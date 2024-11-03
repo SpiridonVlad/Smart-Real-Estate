@@ -17,12 +17,12 @@ namespace ToDoList.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Result<Guid>>> CreateProperty([FromBody] CreatePropertyCommand command)
-        {
-            var result = await mediator.Send(command);
-            return CreatedAtAction(nameof(GetPropertyById), new { Id = result.Data }, result.Data);
-        }
+        //[HttpPost]
+        //public async Task<ActionResult<Result<Guid>>> CreateProperty([FromBody] CreatePropertyCommand command)
+        //{
+        //    var result = await mediator.Send(command);
+        //    return CreatedAtAction(nameof(GetPropertyById), new { Id = result.Data }, result.Data);
+        //}
 
         //[HttpGet]
         //public async Task<ActionResult<IEnumerable<PropertyDto>>> GetAllProperties()
