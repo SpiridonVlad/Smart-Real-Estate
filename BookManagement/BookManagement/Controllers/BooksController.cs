@@ -34,6 +34,9 @@ namespace BookManagement.Controllers
         public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks()
         {
             var books = await mediator.Send(new GetAllBooksQuery());
+            if (books == null) {
+                return NotFound();
+            }
             return Ok(books);
         }
 

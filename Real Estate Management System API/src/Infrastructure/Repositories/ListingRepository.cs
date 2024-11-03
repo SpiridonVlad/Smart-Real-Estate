@@ -42,7 +42,7 @@ namespace Infrastructure.Repositories
 
                 context.Listings.Remove(listing);
                 await context.SaveChangesAsync();
-                return Result<object>.Success(null);
+                return Result<object>.Success(listing);
             }
             catch (Exception ex)
             {
@@ -55,6 +55,22 @@ namespace Infrastructure.Repositories
             try
             {
                 var listings = await context.Listings.ToListAsync();
+                return Result<IEnumerable<Listing>>.Success(listings);
+            }
+            catch (Exception ex)
+            {
+                return Result<IEnumerable<Listing>>.Failure(ex.Message);
+            }
+        }
+
+        public async Task<Result<IEnumerable<Listing>>> GetPaginatedAsync(int page, int pageSize)
+        {
+            try
+            {
+                var listings = await context.Listings
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
                 return Result<IEnumerable<Listing>>.Success(listings);
             }
             catch (Exception ex)
@@ -87,7 +103,7 @@ namespace Infrastructure.Repositories
             {
                 context.Listings.Update(listing);
                 await context.SaveChangesAsync();
-                return Result<object>.Success(null);
+                return Result<object>.Success(data: null);
             }
             catch (Exception ex)
             {

@@ -11,6 +11,5 @@
         public bool IsHighlighted { get; set; }
         public bool IsDeleted { get; set; }
 
-
     }
 }
