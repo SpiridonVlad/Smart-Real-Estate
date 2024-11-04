@@ -16,7 +16,7 @@ namespace Application.Utils
 
             CreateMap<Listing, ListingDto>().ReverseMap();
             CreateMap<CreateListingCommand, Listing>().ReverseMap();
-            //CreateMap<UpdateToDoTaskCommand, ToDoTask>().ReverseMap();
+            CreateMap<UpdateListingCommand, Listing>().ReverseMap();
 
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<CreateUserCommand, User>().ReverseMap();
