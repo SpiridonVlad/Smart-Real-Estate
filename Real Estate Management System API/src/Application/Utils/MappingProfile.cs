@@ -12,7 +12,7 @@ namespace Application.Utils
         {
             CreateMap<Property, PropertyDto>().ReverseMap();
             CreateMap<CreatePropertyCommand, Property>().ReverseMap();
-            // CreateMap<UpdateToDoTaskCommand, ToDoTask>().ReverseMap();
+            CreateMap<UpdatePropertyCommand, Property>().ReverseMap();
 
             CreateMap<Listing, ListingDto>().ReverseMap();
             CreateMap<CreateListingCommand, Listing>().ReverseMap();
@@ -20,7 +20,7 @@ namespace Application.Utils
 
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<CreateUserCommand, User>().ReverseMap();
-            //CreateMap<UpdateToDoTaskCommand, ToDoTask>().ReverseMap();
+            CreateMap<UpdateUserCommand, User>().ReverseMap();
         }
     }
 }

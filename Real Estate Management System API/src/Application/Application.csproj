@@ -17,9 +17,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Use Cases\Property\QueryHandlers\" />
-    <Folder Include="Use Cases\Property\Queries\" />
-  </ItemGroup>
-
 </Project>

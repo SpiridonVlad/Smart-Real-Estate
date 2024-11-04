@@ -1,4 +1,5 @@
 ﻿using Application.Use_Cases.Commands;
+using Application.Use_Cases.Users.Commands;
 using AutoMapper;
 using Domain.Common;
 using Domain.Entities;
@@ -20,6 +21,12 @@ namespace Application.Use_Cases.CommandHandlers
 
         public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+            CreateUserCommandValidator validator = new CreateUserCommandValidator();
+            var validationResult = await validator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                return Result<Guid>.Failure(validationResult.ToString());
+            }
             var user = mapper.Map<User>(request);
             var result = await repository.AddAsync(user);
             if (result.IsSuccess)

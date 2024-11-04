@@ -87,7 +87,7 @@ namespace Infrastructure.Repositories
             {
                 context.Users.Update(user);
                 await context.SaveChangesAsync();
-                return Result<object>.Success(null);
+                return Result<object>.Success(data:null);
             }
             catch (Exception ex)
             {

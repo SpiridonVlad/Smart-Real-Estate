@@ -50,15 +50,15 @@ namespace ToDoList.Controllers
         //    return NoContent();
         //}
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserCommand command)
-        //{
-        //    if (id != command.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    await mediator.Send(command);
-        //    return NoContent();
-        //}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest("The id should be identical with the command.id");
+            }
+            await mediator.Send(command);
+            return NoContent();
+        }
     }
 }

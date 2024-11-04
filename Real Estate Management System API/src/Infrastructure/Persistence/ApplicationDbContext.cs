@@ -27,6 +27,9 @@ namespace Infrastructure.Persistence
                     .HasDefaultValueSql("uuid_generate_v4()")
                     .ValueGeneratedOnAdd();
 
+                entity.Property(e => e.Address)
+                    .IsRequired();
+
                 entity.Property(e => e.Surface)
                     .IsRequired();
 
@@ -37,81 +40,25 @@ namespace Infrastructure.Persistence
                     .HasConversion<string>() // Store PropertyType enum as string in the database
                     .IsRequired();
 
-                // Configure Address as a one-to-one relationship
-                entity.HasOne(e => e.Address)
-                    .WithOne()
-                    .HasForeignKey<Property>(p => p.AddressId) // Ensure Property entity has AddressId as a foreign key
+                entity.Property(e => e.HasGarden)
                     .IsRequired();
 
-                // Configure PropertyFeatures as an owned type
-                entity.OwnsOne(e => e.Features, features =>
-                {
-                    features.Property(f => f.Features)
-                        .HasColumnType("jsonb") // Assuming storage as JSON in PostgreSQL
-                        .IsRequired();
-                });
+                entity.Property(e => e.HasGarage)
+                    .IsRequired();
 
+                entity.Property(e => e.HasPool)
+                    .IsRequired();
+
+                entity.Property(e => e.HasBalcony)
+                    .IsRequired();
+
+                // Configure UserId as a foreign key
+                entity.Property(e => e.UserId)
+                    .HasColumnType("uuid")
+                    .IsRequired();
                 // Configure Images as a one-to-many relationship
-                entity.HasMany(e => e.Images)
-                    .WithOne(i => i.Property)
-                    .HasForeignKey(i => i.PropertyId)
-                    .IsRequired();
-            });
-
-            modelBuilder.Entity<Address>(entity =>
-            {
-                entity.ToTable("addresses");
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("uuid")
-                    .HasDefaultValueSql("uuid_generate_v4()")
-                    .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Street)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.City)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.State)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.PostalCode)
-                    .IsRequired()
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.Country)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.AdditionalInfo)
-                    .HasMaxLength(200);
-            });
-
-            modelBuilder.Entity<Image>(entity =>
-            {
-                entity.ToTable("images");
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("uuid")
-                    .HasDefaultValueSql("uuid_generate_v4()")
-                    .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Data)
-                    .IsRequired();
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(200);
-
-                entity.HasOne(i => i.Property)
-                    .WithMany(p => p.Images)
-                    .HasForeignKey(i => i.PropertyId)
-                    .IsRequired();
+                entity.Property(e => e.ImageId)
+                       .IsRequired();
             });
 
             modelBuilder.Entity<Listing>(entity =>
@@ -160,20 +107,15 @@ namespace Infrastructure.Persistence
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasConversion<string>(); 
-
-                entity.Property(e => e.Status)
-                    .IsRequired()
-                    .HasConversion<string>(); 
-
-                entity.Property(e => e.verified)
+                entity.Property(e => e.Verified)
                     .IsRequired();
 
-                entity.Property(e => e.rating)
-                    .HasColumnType("decimal(3,2)")
-                    .HasDefaultValue(0);
+                entity.Property(e => e.Rating)
+                .IsRequired();
+
+
+                entity.Property(e => e.IsAdmin)
+                    .IsRequired();
             });
         }
     }
