@@ -23,6 +23,10 @@ namespace ToDoList.Controllers
         public async Task<ActionResult<Result<Guid>>> CreateUser([FromBody] CreateUserCommand command)
         {
             var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return CreatedAtAction(nameof(GetUserById), new { Id = result.Data }, result.Data);
         }
 
@@ -31,6 +35,10 @@ namespace ToDoList.Controllers
         {
             var query = new GetAllUsersQuery();
             var result = await mediator.Send(query);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return Ok(result);
         }
 
@@ -39,6 +47,10 @@ namespace ToDoList.Controllers
         {
             var query = new GetUserByIdQuery { Id = id };
             var result = await mediator.Send(query);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return Ok(result);
         }
 
