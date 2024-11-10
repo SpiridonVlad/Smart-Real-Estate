@@ -37,7 +37,7 @@ namespace Infrastructure.Persistence
                     .IsRequired();
 
                 entity.Property(e => e.Type)
-                    .HasConversion<string>() // Store PropertyType enum as string in the database
+                    .HasConversion<string>() 
                     .IsRequired();
 
                 entity.Property(e => e.HasGarden)

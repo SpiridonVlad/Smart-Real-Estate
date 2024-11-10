@@ -2,10 +2,11 @@
 {
     public enum PropertyType
     {
-        Default,       
         Apartment,
         Office,
         Studio,        
-        CommercialSpace
+        CommercialSpace,
+        House,
+        Garage,
     }
 }

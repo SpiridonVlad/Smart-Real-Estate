@@ -3,6 +3,7 @@
     public enum UserType
     {
         LegalEntity,
-        Individual
+        Individual,
+        Admin
     }
 }
