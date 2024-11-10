@@ -34,6 +34,10 @@ namespace ToDoList.Controllers
         public async Task<ActionResult<Result<Guid>>> CreateListing([FromBody] CreateListingCommand command)
         {
             var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return CreatedAtAction(nameof(GetListingById), new { Id = result.Data }, result.Data);
         }
 
@@ -42,6 +46,10 @@ namespace ToDoList.Controllers
         {
             var query = new GetPaginatedListingsQuery { Page = page, PageSize = pageSize };
             var result = await mediator.Send(query);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return Ok(result);
         }
 
@@ -50,6 +58,10 @@ namespace ToDoList.Controllers
         {
             var query = new GetListingByIdQuery { Id = id };
             var result = await mediator.Send(query);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return Ok(result);
         }
 

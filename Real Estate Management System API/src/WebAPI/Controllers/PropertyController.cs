@@ -22,6 +22,10 @@ namespace ToDoList.Controllers
         public async Task<ActionResult<Result<Guid>>> CreateProperty([FromBody] CreatePropertyCommand command)
         {
             var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return CreatedAtAction(nameof(GetPropertyById), new { Id = result.Data }, result.Data);
         }
 
@@ -30,6 +34,10 @@ namespace ToDoList.Controllers
         {
             var query = new GetAllPropertiesQuery();
             var result = await mediator.Send(query);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return Ok(result);
         }
 
@@ -38,6 +46,10 @@ namespace ToDoList.Controllers
         {
             var query = new GetPropertyByIdQuery { Id = id };
             var result = await mediator.Send(query);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return Ok(result);
         }
 

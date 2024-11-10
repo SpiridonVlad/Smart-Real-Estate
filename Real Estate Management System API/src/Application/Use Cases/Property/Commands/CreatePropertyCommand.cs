@@ -1,7 +1,6 @@
 ﻿
 
 using Domain.Common;
-using Domain.Entities;
 using Domain.Types;
 using MediatR;
 
