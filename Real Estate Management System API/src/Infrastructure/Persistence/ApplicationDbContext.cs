@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
+using Domain.Types;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Infrastructure.Persistence
 {
@@ -27,30 +29,24 @@ namespace Infrastructure.Persistence
                     .HasDefaultValueSql("uuid_generate_v4()")
                     .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Address)
+                entity.Property(e => e.AddressId)
+                    .HasColumnType("uuid")
                     .IsRequired();
 
-                entity.Property(e => e.Surface)
-                    .IsRequired();
-
-                entity.Property(e => e.Rooms)
+                entity.HasOne(e => e.Address)
+                    .WithOne()
+                    .HasForeignKey<Property>(e => e.Id)
                     .IsRequired();
 
                 entity.Property(e => e.Type)
-                    .HasConversion<string>() 
+                    .HasConversion<string>()
                     .IsRequired();
 
-                entity.Property(e => e.HasGarden)
-                    .IsRequired();
-
-                entity.Property(e => e.HasGarage)
-                    .IsRequired();
-
-                entity.Property(e => e.HasPool)
-                    .IsRequired();
-
-                entity.Property(e => e.HasBalcony)
-                    .IsRequired();
+                entity.Property(e => e.Features)
+                    .HasConversion(
+                        v => JsonConvert.SerializeObject(v.Features),  // Serialize the dictionary to a JSON string
+                        v => new PropertyFeatures { Features = JsonConvert.DeserializeObject<Dictionary<PropertyFeatureType, int>>(v) }  // Deserialize the JSON string back to a PropertyFeatures object
+                    );
 
                 // Configure UserId as a foreign key
                 entity.Property(e => e.UserId)
@@ -79,9 +75,9 @@ namespace Infrastructure.Persistence
                     .IsRequired()
                     .HasColumnType("decimal(18,2)");
                 entity.Property(e => e.PublicationDate).IsRequired();
-                entity.Property(e => e.IsSold).IsRequired();
-                entity.Property(e => e.IsHighlighted).IsRequired();
-                entity.Property(e => e.IsDeleted).IsRequired();
+                //entity.Property(e => e.IsSold).IsRequired();
+                //entity.Property(e => e.IsHighlighted).IsRequired();
+                //entity.Property(e => e.IsDeleted).IsRequired();
             });
 
             modelBuilder.Entity<User>(entity =>
