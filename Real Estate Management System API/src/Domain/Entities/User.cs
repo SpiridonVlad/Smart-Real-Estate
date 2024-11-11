@@ -11,6 +11,6 @@ namespace Domain.Entities
         public bool Verified { get; set; }
         public decimal Rating { get; set; }
         public UserType Type { get; set; }
-        public List<Guid> PropertyHistory { get; set; }
+        public List<Guid>? PropertyHistory { get; set; } 
     }
 }

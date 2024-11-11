@@ -5,6 +5,7 @@ using Application.DTOs;
 
 using Domain.Common;
 using Application.Use_Cases.Queries;
+using Application.Use_Cases.Users.Commands;
 
 namespace ToDoList.Controllers
 {
@@ -31,9 +32,9 @@ namespace ToDoList.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers(int page, int pageSize)
         {
-            var query = new GetAllUsersQuery();
+            var query = new GetAllUsersQuery { Page = page, PageSize = pageSize };
             var result = await mediator.Send(query);
             if (!result.IsSuccess)
             {
@@ -54,13 +55,17 @@ namespace ToDoList.Controllers
             return Ok(result);
         }
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteUser(Guid id)
-        //{
-        //    var command = new DeleteUserCommand { Id = id };
-        //    await mediator.Send(command);
-        //    return NoContent();
-        //}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            var command = new DeleteUserCommand { Id = id };
+            var result=await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return NoContent();
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserCommand command)
@@ -69,7 +74,40 @@ namespace ToDoList.Controllers
             {
                 return BadRequest("The id should be identical with the command.id");
             }
-            await mediator.Send(command);
+            var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return NoContent();
+        }
+        [HttpPut("{userId}/add_property/{propertyId}")]
+        public async Task<IActionResult> AddPropertyToHistory(Guid userId, Guid propertyId)
+        {
+            var command = new AddPropertyToHistoryCommand
+            {
+                UserId = userId,
+                PropertyId = propertyId
+            };
+            var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return NoContent();
+        }
+        [HttpPut("{userId}/verify")]
+        public async Task<IActionResult> VerifyUser(Guid userId)
+        {
+            var command = new VerifyUserCommand
+            {
+                UserId = userId,
+            };
+            var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return NoContent();
         }
     }

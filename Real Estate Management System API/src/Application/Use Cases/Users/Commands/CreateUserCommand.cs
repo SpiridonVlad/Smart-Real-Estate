@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Types;
 using MediatR;
 
 namespace Application.Use_Cases.Commands
@@ -10,6 +11,7 @@ namespace Application.Use_Cases.Commands
         public required string Email { get; set; }
         public bool Verified { get; set; }
         public decimal Rating { get; set; }
-        public bool IsAdmin { get; set; }
+        public UserType Type { get; set; }
+        public List<Guid>? PropertyHistory { get; set; }
     }
 }
