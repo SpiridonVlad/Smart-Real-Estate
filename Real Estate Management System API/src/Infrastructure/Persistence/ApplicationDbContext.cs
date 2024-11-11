@@ -1,8 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Types;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Npgsql;
+using Newtonsoft.Json;
 
 namespace Infrastructure.Persistence
 {
@@ -127,13 +126,17 @@ namespace Infrastructure.Persistence
 
                 entity.Property(e => e.Price)
                     .IsRequired()
-                    .HasColumnType("decimal(18,2)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.PublicationDate)
                     .IsRequired();
 
-                entity.Property(e => e.Description)
-                    .IsRequired();
+                entity.Property(e => e.Properties)
+                    .HasConversion(
+                        v => JsonConvert.SerializeObject(v),
+                        v => JsonConvert.DeserializeObject<List<ListingAssetss>>(v)
+                    )
+                    .HasColumnType("jsonb"); 
             });
 
             modelBuilder.Entity<User>(entity =>

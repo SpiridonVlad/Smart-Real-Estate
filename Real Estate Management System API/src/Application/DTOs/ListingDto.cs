@@ -1,4 +1,6 @@
-﻿namespace Application.DTOs
+﻿using Domain.Types;
+
+namespace Application.DTOs
 {
     public class ListingDto
     {
@@ -7,8 +9,7 @@
         public Guid UserId { get; set; }
         public decimal Price { get; set; }
         public DateTime PublicationDate { get; set; }
-        public bool IsSold { get; set; }
-        public bool IsHighlighted { get; set; }
-        public bool IsDeleted { get; set; }
+        public string Description { get; set; }
+        public List<ListingAssetss> Assets { get; set; }
     }
 }

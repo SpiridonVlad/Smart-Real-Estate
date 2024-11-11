@@ -1,4 +1,5 @@
 ﻿using Application.Use_Cases.Commands;
+using Domain.Types;
 using FluentValidation;
 
 namespace Application.Use_Cases.Listings.Commands
@@ -21,14 +22,14 @@ namespace Application.Use_Cases.Listings.Commands
                 .NotEmpty().WithMessage("Publication date is required.")
                 .LessThanOrEqualTo(DateTime.Now).WithMessage("Publication date cannot be in the future.");
 
-            RuleFor(x => x.IsSold)
-                .NotNull().WithMessage("IsSold status is required.");
+            RuleFor(x => x.Properties)
+                .NotNull().WithMessage("Properties list is required.")
+                .Must(p => p.All(item => Enum.IsDefined(typeof(ListingAssetss), item)))
+                .WithMessage("Properties list contains invalid values.");
 
-            RuleFor(x => x.IsHighlighted)
-                .NotNull().WithMessage("IsHighlighted status is required.");
-
-            RuleFor(x => x.IsDeleted)
-                .NotNull().WithMessage("IsDeleted status is required.");
+            RuleFor(x => x.Description)
+                .NotEmpty().WithMessage("Description is required.")
+                .MaximumLength(500).WithMessage("Description must not exceed 500 characters.");
         }
     }
 }
