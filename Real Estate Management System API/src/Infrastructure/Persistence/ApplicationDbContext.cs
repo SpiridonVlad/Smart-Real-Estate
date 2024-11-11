@@ -11,13 +11,7 @@ namespace Infrastructure.Persistence
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var dataSourceBuilder = new NpgsqlDataSourceBuilder("host=localhost;port=5432;database=RealEstateManagement;userid=postgres; password=123456");
-            dataSourceBuilder.EnableDynamicJson();
-            var dataSource = dataSourceBuilder.Build();
-            optionsBuilder.UseNpgsql(dataSource);
-        }
+
         public DbSet<Property> Properties { get; set; }
         public DbSet<Listing> Listings { get; set; }
         public DbSet<User> Users { get; set; }
@@ -176,8 +170,8 @@ namespace Infrastructure.Persistence
                     .IsRequired();
 
                 entity.Property(e => e.PropertyHistory)
-                    .HasColumnType("jsonb") // Store as JSONB in PostgreSQL
-                    .IsRequired(false); // Allow null values
+                    .HasColumnType("jsonb") 
+                    .IsRequired(false); 
             });
         }
     }
