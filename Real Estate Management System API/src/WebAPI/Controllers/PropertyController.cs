@@ -4,6 +4,7 @@ using Application.Use_Cases.Commands;
 using Application.DTOs;
 using Domain.Common;
 using Application.Use_Cases.Queries;
+using Application.Use_Cases.Property.Commands;
 
 namespace ToDoList.Controllers
 {
@@ -68,6 +69,14 @@ namespace ToDoList.Controllers
             {
                 return BadRequest();
             }
+            await mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProperty(Guid id)
+        {
+            var command = new DeletePropertyCommand { Id = id };
             await mediator.Send(command);
             return NoContent();
         }
