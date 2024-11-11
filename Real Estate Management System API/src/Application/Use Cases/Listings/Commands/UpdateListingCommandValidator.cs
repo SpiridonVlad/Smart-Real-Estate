@@ -1,4 +1,5 @@
 ﻿using Application.Use_Cases.Commands;
+using Domain.Types;
 using FluentValidation;
 
 namespace Application.Use_Cases.Listings.Commands
@@ -18,23 +19,19 @@ namespace Application.Use_Cases.Listings.Commands
 
             RuleFor(x => x.Price)
                 .GreaterThan(0).WithMessage("Price must be greater than zero.")
-                .When(x => x.Price.HasValue); 
+                .When(x => x.Price.HasValue);
 
             RuleFor(x => x.PublicationDate)
                 .LessThanOrEqualTo(DateTime.Now).WithMessage("Publication date cannot be in the future.")
-                .When(x => x.PublicationDate.HasValue); 
+                .When(x => x.PublicationDate.HasValue);
 
-            RuleFor(x => x.IsSold)
-                .NotNull().WithMessage("IsSold status is required.")
-                .When(x => x.IsSold.HasValue); 
+            RuleFor(x => x.Properties)
+                .Must(p => p == null || p.All(item => Enum.IsDefined(typeof(ListingAssetss), item)))
+                .WithMessage("Properties list contains invalid values.");
 
-            RuleFor(x => x.IsHighlighted)
-                .NotNull().WithMessage("IsHighlighted status is required.")
-                .When(x => x.IsHighlighted.HasValue); 
-
-            RuleFor(x => x.IsDeleted)
-                .NotNull().WithMessage("IsDeleted status is required.")
-                .When(x => x.IsDeleted.HasValue); 
+            RuleFor(x => x.Description)
+                .MaximumLength(500).WithMessage("Description must not exceed 500 characters.")
+                .When(x => x.Description != null);
         }
     }
 }

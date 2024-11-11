@@ -20,7 +20,7 @@ namespace Application.Use_Cases.QueryHandlers
         }
         public async Task<Result<IEnumerable<UserDto>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var usersResult = await repository.GetAllAsync();
+            var usersResult = await repository.GetPaginatedAsync(request.Page,request.PageSize);
             if (usersResult.IsSuccess)
             {
                 var userDtos = mapper.Map<IEnumerable<UserDto>>(usersResult.Data);

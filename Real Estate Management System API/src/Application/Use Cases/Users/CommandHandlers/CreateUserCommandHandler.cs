@@ -12,11 +12,13 @@ namespace Application.Use_Cases.CommandHandlers
     {
         private readonly IUserRepository repository;
         private readonly IMapper mapper;
+        private readonly IPropertyRepository propertyRepository;
 
-        public CreateUserCommandHandler(IUserRepository repository, IMapper mapper)
+        public CreateUserCommandHandler(IUserRepository repository, IMapper mapper, IPropertyRepository propertyRepository)
         {
             this.repository = repository;
             this.mapper = mapper;
+            this.propertyRepository = propertyRepository;
         }
 
         public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -28,6 +30,19 @@ namespace Application.Use_Cases.CommandHandlers
                 return Result<Guid>.Failure(validationResult.ToString());
             }
             var user = mapper.Map<User>(request);
+            // Handle null PropertyHistory
+            if (user.PropertyHistory == null)
+            {
+                user.PropertyHistory = new List<Guid>();
+            }
+            foreach(var propertyId in user.PropertyHistory)
+            {
+                var propertyResult = await propertyRepository.GetByIdAsync(propertyId);
+                if (!propertyResult.IsSuccess)
+                {
+                    return Result<Guid>.Failure("Property not found");
+                }
+            }
             var result = await repository.AddAsync(user);
             if (result.IsSuccess)
             {
