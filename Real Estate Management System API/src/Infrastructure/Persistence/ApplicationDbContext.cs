@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
+using Domain.Types;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Infrastructure.Persistence
 {
@@ -27,29 +29,8 @@ namespace Infrastructure.Persistence
                     .HasDefaultValueSql("uuid_generate_v4()")
                     .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Address)
-                    .IsRequired();
-
-                entity.Property(e => e.Surface)
-                    .IsRequired();
-
-                entity.Property(e => e.Rooms)
-                    .IsRequired();
-
                 entity.Property(e => e.Type)
                     .HasConversion<string>() 
-                    .IsRequired();
-
-                entity.Property(e => e.HasGarden)
-                    .IsRequired();
-
-                entity.Property(e => e.HasGarage)
-                    .IsRequired();
-
-                entity.Property(e => e.HasPool)
-                    .IsRequired();
-
-                entity.Property(e => e.HasBalcony)
                     .IsRequired();
 
                 // Configure UserId as a foreign key
@@ -65,23 +46,33 @@ namespace Infrastructure.Persistence
             {
                 entity.ToTable("listings");
                 entity.HasKey(e => e.Id);
+
                 entity.Property(e => e.Id)
                     .HasColumnType("uuid")
                     .HasDefaultValueSql("uuid_generate_v4()")
                     .ValueGeneratedOnAdd();
+
                 entity.Property(e => e.PropertyId)
                     .HasColumnType("uuid")
                     .IsRequired();
+
                 entity.Property(e => e.UserId)
                     .HasColumnType("uuid")
                     .IsRequired();
+
                 entity.Property(e => e.Price)
                     .IsRequired()
-                    .HasColumnType("decimal(18,2)");
-                entity.Property(e => e.PublicationDate).IsRequired();
-                entity.Property(e => e.IsSold).IsRequired();
-                entity.Property(e => e.IsHighlighted).IsRequired();
-                entity.Property(e => e.IsDeleted).IsRequired();
+                    .HasColumnType("int");
+
+                entity.Property(e => e.PublicationDate)
+                    .IsRequired();
+
+                entity.Property(e => e.Properties)
+                    .HasConversion(
+                        v => JsonConvert.SerializeObject(v),
+                        v => JsonConvert.DeserializeObject<List<ListingAssetss>>(v)
+                    )
+                    .HasColumnType("jsonb"); 
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -113,9 +104,6 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.Rating)
                 .IsRequired();
 
-
-                entity.Property(e => e.IsAdmin)
-                    .IsRequired();
             });
         }
     }

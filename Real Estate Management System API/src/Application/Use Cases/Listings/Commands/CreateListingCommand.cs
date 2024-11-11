@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Types;
 using MediatR;
 
 namespace Application.Use_Cases.Commands
@@ -9,8 +10,7 @@ namespace Application.Use_Cases.Commands
         public Guid UserId { get; set; }
         public decimal Price { get; set; }
         public DateTime PublicationDate { get; set; }
-        public bool IsSold { get; set; }
-        public bool IsHighlighted { get; set; }
-        public bool IsDeleted { get; set; }
+        public string Description { get; set; }
+        public List<ListingAssetss> Properties { get; set; }
     }
 }
