@@ -41,7 +41,7 @@ namespace Infrastructure.Repositories
 
                 context.Properties.Remove(property);
                 await context.SaveChangesAsync();
-                return Result<object>.Success(null);
+                return Result<object>.Success(property);
             }
             catch (Exception ex)
             {

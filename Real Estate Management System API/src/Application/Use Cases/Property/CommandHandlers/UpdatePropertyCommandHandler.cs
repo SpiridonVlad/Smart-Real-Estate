@@ -36,14 +36,14 @@ namespace Application.Use_Cases.CommandHandlers
             var property = propertyResult.Data;
             mapper.Map(request, property);
 
-            var result = await propertyRepository.UpdateAsync(property);
-            if (result.IsSuccess)
+            var updateResult = await propertyRepository.UpdateAsync(property);
+            if (updateResult.IsSuccess)
             {
                 return Result<string>.Success("Property updated successfully");
             }
             else
             {
-                return Result<string>.Failure(result.ErrorMessage);
+                return Result<string>.Failure(updateResult.ErrorMessage);
             }
         }
     }

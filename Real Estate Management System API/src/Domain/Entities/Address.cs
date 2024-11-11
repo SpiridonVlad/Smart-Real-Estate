@@ -8,7 +8,7 @@
         public string State { get; set; }
         public string PostalCode { get; set; }
         public string Country { get; set; }
-        public string AdditionalInfo { get; set; }
+        public string? AdditionalInfo { get; set; }
 
     }
 }

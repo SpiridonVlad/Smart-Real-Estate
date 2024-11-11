@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241110211939_AddAddressToProperty")]
+    partial class AddAddressToProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,8 +31,7 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("uuid_generate_v4()");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AdditionalInfo")
                         .IsRequired()
@@ -57,7 +59,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("addresses", (string)null);
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Domain.Entities.Listing", b =>
@@ -119,8 +121,6 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdressId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("properties", (string)null);
@@ -144,14 +144,14 @@ namespace Infrastructure.Migrations
                         .HasColumnType("character varying(200)");
 
                     b.Property<List<Guid>>("PropertyHistory")
-                        .HasColumnType("jsonb");
+                        .IsRequired()
+                        .HasColumnType("uuid[]");
 
                     b.Property<decimal>("Rating")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Username")
                         .IsRequired()
