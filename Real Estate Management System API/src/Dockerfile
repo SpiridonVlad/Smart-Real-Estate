@@ -1,30 +1,24 @@
-# Step 1: Use .NET SDK 8.0 to build the project
+# Use the .NET SDK image to build the project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+WORKDIR /source
 
-# Copy each .csproj file and restore dependencies
-COPY ["WebAPI/Real Estate Management System.csproj", "WebAPI/"]
-COPY ["Application/Application.csproj", "Application/"]
-COPY ["Domain/Domain.csproj", "Domain/"]
-COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
-
-# Run restore on the WebAPI project, which should include all dependencies
+# Copy everything and restore dependencies specifically for WebAPI
+COPY . .
 RUN dotnet restore "WebAPI/Real Estate Management System.csproj"
 
-# Copy all source code into the container
-COPY . .
+# Publish the application
+RUN dotnet publish "WebAPI/Real Estate Management System.csproj" -c Release -o /app
 
-# Change to the WebAPI directory to build the project
-WORKDIR "/src/WebAPI"
-RUN dotnet publish "Real Estate Management System.csproj" -c Release -o /app/publish
-
-# Step 2: Use .NET 8.0 runtime to run the application
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+# Use the .NET Runtime image to run the application
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /app/publish .
+COPY --from=build /app .
 
-# Expose the port your app listens on
+# Set environment variable
+ENV ASPNETCORE_ENVIRONMENT=Production
+
+# Expose port 80
 EXPOSE 80
 
-# Set the entry point to run the application
+# Set the entry point for the container
 ENTRYPOINT ["dotnet", "Real Estate Management System.dll"]
