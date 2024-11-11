@@ -29,10 +29,10 @@ namespace Application.Use_Cases.Users.Commands
             RuleFor(x => x.Rating)
                 .InclusiveBetween(0, 5).WithMessage("Rating must be between 0 and 5.");
 
-            RuleFor(x => x.IsAdmin)
-                .NotNull().WithMessage("IsAdmin status is required.");
+            RuleFor(x => x.Type)
+                .IsInEnum().WithMessage("Invalid user type.");
 
-
+            
         }
     }
 }
