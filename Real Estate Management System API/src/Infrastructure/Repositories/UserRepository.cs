@@ -94,5 +94,20 @@ namespace Infrastructure.Repositories
                 return Result<object>.Failure(ex.Message);
             }
         }
+        public async Task<Result<IEnumerable<User>>> GetPaginatedAsync(int page, int pageSize)
+        {
+            try
+            {
+                var users = await context.Users
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+                return Result<IEnumerable<User>>.Success(users);
+            }
+            catch (Exception ex)
+            {
+                return Result<IEnumerable<User>>.Failure(ex.Message);
+            }
+        }
     }
 }
