@@ -36,19 +36,6 @@ namespace Application.Use_Cases.CommandHandlers
             var property = propertyResult.Data;
             mapper.Map(request, property);
 
-            // Verificăm dacă mapper-ul a funcționat corect
-            if (!property.Address.Street.Equals(request.Address.Street) ||
-                !property.Address.City.Equals(request.Address.City) ||
-                !property.Address.State.Equals(request.Address.State) ||
-                !property.Address.PostalCode.Equals(request.Address.PostalCode) ||
-                !property.Address.Country.Equals(request.Address.Country) ||
-                !property.ImageId.Equals(request.ImageId) ||
-                !property.UserId.Equals(request.UserId) ||
-                !property.Type.Equals(request.Type))
-            {
-                return Result<string>.Failure("Mapping failed.");
-            }
-
             var updateResult = await propertyRepository.UpdateAsync(property);
             if (updateResult.IsSuccess)
             {
