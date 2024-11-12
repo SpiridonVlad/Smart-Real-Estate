@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Types;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
 
 namespace Infrastructure.Persistence
@@ -31,26 +32,17 @@ namespace Infrastructure.Persistence
                     .HasDefaultValueSql("uuid_generate_v4()")
                     .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Street)
-                    .IsRequired();
-
-                entity.Property(e => e.City)
-                    .IsRequired();
-
-                entity.Property(e => e.State)
-                    .IsRequired();
-
-                entity.Property(e => e.PostalCode)
-                    .IsRequired();
-
-                entity.Property(e => e.Country)
-                    .IsRequired();
-
+                entity.Property(e => e.Street).IsRequired();
+                entity.Property(e => e.City).IsRequired();
+                entity.Property(e => e.State).IsRequired();
+                entity.Property(e => e.PostalCode).IsRequired();
+                entity.Property(e => e.Country).IsRequired();
                 entity.Property(e => e.AdditionalInfo);
             });
 
             modelBuilder.Entity<Property>(entity =>
             {
+                // Define the table name and primary key
                 entity.ToTable("properties");
                 entity.HasKey(e => e.Id);
 
@@ -59,49 +51,48 @@ namespace Infrastructure.Persistence
                     .HasDefaultValueSql("uuid_generate_v4()")
                     .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.AdressId)
+                // AddressId and navigation property
+                entity.Property(e => e.AddressId)
                     .HasColumnType("uuid")
                     .IsRequired();
 
                 entity.HasOne(e => e.Address)
                     .WithMany()
-                    .HasForeignKey(e => e.AdressId)
+                    .HasForeignKey(e => e.AddressId)
                     .OnDelete(DeleteBehavior.Cascade);
 
-                entity.Property(e => e.ImageId)
-                    .IsRequired();
-
+                // UserId and navigation property
                 entity.Property(e => e.UserId)
                     .HasColumnType("uuid")
                     .IsRequired();
 
                 entity.HasOne(e => e.User)
-                    .WithMany()
+                    .WithMany() 
                     .HasForeignKey(e => e.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
 
+                // ImageId
+                entity.Property(e => e.ImageId)
+                    .IsRequired();
+
+                // PropertyType enum
                 entity.Property(e => e.Type)
                     .HasConversion<string>()
                     .IsRequired();
 
+                // PropertyFeatures configuration with a dictionary for Features
                 entity.OwnsOne(e => e.Features, features =>
                 {
                     features.Property(f => f.Features)
+                        .HasColumnType("jsonb")
                         .HasConversion(
-                            v => string.Join(',', v.Select(kv => $"{kv.Key}:{kv.Value}")),
-                            v => v.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                  .Select(s => s.Split(new[] { ':' }, StringSplitOptions.None))
-                                  .Where(parts => parts.Length == 2)
-                                  .ToDictionary(
-                                      kv => Enum.Parse<PropertyFeatureType>(kv[0]),
-                                      kv => int.Parse(kv[1])
-                                  )
+                            v => JsonConvert.SerializeObject(v),
+                            v => JsonConvert.DeserializeObject<Dictionary<PropertyFeatureType, int>>(v)
                         )
-                        .Metadata
-                        .SetValueComparer(new ValueComparer<Dictionary<PropertyFeatureType, int>>(
+                        .Metadata.SetValueComparer(new ValueComparer<Dictionary<PropertyFeatureType, int>>(
                             (c1, c2) => c1.SequenceEqual(c2),
-                            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                            c => c.ToDictionary(kv => kv.Key, kv => kv.Value)
+                            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.Key.GetHashCode(), v.Value)),
+                            c => c.ToDictionary(k => k.Key, v => v.Value)
                         ));
                 });
             });
@@ -128,15 +119,20 @@ namespace Infrastructure.Persistence
                     .IsRequired()
                     .HasColumnType("int");
 
-                entity.Property(e => e.PublicationDate)
-                    .IsRequired();
+                entity.Property(e => e.PublicationDate).IsRequired();
 
                 entity.Property(e => e.Properties)
                     .HasConversion(
                         v => JsonConvert.SerializeObject(v),
                         v => JsonConvert.DeserializeObject<List<ListingAssetss>>(v)
                     )
-                    .HasColumnType("jsonb"); 
+                    .HasColumnType("jsonb")
+                    .Metadata
+                    .SetValueComparer(new ValueComparer<List<ListingAssetss>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                        c => c.ToList()
+                    ));
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -162,19 +158,26 @@ namespace Infrastructure.Persistence
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.Property(e => e.Verified)
-                    .IsRequired();
-
-                entity.Property(e => e.Rating)
-                    .IsRequired();
+                entity.Property(e => e.Verified).IsRequired();
+                entity.Property(e => e.Rating).IsRequired();
 
                 entity.Property(e => e.Type)
                     .HasConversion<string>()
                     .IsRequired();
 
                 entity.Property(e => e.PropertyHistory)
-                    .HasColumnType("jsonb") 
-                    .IsRequired(false); 
+                    .HasColumnType("jsonb")
+                    .IsRequired(false)
+                    .HasConversion(
+                        v => JsonConvert.SerializeObject(v),
+                        v => JsonConvert.DeserializeObject<List<Guid>>(v)
+                    )
+                    .Metadata
+                    .SetValueComparer(new ValueComparer<List<Guid>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                        c => c.ToList()
+                    ));
             });
         }
     }

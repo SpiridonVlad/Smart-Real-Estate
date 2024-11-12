@@ -22,7 +22,7 @@ namespace Application.Use_Cases.Listings.Commands
                 .NotEmpty().WithMessage("Publication date is required.")
                 .LessThanOrEqualTo(DateTime.Now).WithMessage("Publication date cannot be in the future.");
 
-            RuleFor(x => x.Properties)
+            RuleFor(x => x.Properties)     
                 .NotNull().WithMessage("Properties list is required.")
                 .Must(p => p.All(item => Enum.IsDefined(typeof(ListingAssetss), item)))
                 .WithMessage("Properties list contains invalid values.");

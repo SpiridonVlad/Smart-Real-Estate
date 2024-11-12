@@ -54,14 +54,6 @@ namespace ToDoList.Controllers
             return Ok(result);
         }
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteProperty(Guid id)
-        //{
-        //    var command = new DeletePropertyCommand { Id = id };
-        //    await mediator.Send(command);
-        //    return NoContent();
-        //}
-
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProperty(Guid id, [FromBody] UpdatePropertyCommand command)
         {
