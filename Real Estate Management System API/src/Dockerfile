@@ -1,22 +1,17 @@
-# Use the .NET SDK image to build the project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
-# Copy everything and restore dependencies specifically for WebAPI
 COPY . .
 RUN dotnet restore "WebAPI/Real Estate Management System.csproj"
-
-# Publish the application
-RUN dotnet publish "WebAPI/Real Estate Management System.csproj" -c Release -o /app
+RUN dotnet publish "WebAPI/Real Estate Management System.csproj" -c Release -o /app --no-restore
 
 # Use the .NET Runtime image to run the application
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /app .
+COPY --from=build /app ./
 
-ENV ASPNETCORE_ENVIRONMENT=Development #Add this line.
+ENV ASPNETCORE_ENVIRONMENT=Development 
 
-# Expose port 80
 EXPOSE 80
 
 # Set the entry point for the container
