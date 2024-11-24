@@ -22,7 +22,7 @@ namespace Application.Use_Cases.Users.CommandHandlers
         public async Task<Result<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             UpdateUserCommandValidator validator = new UpdateUserCommandValidator();
-            var validationResult = await validator.ValidateAsync(request);
+            var validationResult = await validator.ValidateAsync(request,cancellationToken);
             if (!validationResult.IsValid)
             {
                 return Result<string>.Failure(validationResult.ToString());

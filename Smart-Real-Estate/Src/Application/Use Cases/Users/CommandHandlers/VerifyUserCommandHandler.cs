@@ -9,15 +9,12 @@ namespace Application.Use_Cases.Users.CommandHandlers
     public class VerifyUserCommandHandler : IRequestHandler<VerifyUserCommand, Result<string>>
     {
         private readonly IUserRepository repository;
-        private readonly IMapper mapper;
         public VerifyUserCommandHandler(IUserRepository repository, IMapper mapper)
         {
             this.repository = repository;
-            this.mapper = mapper;
         }
         public async Task<Result<string>> Handle(VerifyUserCommand request, CancellationToken cancellationToken)
         {
-            // Check if user exists
             var userResult = await repository.GetByIdAsync(request.UserId);
             if (!userResult.IsSuccess)
             {

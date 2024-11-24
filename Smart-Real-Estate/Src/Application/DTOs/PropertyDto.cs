@@ -7,11 +7,11 @@ namespace Application.DTOs
     {
         public Guid Id { get; set; }
         public Guid AddressId { get; set; }
-        public string ImageId { get; set; }
+        public required string ImageId { get; set; }
         public Guid UserId { get; set; }
         public User User { get; set; }        
         public PropertyType Type { get; set; }
-        public PropertyFeatures Features { get; set; }
+        public required PropertyFeatures Features { get; set; }
 
     }
 }

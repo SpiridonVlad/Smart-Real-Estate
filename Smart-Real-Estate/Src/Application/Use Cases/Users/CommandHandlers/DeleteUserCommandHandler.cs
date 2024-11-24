@@ -19,7 +19,7 @@ namespace Application.Use_Cases.Users.CommandHandlers
             var result = await repository.DeleteAsync(request.Id);
             if (result.IsSuccess)
             {
-                return Result<string>.Success(null);
+                return Result<string>.Success("Deleted succesfully");
             }
 
             return Result<string>.Failure(result.ErrorMessage);

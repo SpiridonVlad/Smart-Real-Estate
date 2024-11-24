@@ -42,7 +42,7 @@ namespace Infrastructure.Repositories
 
                 context.Users.Remove(user);
                 await context.SaveChangesAsync();
-                return Result<object>.Success(null);
+                return Result<object>.Success("Deleted succesfully");
             }
             catch (Exception ex)
             {
@@ -87,7 +87,7 @@ namespace Infrastructure.Repositories
             {
                 context.Users.Update(user);
                 await context.SaveChangesAsync();
-                return Result<object>.Success(data:null);
+                return Result<object>.Success("Updated succesfully");
             }
             catch (Exception ex)
             {

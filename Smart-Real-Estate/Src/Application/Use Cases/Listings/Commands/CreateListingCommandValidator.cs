@@ -24,7 +24,7 @@ namespace Application.Use_Cases.Listings.Commands
 
             RuleFor(x => x.Properties)     
                 .NotNull().WithMessage("Properties list is required.")
-                .Must(p => p.All(item => Enum.IsDefined(typeof(ListingAssetss), item)))
+                .Must(p => p.TrueForAll(item => Enum.IsDefined(typeof(ListingAssetss), item)))
                 .WithMessage("Properties list contains invalid values.");
 
             RuleFor(x => x.Description)
