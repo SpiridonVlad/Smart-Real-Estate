@@ -23,7 +23,7 @@ namespace Application.Use_Cases.CommandHandlers
         public async Task<Result<Guid>> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
             CreatePropertyCommandValidator validator = new CreatePropertyCommandValidator();
-            var validationResult = await validator.ValidateAsync(request);
+            var validationResult = await validator.ValidateAsync(request,cancellationToken);
             if (!validationResult.IsValid)
             {
                 return Result<Guid>.Failure(validationResult.ToString());

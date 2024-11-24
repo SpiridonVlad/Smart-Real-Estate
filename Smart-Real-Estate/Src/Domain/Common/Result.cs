@@ -12,7 +12,7 @@
             IsSuccess = isSuccess;
             ErrorMessage = errorMessage;
         }
-        public static Result<T> Success(T data) => new Result<T>(data, true, null);
+        public static Result<T> Success(T data) => new Result<T>(data, true, "");
 
         public static Result<T> Failure(string errorMessage) => new Result<T>(default(T), false, errorMessage);
     }

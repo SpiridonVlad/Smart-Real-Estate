@@ -10,10 +10,10 @@ namespace Application.Use_Cases.Commands
     public class CreatePropertyCommand : IRequest<Result<Guid>>
     {
         public Guid AddressId { get; set; }
-        public Address Address { get; set; }
-        public string ImageId { get; set; }
+        public required Address Address { get; set; }
+        public required string ImageId { get; set; }
         public Guid UserId { get; set; }
         public PropertyType Type { get; set; }
-        public PropertyFeatures Features { get; set; }
+        public required PropertyFeatures Features { get; set; }
     }
 }

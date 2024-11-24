@@ -26,7 +26,7 @@ namespace Application.Use_Cases.Listings.Commands
                 .When(x => x.PublicationDate.HasValue);
 
             RuleFor(x => x.Properties)
-                .Must(p => p == null || p.All(item => Enum.IsDefined(typeof(ListingAssetss), item)))
+                .Must(p => p == null || p.TrueForAll(item => Enum.IsDefined(typeof(ListingAssetss), item)))
                 .WithMessage("Properties list contains invalid values.");
 
             RuleFor(x => x.Description)

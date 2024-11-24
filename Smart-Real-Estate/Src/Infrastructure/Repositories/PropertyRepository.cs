@@ -86,7 +86,7 @@ namespace Infrastructure.Repositories
             {
                 context.Properties.Update(property);
                 await context.SaveChangesAsync();
-                return Result<object>.Success(null);
+                return Result<object>.Success("Updated succesfully");
             }
             catch (Exception ex)
             {

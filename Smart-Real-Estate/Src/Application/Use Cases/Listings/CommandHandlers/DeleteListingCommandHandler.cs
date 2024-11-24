@@ -9,12 +9,10 @@ namespace Application.Use_Cases.Listings.CommandHandlers
     public class DeleteListingCommandHandler : IRequestHandler<DeleteListingCommand, Result<string>>
     {
         private readonly IListingRepository repository;
-        private readonly IMapper mapper;
 
         public DeleteListingCommandHandler(IListingRepository repository, IMapper mapper)
         {
             this.repository = repository;
-            this.mapper = mapper;
         }
 
 

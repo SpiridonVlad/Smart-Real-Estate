@@ -103,7 +103,7 @@ namespace Infrastructure.Repositories
             {
                 context.Listings.Update(listing);
                 await context.SaveChangesAsync();
-                return Result<object>.Success(data: null);
+                return Result<object>.Success("Updated succesfully");
             }
             catch (Exception ex)
             {
