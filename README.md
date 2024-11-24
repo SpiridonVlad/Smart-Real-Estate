@@ -5,8 +5,13 @@ This project is a comprehensive platform for managing property listings, client 
 Key features include:
 
 -CQRS for handling property listings and client inquiries separately.
+
 -MediatR for managing commands and queries.
+
 -PostgreSQL for data storage.
+
 -JWT for secure authentication and authorization.
+
 -Angular & Angular Material for a responsive and attractive frontend.
+
 -Machine Learning for market trend prediction.
