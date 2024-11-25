@@ -83,6 +83,14 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
             {
                 Id = Guid.NewGuid(),
                 AddressId = Guid.NewGuid(),
+                Address = new Address
+                {
+                    Id = Guid.NewGuid(),
+                    Street = "123 Main St",
+                    City = "Sample City",
+                    State = "Sample State",
+                    Country = "Sample Country"
+                },
                 ImageId = "image123",
                 UserId = Guid.NewGuid(),
                 User = new User
@@ -100,13 +108,14 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
                 Features = new PropertyFeatures
                 {
                     Features = new Dictionary<PropertyFeatureType, int>
-                    {
-                        { PropertyFeatureType.Balcony, 1 },
-                        { PropertyFeatureType.Garage, 1 }
-                    }
+            {
+                { PropertyFeatureType.Balcony, 1 },
+                { PropertyFeatureType.Garage, 1 }
+            }
                 }
             };
         }
+
 
         private PropertyDto GeneratePropertyDto(Property property)
         {

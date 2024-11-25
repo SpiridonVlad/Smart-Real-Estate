@@ -6,9 +6,6 @@ using Domain.Entities;
 using Domain.Repositories;
 using Domain.Types;
 using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
-using Infrastructure.Repositories;
 using NSubstitute;
 
 namespace RealEstateManager.Application.UnitTests.PropertyTests
@@ -17,19 +14,15 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
     {
         private readonly IPropertyRepository propertyRepository;
         private readonly IMapper mapper;
-        private readonly IUserRepository userRepository;
-        private readonly IValidator<UpdatePropertyCommand> validator;
 
         public UpdatePropertyCommandHandlerTests()
         {
             propertyRepository = Substitute.For<IPropertyRepository>();
-            userRepository = Substitute.For<IUserRepository>();
             mapper = Substitute.For<IMapper>();
-            validator = Substitute.For<IValidator<UpdatePropertyCommand>>();
         }
 
         [Fact]
-        public async void Given_UpdatePropertyCommandHandler_When_HandleIsCalled_Then_PropertyShouldBeUpdated()
+        public async Task Given_UpdatePropertyCommandHandler_When_HandleIsCalled_Then_PropertyShouldBeUpdated()
         {
             // Arrange
             var property = GenerateProperty();
@@ -43,10 +36,8 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
                 Type = property.Type,
                 Features = property.Features
             };
-            userRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(Result<User>.Success(property.User));
             propertyRepository.UpdateAsync(Arg.Any<Property>()).Returns(Result<object>.Success(null));
             mapper.Map(Arg.Any<UpdatePropertyCommand>(), Arg.Any<Property>()).Returns(property);
-            validator.ValidateAsync(Arg.Any<UpdatePropertyCommand>()).Returns(new ValidationResult());
 
             // Act
             var handler = new UpdatePropertyCommandHandler(propertyRepository, mapper);
@@ -59,7 +50,7 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
         }
 
         [Fact]
-        public async void Given_UpdatePropertyCommandHandler_When_PropertyNotFound_Then_FailureShouldBeReturned()
+        public async Task Given_UpdatePropertyCommandHandler_When_PropertyNotFound_Then_FailureShouldBeReturned()
         {
             // Arrange
             var command = new UpdatePropertyCommand
@@ -72,7 +63,7 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
                     Street = "123 Main St",
                     City = "Anytown",
                     State = "Anystate",
-                    PostalCode = "12345",
+                    PostalCode = "123456",
                     Country = "USA",
                     AdditionalInfo = "Near the park"
                 },
@@ -89,7 +80,6 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
                 }
             };
             propertyRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(Result<Property>.Failure("Property not found."));
-            validator.ValidateAsync(Arg.Any<UpdatePropertyCommand>()).Returns(new ValidationResult());
 
             // Act
             var handler = new UpdatePropertyCommandHandler(propertyRepository, mapper);
@@ -102,7 +92,7 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
         }
 
         [Fact]
-        public async void Given_UpdatePropertyCommandHandler_When_UpdateFails_Then_FailureShouldBeReturned()
+        public async Task Given_UpdatePropertyCommandHandler_When_UpdateFails_Then_FailureShouldBeReturned()
         {
             // Arrange
             var property = GenerateProperty();
@@ -119,7 +109,6 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
             propertyRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(Result<Property>.Success(property));
             propertyRepository.UpdateAsync(Arg.Any<Property>()).Returns(Result<object>.Failure("Failed to update property"));
             mapper.Map(Arg.Any<UpdatePropertyCommand>(), Arg.Any<Property>()).Returns(property);
-            validator.ValidateAsync(Arg.Any<UpdatePropertyCommand>()).Returns(new ValidationResult());
 
             // Act
             var handler = new UpdatePropertyCommandHandler(propertyRepository, mapper);
@@ -132,7 +121,7 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
         }
 
         [Fact]
-        public async void Given_UpdatePropertyCommandHandler_When_ExceptionIsThrown_Then_FailureShouldBeReturned()
+        public async Task Given_UpdatePropertyCommandHandler_When_ExceptionIsThrown_Then_FailureShouldBeReturned()
         {
             // Arrange
             var property = GenerateProperty();
@@ -145,11 +134,11 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
                 UserId = property.UserId,
                 Type = property.Type,
                 Features = property.Features
+                
             };
             propertyRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(Result<Property>.Success(property));
-            propertyRepository.UpdateAsync(Arg.Any<Property>()).Returns(Task.FromResult(Result<object>.Failure("Database error")));
+            propertyRepository.UpdateAsync(Arg.Any<Property>()).Returns(Task.FromException<Result<object>>(new Exception("Database error")));
             mapper.Map(Arg.Any<UpdatePropertyCommand>(), Arg.Any<Property>()).Returns(property);
-            validator.ValidateAsync(Arg.Any<UpdatePropertyCommand>()).Returns(new ValidationResult());
 
             // Act
             var handler = new UpdatePropertyCommandHandler(propertyRepository, mapper);
@@ -173,7 +162,7 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
                     Street = "123 Main St",
                     City = "Anytown",
                     State = "Anystate",
-                    PostalCode = "12345",
+                    PostalCode = "123456",
                     Country = "USA",
                     AdditionalInfo = "Near the park"
                 },

@@ -41,8 +41,24 @@ namespace RealEstateManager.Application.UnitTests.UserTests
             };
             repository.AddAsync(Arg.Any<User>()).Returns(Result<Guid>.Success(user.Id));
             mapper.Map<User>(Arg.Any<CreateUserCommand>()).Returns(user);
-            propertyRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(Result<Property>.Success(new Property()));
-
+            propertyRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(Result<Property>.Success(new Property
+            {
+                Address = new Address
+                {
+                    Street = "Default Street",
+                    City = "Default City",
+                    State = "Default State",
+                    Country = "Default Country"
+                },
+                ImageId = "defaultImageId", // Set a default or valid ImageId
+                User = new User
+                {
+                    Username = "defaultUsername",
+                    Password = "defaultPassword",
+                    Email = "defaultEmail@example.com"
+                }, // Assuming User is a required member
+                Features = new PropertyFeatures() // Assuming PropertyFeatures is a required member
+            }));
             // Act
             var handler = new CreateUserCommandHandler(repository, mapper, propertyRepository);
             var result = await handler.Handle(command, CancellationToken.None);
@@ -70,7 +86,24 @@ namespace RealEstateManager.Application.UnitTests.UserTests
             };
             repository.AddAsync(Arg.Any<User>()).Returns(Result<Guid>.Failure("Failed to add user"));
             mapper.Map<User>(Arg.Any<CreateUserCommand>()).Returns(user);
-            propertyRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(Result<Property>.Success(new Property()));
+            propertyRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(Result<Property>.Success(new Property
+            {
+                Address = new Address
+                {
+                    Street = "Default Street",
+                    City = "Default City",
+                    State = "Default State",
+                    Country = "Default Country"
+                },
+                ImageId = "defaultImageId", // Set a default or valid ImageId
+                User = new User
+                {
+                    Username = "defaultUsername",
+                    Password = "defaultPassword",
+                    Email = "defaultEmail@example.com"
+                }, // Assuming User is a required member
+                Features = new PropertyFeatures() // Assuming PropertyFeatures is a required member
+            }));
 
             // Act
             var handler = new CreateUserCommandHandler(repository, mapper, propertyRepository);
@@ -99,7 +132,24 @@ namespace RealEstateManager.Application.UnitTests.UserTests
             };
             repository.AddAsync(Arg.Any<User>()).Returns(Task.FromResult(Result<Guid>.Failure("Database error")));
             mapper.Map<User>(Arg.Any<CreateUserCommand>()).Returns(user);
-            propertyRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(Result<Property>.Success(new Property()));
+            propertyRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(Result<Property>.Success(new Property
+            {
+                Address = new Address
+                {
+                    Street = "Default Street",
+                    City = "Default City",
+                    State = "Default State",
+                    Country = "Default Country"
+                },
+                ImageId = "defaultImageId", // Set a default or valid ImageId
+                User = new User
+                {
+                    Username = "defaultUsername",
+                    Password = "defaultPassword",
+                    Email = "defaultEmail@example.com"
+                }, // Assuming User is a required member
+                Features = new PropertyFeatures() // Assuming PropertyFeatures is a required member
+            }));
             // Act
             var handler = new CreateUserCommandHandler(repository, mapper, propertyRepository);
             var result = await handler.Handle(command, CancellationToken.None);
