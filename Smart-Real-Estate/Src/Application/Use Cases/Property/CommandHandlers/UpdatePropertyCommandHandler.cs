@@ -30,7 +30,7 @@ namespace Application.Use_Cases.CommandHandlers
             var propertyResult = await propertyRepository.GetByIdAsync(request.Id);
             if (!propertyResult.IsSuccess)
             {
-                return Result<string>.Failure("Property not found.");
+                return Result<string>.Failure(propertyResult.ErrorMessage);
             }
 
             var property = propertyResult.Data;
@@ -39,12 +39,10 @@ namespace Application.Use_Cases.CommandHandlers
             var updateResult = await propertyRepository.UpdateAsync(property);
             if (updateResult.IsSuccess)
             {
-                return Result<string>.Success("Property updated successfully");
+                return Result<string>.Success(null);
             }
-            else
-            {
-                return Result<string>.Failure(updateResult.ErrorMessage);
-            }
+            return Result<string>.Failure(updateResult.ErrorMessage);
+            
         }
     }
 }
