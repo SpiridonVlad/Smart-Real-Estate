@@ -3,22 +3,27 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-user-list',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.css'
+  styleUrls: ['./user-list.component.css'] // Corectat din 'styleUrl' în 'styleUrls'
 })
-export class UserListComponent implements OnInit{
+export class UserListComponent implements OnInit {
+  users: User[] = [];
+  page: number = 1;
+  pageSize: number = 5;
 
-  users: User[]=[];
-  constructor(private userService: UserService, private router : Router) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadUsers();
   }
+
   loadUsers(): void {
-    this.userService.getPaginatedUsers(1, 5).subscribe(
+    this.userService.getPaginatedUsers(this.page, this.pageSize).subscribe(
       (response: any) => {
         this.users = response.data;
       },
@@ -27,7 +32,8 @@ export class UserListComponent implements OnInit{
       }
     );
   }
-  navigateToCreate(){
+
+  navigateToCreate(): void {
     this.router.navigate(['/users/create']);
   }
 }
