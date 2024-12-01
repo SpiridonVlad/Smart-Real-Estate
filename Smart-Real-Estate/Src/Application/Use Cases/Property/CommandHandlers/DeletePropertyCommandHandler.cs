@@ -3,26 +3,16 @@ using AutoMapper;
 using Domain.Common;
 using Domain.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Use_Cases.Property.CommandHandlers
 {
-    public class DeletePropertyCommandHandler : IRequestHandler<DeletePropertyCommand, Result<string>>
+    public class DeletePropertyCommandHandler(IPropertyRepository repository, IMapper mapper) : IRequestHandler<DeletePropertyCommand, Result<string>>
     {
-        private readonly IPropertyRepository repository;
-
-        public DeletePropertyCommandHandler(IPropertyRepository repository, IMapper mapper)
-        {
-            this.repository = repository;
-        }
+        private readonly IPropertyRepository repository = repository;
 
         public async Task<Result<string>> Handle(DeletePropertyCommand request, CancellationToken cancellationToken)
         {
-            DeletePropertyCommandValidator validator = new DeletePropertyCommandValidator();
+            DeletePropertyCommandValidator validator = new();
             var validationResult = validator.Validate(request);
             if (!validationResult.IsValid)
             {

@@ -7,7 +7,7 @@ using Domain.Common;
 using Application.Use_Cases.Queries;
 using Application.Use_Cases.Users.Commands;
 
-namespace ToDoList.Controllers
+namespace Real_Estate_Management_System.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -59,7 +59,7 @@ namespace ToDoList.Controllers
         public async Task<IActionResult> DeleteUser(Guid id)
         {
             var command = new DeleteUserCommand { Id = id };
-            var result=await mediator.Send(command);
+            var result = await mediator.Send(command);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.ErrorMessage);

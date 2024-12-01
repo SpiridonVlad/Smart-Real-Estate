@@ -6,29 +6,13 @@ using Application.DTOs;
 using Domain.Common;
 using Application.Use_Cases.Listings.Commands;
 
-namespace ToDoList.Controllers
+namespace Real_Estate_Management_System.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class ListingController : ControllerBase
+    public class ListingController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator mediator;
-
-        public ListingController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateListing(Guid id, [FromBody] UpdateListingCommand command)
-        {
-            if (id != command.Id)
-            {
-                return BadRequest("The id should be identical with the command.id");
-            }
-            await mediator.Send(command);
-            return NoContent();
-        }
+        private readonly IMediator mediator = mediator;
 
         [HttpPost]
         public async Task<ActionResult<Result<Guid>>> CreateListing([FromBody] CreateListingCommand command)
@@ -63,6 +47,17 @@ namespace ToDoList.Controllers
                 return BadRequest(result.ErrorMessage);
             }
             return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateListing(Guid id, [FromBody] UpdateListingCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest("The id should be identical with the command.id");
+            }
+            await mediator.Send(command);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]

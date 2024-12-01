@@ -12,7 +12,7 @@ namespace Application.Use_Cases.CommandHandlers
     public class CreateListingCommandHandler : IRequestHandler<CreateListingCommand, Result<Guid>>
     {
         private readonly IListingRepository repository;
-        private readonly IUserRepository userRepository; //posibil sa schimbam ca nu prea imi place ca aici se interogheaza 3 tabele
+        private readonly IUserRepository userRepository; 
         private readonly IPropertyRepository propertyRepository;
         private readonly IMapper mapper;
 

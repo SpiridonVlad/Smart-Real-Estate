@@ -6,16 +6,12 @@ using Newtonsoft.Json;
 
 namespace Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {
-        }
-
-        public DbSet<Property> Properties { get; set; }
-        public DbSet<Listing> Listings { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Address> Addresses { get; set; }
+        public required DbSet<Property> Properties { get; set; }
+        public required DbSet<Listing> Listings { get; set; }
+        public required DbSet<User> Users { get; set; }
+        public required DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -97,7 +93,7 @@ namespace Infrastructure.Persistence
                 });
             });
 
-            modelBuilder.Entity<Listing>(entity =>
+            modelBuilder.Entity<Listing>(static entity =>
             {
                 entity.ToTable("listings");
                 entity.HasKey(e => e.Id);
@@ -119,21 +115,29 @@ namespace Infrastructure.Persistence
                     .IsRequired()
                     .HasColumnType("int");
 
-                entity.Property(e => e.PublicationDate).IsRequired();
+                entity.Property(e => e.PublicationDate)
+                    .IsRequired();
 
-                entity.Property(e => e.Properties)
-                    .HasConversion(
-                        v => JsonConvert.SerializeObject(v),
-                        v => JsonConvert.DeserializeObject<List<ListingAssetss>>(v)
-                    )
-                    .HasColumnType("jsonb")
-                    .Metadata
-                    .SetValueComparer(new ValueComparer<List<ListingAssetss>>(
-                        (c1, c2) => c1.SequenceEqual(c2),
-                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                        c => c.ToList()
-                    ));
+                entity.Property(e => e.Description)
+                    .HasMaxLength(1000)
+                    .IsRequired(false);
+
+                entity.OwnsOne(e => e.Features, features =>
+                {
+                    features.Property(f => f.Features)
+                        .HasColumnType("jsonb")
+                        .HasConversion(
+                            v => JsonConvert.SerializeObject(v), 
+                            v => JsonConvert.DeserializeObject<Dictionary<ListingAssetss, int>>(v) 
+                        )
+                        .Metadata.SetValueComparer(new ValueComparer<Dictionary<ListingAssetss, int>>(
+                            (c1, c2) => c1.SequenceEqual(c2), 
+                            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.Key.GetHashCode(), v.Value)), 
+                            c => c.ToDictionary(k => k.Key, v => v.Value) 
+                        ));
+                });
             });
+
 
             modelBuilder.Entity<User>(entity =>
             {

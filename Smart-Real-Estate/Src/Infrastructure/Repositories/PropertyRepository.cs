@@ -6,14 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class PropertyRepository : IPropertyRepository
+    public class PropertyRepository(ApplicationDbContext context) : IPropertyRepository
     {
-        private readonly ApplicationDbContext context;
-
-        public PropertyRepository(ApplicationDbContext context)
-        {
-            this.context = context;
-        }
+        private readonly ApplicationDbContext context = context;
 
         public async Task<Result<Guid>> AddAsync(Property property)
         {

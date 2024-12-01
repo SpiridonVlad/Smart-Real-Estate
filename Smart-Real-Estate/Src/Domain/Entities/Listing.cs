@@ -1,6 +1,4 @@
-﻿using Domain.Types;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Listing
     {
@@ -10,6 +8,6 @@ namespace Domain.Entities
         public string? Description { get; set; }
         public int Price { get; set; }
         public DateTime PublicationDate { get; set; }
-        public required List<ListingAssetss> Properties { get; set; }
+        public required ListingFeatures Features { get; set; }
     }
 }

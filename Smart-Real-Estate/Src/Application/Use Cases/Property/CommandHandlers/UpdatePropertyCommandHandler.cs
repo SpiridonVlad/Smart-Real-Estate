@@ -7,20 +7,14 @@ using Domain.Common;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class UpdatePropertyCommandHandler : IRequestHandler<UpdatePropertyCommand, Result<string>>
+    public class UpdatePropertyCommandHandler(IPropertyRepository propertyRepository, IMapper mapper) : IRequestHandler<UpdatePropertyCommand, Result<string>>
     {
-        private readonly IPropertyRepository propertyRepository;
-        private readonly IMapper mapper;
-
-        public UpdatePropertyCommandHandler(IPropertyRepository propertyRepository, IMapper mapper)
-        {
-            this.propertyRepository = propertyRepository;
-            this.mapper = mapper;
-        }
+        private readonly IPropertyRepository propertyRepository = propertyRepository;
+        private readonly IMapper mapper = mapper;
 
         public async Task<Result<string>> Handle(UpdatePropertyCommand request, CancellationToken cancellationToken)
         {
-            UpdatePropertyCommandValidator validator = new UpdatePropertyCommandValidator();
+            UpdatePropertyCommandValidator validator = new();
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
             if (!validationResult.IsValid)
             {
@@ -39,7 +33,7 @@ namespace Application.Use_Cases.CommandHandlers
             var updateResult = await propertyRepository.UpdateAsync(property);
             if (updateResult.IsSuccess)
             {
-                return Result<string>.Success(null);
+                return Result<string>.Success("");
             }
             return Result<string>.Failure(updateResult.ErrorMessage);
             

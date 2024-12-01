@@ -6,7 +6,7 @@ using Domain.Common;
 using Application.Use_Cases.Queries;
 using Application.Use_Cases.Property.Commands;
 
-namespace ToDoList.Controllers
+namespace Real_Estate_Management_System.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
