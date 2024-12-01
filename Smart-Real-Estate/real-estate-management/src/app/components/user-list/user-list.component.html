@@ -1,1 +1,24 @@
-<p>user-list works!</p>
+<div class="user-list">
+    <h1>User List</h1>
+    <button (click)="navigateToCreate()">Create New User</button>
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Verified</th>
+          <th>Rating</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.verified }}</td>
+          <td>{{ user.rating }}</td>
+          <td>{{ user.type }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
