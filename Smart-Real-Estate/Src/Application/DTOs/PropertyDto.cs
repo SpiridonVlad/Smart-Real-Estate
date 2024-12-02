@@ -14,4 +14,5 @@ namespace Application.DTOs
         public required PropertyFeatures Features { get; set; }
 
     }
+
 }

@@ -7,6 +7,7 @@ import { ListingCreateComponent } from './components/listing-create/listing-crea
 import { PropertyListComponent } from './components/property-list/property-list.component';
 import { PropertyCreateComponent } from './components/property-create/property-create.component';
 import { PropertyUpdateComponent } from './components/property-update/property-update.component';
+import { ListingUpdateComponent } from './components/listing-update/listing-update.component';
 export const appRoutes: Routes = [
   { path: '', redirectTo: '/listings/create', pathMatch: 'full' },
   { path: 'users', component: UserListComponent },
@@ -16,7 +17,8 @@ export const appRoutes: Routes = [
   { path: 'listings/create', component: ListingCreateComponent },
   {path: 'properties',component:PropertyListComponent},
   {path: 'properties/create',component:PropertyCreateComponent},
-  {path: 'properties/update',component:PropertyUpdateComponent}
+  {path: 'properties/update/:id',component:PropertyUpdateComponent},
   
   // { path: 'listings/update/:id', component: UpdateListingComponent }
+  { path: 'listings/update/:id', component: ListingUpdateComponent }
 ];

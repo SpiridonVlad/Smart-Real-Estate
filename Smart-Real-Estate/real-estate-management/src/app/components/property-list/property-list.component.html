@@ -20,12 +20,27 @@
         </thead>
         <tbody>
             <tr *ngFor="let property of properties">
-                <td>{{ property.address.street }}, {{ property.address.city }}, {{ property.address.state }}, {{ property.address.country }}</td>
-                <td>{{ property.imageId }}</td>
-                <td>{{ property.userId }}</td>
-                <td>{{ property.type }}</td>
-                <td>{{ property.features | json }}</td>
+              <td>
+                {{ property.address?.street }}, 
+                {{ property.address?.city }}, 
+                {{ property.address?.state }}, 
+                {{ property.address?.country }}
+              </td>
+              <td>{{ property.imageId }}</td>
+              <td>{{ property.userId }}</td>
+              <td>{{ property.type }}</td>
+              <td>
+                <ul>
+                  <li *ngFor="let feature of getFeatures(property.features)">
+                    {{ feature.key }}: {{ feature.value }}
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <button (click)="navigateToUpdate(property.id)">Update Property</button>
+              </td>
             </tr>
-        </tbody>
+          </tbody>
     </table>
-</div>
+    
+    </div>

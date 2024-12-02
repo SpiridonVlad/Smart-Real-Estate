@@ -1,5 +1,6 @@
 export interface Property {
     id: string;
+    addressId: string;
     address: {
       street: string;
       city: string;
