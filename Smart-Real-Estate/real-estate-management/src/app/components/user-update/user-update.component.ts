@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User, UserType } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-update',
@@ -24,12 +25,13 @@ export class UserUpdateComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.userForm = this.fb.group({
-      id: [{ value: '', disabled: true }, Validators.required],
       username: ['', Validators.required],
       password: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      verified: [false, Validators.required],
+      rating: [0, [Validators.required, Validators.min(0)]],
       type: [UserType.Individual, Validators.required],
-      propertyHistory: [null]
+      propertyHistory: [[]]
     });
   }
 
@@ -42,10 +44,11 @@ export class UserUpdateComponent implements OnInit {
     this.userService.getUserById(this.userId).subscribe(
       (user: User) => {
         this.userForm.patchValue({
-          id: user.id,
           username: user.username,
           password: user.password,
           email: user.email,
+          verified: user.verified,
+          rating: user.rating,
           type: UserType[user.type],
           propertyHistory: user.propertyHistory
         });
@@ -59,6 +62,7 @@ export class UserUpdateComponent implements OnInit {
   onSubmit(): void {
     if (this.userForm.valid) {
       const userData = {
+        id: this.userId, // Add the id directly to userData
         ...this.userForm.value,
         type: this.mapUserType(this.userForm.value.type)
       };
@@ -70,6 +74,9 @@ export class UserUpdateComponent implements OnInit {
           console.error('Error updating user:', error);
         }
       );
+    } else {
+      console.log('Form is invalid:', this.userForm.errors);
+      console.log('Form controls:', this.userForm.controls);
     }
   }
 
@@ -82,7 +89,7 @@ export class UserUpdateComponent implements OnInit {
       case 'Admin':
         return 2;
       default:
-        return 0; 
+        return 0; // Default to Individual if type is not recognized
     }
   }
 }

@@ -33,7 +33,11 @@ export class ListingCreateComponent {
 
   onSubmit(): void {
     if (this.listingForm.valid) {
-      const listingData = this.listingForm.value;
+      const listingData = {
+        ...this.listingForm.value,
+        property: this.listingForm.value.property,
+      };
+
       this.listingService.createListing(listingData).subscribe(
         () => {
           this.router.navigate(['/listings']);
@@ -44,6 +48,7 @@ export class ListingCreateComponent {
       );
     }
   }
+  
 
   toggleAsset(asset: string): void {
     const assetEnum = asset as ListingAsset; // Convertim stringul în tipul ListingAsset
