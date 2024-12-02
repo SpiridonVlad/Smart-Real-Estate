@@ -1,35 +1,29 @@
 <div class="user-list">
-    <h1>User List</h1>
-    
-    <div>
-      <label for="page">Page:</label>
-      <input type="number" id="page" [(ngModel)]="page" />
-      <label for="pageSize">Page Size:</label>
-      <input type="number" id="pageSize" [(ngModel)]="pageSize" />
-      <button (click)="loadUsers()">Load Users</button>
-    </div>
-    <button (click)="navigateToCreate()">Create New User</button>
-    <table>
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Verified</th>
-          <th>Rating</th>
-          <th>Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.verified }}</td>
-          <td>{{ user.rating }}</td>
-          <td>{{ user.type }}</td>
-          <td>
-            <button (click)="navigateToUpdate(user.id)">Update</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <h1>User List</h1>
+  <button (click)="navigateToCreate()">Create New User</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Verified</th>
+        <th>Rating</th>
+        <th>Type</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.verified }}</td>
+        <td>{{ user.rating }}</td>
+        <td>{{ user.type }}</td>
+        <td>
+          <button (click)="navigateToUpdate(user.id)">Update</button>
+          <button (click)="deleteUser(user.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

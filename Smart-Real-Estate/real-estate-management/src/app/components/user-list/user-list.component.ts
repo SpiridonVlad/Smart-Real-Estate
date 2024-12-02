@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-user-list',
   imports: [CommonModule, FormsModule],
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css'] // Corectat din 'styleUrl' în 'styleUrls'
+  styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
@@ -36,8 +36,21 @@ export class UserListComponent implements OnInit {
   navigateToCreate(): void {
     this.router.navigate(['/users/create']);
   }
+
   navigateToUpdate(userId: string): void {
     this.router.navigate(['/users/update', userId]);
   }
-  
+
+  deleteUser(userId: string): void {
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.userService.deleteUser(userId).subscribe(
+        () => {
+          this.loadUsers(); // Reload the user list after deletion
+        },
+        (error) => {
+          console.error('Error deleting user:', error);
+        }
+      );
+    }
+  }
 }
