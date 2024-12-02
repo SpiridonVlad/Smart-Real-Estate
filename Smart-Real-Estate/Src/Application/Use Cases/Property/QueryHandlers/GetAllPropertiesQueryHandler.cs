@@ -20,7 +20,7 @@ namespace Application.Use_Cases.Property.QueryHandlers
 
         public async Task<Result<IEnumerable<PropertyDto>>> Handle(GetAllPropertiesQuery request, CancellationToken cancellationToken)
         {
-            var propertiesResult = await repository.GetAllAsync();
+            var propertiesResult = await repository.GetAllAsync(request.page, request.pageSize);
             if (propertiesResult.IsSuccess)
             {
                 var propertyDtos = mapper.Map<IEnumerable<PropertyDto>>(propertiesResult.Data);
