@@ -40,4 +40,17 @@ export class ListingListComponent implements OnInit {
   navigateToUpdate(listingId: string): void {
     this.router.navigate(['/listings/update', listingId]);
   }
+
+  deleteListing(listingId: string): void {
+    if (confirm('Are you sure you want to delete this listing?')) {
+      this.listingService.deleteListing(listingId).subscribe(
+        () => {
+          this.loadListings(); // Reload the listing list after deletion
+        },
+        (error) => {
+          console.error('Error deleting listing:', error);
+        }
+      );
+    }
+  }
 }

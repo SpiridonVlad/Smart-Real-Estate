@@ -12,12 +12,12 @@ export class ListingService {
 
   constructor(private http: HttpClient) {}
 
-  public getPaginatedListings(page: number, pageSize: number): Observable<Listing[]> {
+  public getPaginatedListings(page: number, pageSize: number): Observable<{ data: Listing[]}> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());
 
-    return this.http.get<Listing[]>(this.apiUrl, { params }).pipe(
+    return this.http.get<{ data: Listing[] }>(this.apiUrl, { params }).pipe(
       catchError((error) => {
         console.error('Error fetching paginated listings:', error);
         return throwError(error);
@@ -47,6 +47,15 @@ export class ListingService {
     return this.http.put(`${this.apiUrl}/${id}`, listing).pipe(
       catchError((error) => {
         console.error('Error updating listing:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  public deleteListing(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`).pipe(
+      catchError((error) => {
+        console.error('Error deleting listing:', error);
         return throwError(error);
       })
     );
