@@ -8,16 +8,10 @@ using Application.Use_Cases.Listings.Commands;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class UpdateListingCommandHandler : IRequestHandler<UpdateListingCommand, Result<string>>
+    public class UpdateListingCommandHandler(IListingRepository repository, IMapper mapper) : IRequestHandler<UpdateListingCommand, Result<string>>
     {
-        private readonly IListingRepository repository;
-        private readonly IMapper mapper;
-
-        public UpdateListingCommandHandler(IListingRepository repository, IMapper mapper)
-        {
-            this.repository = repository;
-            this.mapper = mapper;
-        }
+        private readonly IListingRepository repository = repository;
+        private readonly IMapper mapper = mapper;
 
         public async Task<Result<string>> Handle(UpdateListingCommand request, CancellationToken cancellationToken)
         {

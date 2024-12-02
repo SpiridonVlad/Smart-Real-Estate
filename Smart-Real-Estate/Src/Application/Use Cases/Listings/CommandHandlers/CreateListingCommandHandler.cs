@@ -9,20 +9,12 @@ using MediatR;
 
 namespace Application.Use_Cases.CommandHandlers
 {
-    public class CreateListingCommandHandler : IRequestHandler<CreateListingCommand, Result<Guid>>
+    public class CreateListingCommandHandler(IListingRepository repository, IMapper mapper, IUserRepository userRepository, IPropertyRepository propertyRepository) : IRequestHandler<CreateListingCommand, Result<Guid>>
     {
-        private readonly IListingRepository repository;
-        private readonly IUserRepository userRepository; 
-        private readonly IPropertyRepository propertyRepository;
-        private readonly IMapper mapper;
-
-        public CreateListingCommandHandler(IListingRepository repository, IMapper mapper,IUserRepository userRepository,IPropertyRepository propertyRepository)
-        {
-            this.repository = repository;
-            this.userRepository = userRepository;
-            this.propertyRepository = propertyRepository;
-            this.mapper = mapper;
-        }
+        private readonly IListingRepository repository = repository;
+        private readonly IUserRepository userRepository = userRepository; 
+        private readonly IPropertyRepository propertyRepository = propertyRepository;
+        private readonly IMapper mapper = mapper;
 
         public async Task<Result<Guid>> Handle(CreateListingCommand request, CancellationToken cancellationToken)
         {

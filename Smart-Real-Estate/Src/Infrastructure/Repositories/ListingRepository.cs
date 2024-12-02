@@ -3,18 +3,14 @@ using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Domain.Filters;
 
 
 namespace Infrastructure.Repositories
 {
-    public class ListingRepository : IListingRepository
+    public class ListingRepository(ApplicationDbContext context) : IListingRepository
     {
-        private readonly ApplicationDbContext context;
-
-        public ListingRepository(ApplicationDbContext context)
-        {
-            this.context = context;
-        }
+        private readonly ApplicationDbContext context = context;
 
         public async Task<Result<Guid>> AddAsync(Listing listing)
         {
@@ -63,14 +59,28 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<Result<IEnumerable<Listing>>> GetPaginatedAsync(int page, int pageSize)
+        public async Task<Result<IEnumerable<Listing>>> GetPaginatedAsync(int page, int pageSize, ListingFilter? filter)
         {
             try
             {
-                var listings = await context.Listings
+                IQueryable<Listing> query = context.Listings;
+
+                if (filter != null)
+                {
+
+                    if (filter.MinPrice.HasValue)
+                        query = query.Where(l => l.Price >= filter.MinPrice.Value);
+
+                    if (filter.MaxPrice.HasValue)
+                        query = query.Where(l => l.Price <= filter.MaxPrice.Value);
+
+                }
+
+                var listings = await query
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToListAsync();
+
                 return Result<IEnumerable<Listing>>.Success(listings);
             }
             catch (Exception ex)

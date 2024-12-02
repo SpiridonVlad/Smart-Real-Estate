@@ -7,20 +7,14 @@ using MediatR;
 
 namespace Application.Use_Cases.QueryHandlers
 {
-    public class GetPaginatedListingsQueryHandler : IRequestHandler<GetPaginatedListingsQuery, Result<IEnumerable<ListingDto>>>
+    public class GetPaginatedListingsQueryHandler(IListingRepository repository, IMapper mapper) : IRequestHandler<GetPaginatedListingsQuery, Result<IEnumerable<ListingDto>>>
     {
-        private readonly IListingRepository repository;
-        private readonly IMapper mapper;
-
-        public GetPaginatedListingsQueryHandler(IListingRepository repository, IMapper mapper)
-        {
-            this.repository = repository;
-            this.mapper = mapper;
-        }
+        private readonly IListingRepository repository = repository;
+        private readonly IMapper mapper = mapper;
 
         public async Task<Result<IEnumerable<ListingDto>>> Handle(GetPaginatedListingsQuery request, CancellationToken cancellationToken)
         {
-            var listings = await repository.GetPaginatedAsync(request.Page, request.PageSize);
+            var listings = await repository.GetPaginatedAsync(request.Page, request.PageSize, request.Filter);
             if (listings.IsSuccess)
             {
                 return Result<IEnumerable<ListingDto>>.Success(mapper.Map<IEnumerable<ListingDto>>(listings.Data));

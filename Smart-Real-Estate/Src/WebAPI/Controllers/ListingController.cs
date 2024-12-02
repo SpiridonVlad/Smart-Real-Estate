@@ -4,6 +4,7 @@ using Application.Use_Cases.Commands;
 using Application.Use_Cases.Queries;
 using Application.DTOs;
 using Domain.Common;
+using Domain.Filters;
 using Application.Use_Cases.Listings.Commands;
 
 namespace Real_Estate_Management_System.Controllers
@@ -26,9 +27,9 @@ namespace Real_Estate_Management_System.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ListingDto>>> GetPagiantedListings(int page, int pageSize)
+        public async Task<ActionResult<IEnumerable<ListingDto>>> GetPagiantedListings(int page, int pageSize,[FromQuery] ListingFilter filter)
         {
-            var query = new GetPaginatedListingsQuery { Page = page, PageSize = pageSize };
+            var query = new GetPaginatedListingsQuery { Page = page, PageSize = pageSize, Filter = filter};
             var result = await mediator.Send(query);
             if (!result.IsSuccess)
             {

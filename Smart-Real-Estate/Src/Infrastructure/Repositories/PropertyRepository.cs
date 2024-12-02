@@ -44,11 +44,11 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<Result<IEnumerable<Property>>> GetAllAsync()
+        public async Task<Result<IEnumerable<Property>>> GetAllAsync(int page, int pageSize)
         {
             try
             {
-                var properties = await context.Properties.ToListAsync();
+                var properties = await context.Properties.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
                 return Result<IEnumerable<Property>>.Success(properties);
             }
             catch (Exception ex)
