@@ -76,12 +76,21 @@ describe('ListingUpdateComponent', () => {
       publicationDate: new Date('2024-12-02'),
       properties: [ListingAsset.IsDeleted, ListingAsset.IsSold],
     };
-
+  
     spyOn(listingService, 'updateListing').and.returnValue(of(listing));
-    component.listingForm.patchValue(listing);
-
+  
+    component.listingId = '1'; // Asigură-te că ID-ul este setat corect
+    component.listingForm.patchValue({
+      propertyId: listing.propertyId,
+      userId: listing.userId,
+      description: listing.description,
+      price: listing.price,
+      publicationDate: listing.publicationDate,
+      properties: listing.properties,
+    });
+  
     component.onSubmit();
-
+  
     expect(listingService.updateListing).toHaveBeenCalledWith('1', {
       id: '1',
       propertyId: '123',
@@ -92,6 +101,7 @@ describe('ListingUpdateComponent', () => {
       properties: [ListingAsset.IsDeleted, ListingAsset.IsSold],
     });
   });
+  
 
   it('should navigate after update', () => {
     const listing: Listing = {
