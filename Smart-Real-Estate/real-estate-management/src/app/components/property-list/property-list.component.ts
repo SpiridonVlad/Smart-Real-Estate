@@ -36,4 +36,7 @@ export class PropertyListComponent implements OnInit {
   navigateToCreate(): void {
     this.router.navigate(['/properties/create']);
   }
+  navigateToUpdate(userId: string): void {
+    this.router.navigate(['/properties/update', userId]);
+  }
 }
