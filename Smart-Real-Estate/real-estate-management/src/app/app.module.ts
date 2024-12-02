@@ -8,6 +8,8 @@ import { appRoutes } from './app.routes';
 import { UserService } from '../app/services/user.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms'; // Import FormsModule
+
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { BrowserModule } from '@angular/platform-browser';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
+    FormsModule
   ],
   providers: [provideHttpClient(),UserService],
 })

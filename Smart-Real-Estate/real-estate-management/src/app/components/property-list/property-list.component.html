@@ -1,1 +1,31 @@
-<p>property-list works!</p>
+<div class="property-list">
+    <h1>Property List</h1>
+    <div>
+        <label for="page">Page:</label>
+        <input type="number" id="page" [(ngModel)]="page" />
+        <label for="pageSize">Page Size:</label>
+        <input type="number" id="pageSize" [(ngModel)]="pageSize" />
+        <button (click)="loadProperties()">Load Properties</button>
+    </div>
+    <button (click)="navigateToCreate()">Create New Property</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Address</th>
+                <th>Image ID</th>
+                <th>User ID</th>
+                <th>Type</th>
+                <th>Features</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let property of properties">
+                <td>{{ property.address.street }}, {{ property.address.city }}, {{ property.address.state }}, {{ property.address.country }}</td>
+                <td>{{ property.imageId }}</td>
+                <td>{{ property.userId }}</td>
+                <td>{{ property.type }}</td>
+                <td>{{ property.features | json }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
