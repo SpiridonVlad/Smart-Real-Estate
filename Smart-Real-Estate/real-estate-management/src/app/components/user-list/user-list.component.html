@@ -1,5 +1,6 @@
 <div class="user-list">
     <h1>User List</h1>
+    
     <div>
       <label for="page">Page:</label>
       <input type="number" id="page" [(ngModel)]="page" />
@@ -25,6 +26,9 @@
           <td>{{ user.verified }}</td>
           <td>{{ user.rating }}</td>
           <td>{{ user.type }}</td>
+          <td>
+            <button (click)="navigateToUpdate(user.id)">Update</button>
+          </td>
         </tr>
       </tbody>
     </table>

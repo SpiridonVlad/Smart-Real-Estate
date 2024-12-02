@@ -36,4 +36,8 @@ export class UserListComponent implements OnInit {
   navigateToCreate(): void {
     this.router.navigate(['/users/create']);
   }
+  navigateToUpdate(userId: string): void {
+    this.router.navigate(['/users/update', userId]);
+  }
+  
 }
