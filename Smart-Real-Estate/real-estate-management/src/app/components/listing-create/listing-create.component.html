@@ -1,1 +1,59 @@
-<p>listing-create works!</p>
+<div class="listing-create">
+    <h1>Create New Listing</h1>
+    <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="propertyId">Property ID:</label>
+        <input id="propertyId" formControlName="propertyId" />
+        <div *ngIf="listingForm.get('propertyId')?.invalid && listingForm.get('propertyId')?.touched">
+          Property ID is required.
+        </div>
+      </div>
+  
+      <div>
+        <label for="userId">User ID:</label>
+        <input id="userId" formControlName="userId" />
+        <div *ngIf="listingForm.get('userId')?.invalid && listingForm.get('userId')?.touched">
+          User ID is required.
+        </div>
+      </div>
+  
+      <div>
+        <label for="description">Description:</label>
+        <textarea id="description" formControlName="description"></textarea>
+      </div>
+  
+      <div>
+        <label for="price">Price:</label>
+        <input id="price" type="number" formControlName="price" />
+        <div *ngIf="listingForm.get('price')?.invalid && listingForm.get('price')?.touched">
+          Enter a valid price (minimum 0).
+        </div>
+      </div>
+  
+      <div>
+        <label for="publicationDate">Publication Date:</label>
+        <input id="publicationDate" type="date" formControlName="publicationDate" />
+        <div *ngIf="listingForm.get('publicationDate')?.invalid && listingForm.get('publicationDate')?.touched">
+          Publication date is required.
+        </div>
+      </div>
+  
+      <div>
+        <label>Properties:</label>
+        <div *ngFor="let asset of listingAssets" class="asset-item">
+            <label>
+              <input
+                type="checkbox"
+                [value]="asset"
+                [checked]="listingForm.get('properties')?.value?.includes(asset)"
+                (change)="toggleAsset(asset)"
+              />
+              {{ asset }}
+            </label>
+          </div>
+      </div>
+  
+      <button type="submit" [disabled]="listingForm.invalid" (click)="navigateToListings()">Create Listing</button>
+    </form>
+  </div>
+  
