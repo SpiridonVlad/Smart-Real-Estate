@@ -1,28 +1,33 @@
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { appRoutes } from './app.routes';
-import { UserService } from '../app/services/user.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AppComponent } from './app.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserCreateComponent } from './components/user-create/user-create.component';
+import { appRoutes } from './app.routes';
+import { UserService } from './services/user.service';
 
 @NgModule({
-  declarations: [
-   
-  ],
+    
   imports: [
+    UserListComponent,
     BrowserModule,
+    AppComponent,
     CommonModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule, // Import HttpClientModule here
     RouterModule.forRoot(appRoutes),
-    FormsModule
+    AppComponent, 
+    UserListComponent, 
+    UserCreateComponent 
   ],
-  providers: [provideHttpClient(),UserService],
+  providers: [UserService]
 })
 export class AppModule { }

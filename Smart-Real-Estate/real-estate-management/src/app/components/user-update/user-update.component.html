@@ -1,6 +1,10 @@
-<div class="user-create">
-    <h1>Create New User</h1>
+<div class="user-update">
+    <h1>Update User</h1>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="id">ID:</label>
+            <input id="id" formControlName="id" readonly />
+          </div>
       <div>
         <label for="username">Username:</label>
         <input id="username" formControlName="username" />
@@ -34,8 +38,7 @@
           User type is required.
         </div>
       </div>
-      
-
-      <button type="submit" [disabled]="userForm.invalid">Create User</button>
+  
+      <button type="submit" [disabled]="userForm.invalid">Update User</button>
     </form>
   </div>

@@ -5,7 +5,6 @@ import { appRoutes } from '../src/app/app.routes'; // Adjust the path as necessa
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
-
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(appRoutes),
