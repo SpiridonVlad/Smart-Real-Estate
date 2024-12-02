@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { UserService } from '../../services/user.service';
 import { User, UserType } from '../../models/user.model';
 
-describe('UserService', () => {
+describe('UserCreateComponent', () => {
   let service: UserService;
   let httpMock: HttpTestingController;
 

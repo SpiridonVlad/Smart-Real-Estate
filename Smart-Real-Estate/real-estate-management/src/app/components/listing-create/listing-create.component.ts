@@ -15,7 +15,6 @@ import { CommonModule } from '@angular/common';
 export class ListingCreateComponent {
   listingForm: FormGroup;
   listingAssets = Object.keys(ListingAsset);
-  errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -32,16 +31,22 @@ export class ListingCreateComponent {
     });
   }
 
-  onSubmit() {
-    if (this.listingForm.invalid) return;
-  
-    this.listingService.createListing(this.listingForm.value).subscribe({
-      next: () => this.router.navigate(['/listings']),
-      error: (err) => {
-        this.errorMessage = 'Error creating listing';
-        console.error(err);
-      }
-    });
+  onSubmit(): void {
+    if (this.listingForm.valid) {
+      const listingData = {
+        ...this.listingForm.value,
+        property: this.listingForm.value.property,
+      };
+
+      this.listingService.createListing(listingData).subscribe(
+        () => {
+          this.router.navigate(['/listings']);
+        },
+        (error) => {
+          console.error('Error creating listing:', error);
+        }
+      );
+    }
   }
   
 

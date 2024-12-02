@@ -15,8 +15,7 @@ describe('ListingUpdateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [ListingUpdateComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule, ListingUpdateComponent], // Import ListingUpdateComponent here
       providers: [
         ListingService,
         {
@@ -62,8 +61,8 @@ describe('ListingUpdateComponent', () => {
       userId: listing.userId,
       description: listing.description,
       price: listing.price,
-      publicationDate: listing.publicationDate.toISOString().split('T')[0], // ISO Date string
-      properties: listing.properties.join(', '), // Assume properties are stored as a comma-separated string in the form
+      publicationDate: listing.publicationDate, // ISO Date string
+      properties: listing.properties // Assume properties are stored as a comma-separated string in the form
     });
   });
 
@@ -79,14 +78,7 @@ describe('ListingUpdateComponent', () => {
     };
 
     spyOn(listingService, 'updateListing').and.returnValue(of(listing));
-    component.listingForm.patchValue({
-      propertyId: listing.propertyId,
-      userId: listing.userId,
-      description: listing.description,
-      price: listing.price,
-      publicationDate: listing.publicationDate.toISOString().split('T')[0],
-      properties: listing.properties.join(', '),
-    });
+    component.listingForm.patchValue(listing);
 
     component.onSubmit();
 
@@ -114,14 +106,7 @@ describe('ListingUpdateComponent', () => {
 
     spyOn(listingService, 'updateListing').and.returnValue(of(listing));
     spyOn(router, 'navigate');
-    component.listingForm.patchValue({
-      propertyId: listing.propertyId,
-      userId: listing.userId,
-      description: listing.description,
-      price: listing.price,
-      publicationDate: listing.publicationDate.toISOString().split('T')[0],
-      properties: listing.properties.join(', '),
-    });
+    component.listingForm.patchValue(listing);
 
     component.onSubmit();
 

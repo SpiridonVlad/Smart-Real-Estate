@@ -58,24 +58,25 @@ export class ListingUpdateComponent implements OnInit {
     );
   }
 
-  toggleAsset(asset: string): void {
-    const properties = this.listingForm.get('properties')?.value || [];
-    if (properties.includes(asset)) {
-      this.listingForm.patchValue({
-        properties: properties.filter((a: string) => a !== asset)
-      });
-    } else {
-      this.listingForm.patchValue({
-        properties: [...properties, asset]
-      });
-    }
-  }
+  // toggleAsset(asset: string): void {
+  //   const properties = this.listingForm.get('properties')?.value || [];
+  //   if (properties.includes(asset)) {
+  //     this.listingForm.patchValue({
+  //       properties: properties.filter((a: string) => a !== asset)
+  //     });
+  //   } else {
+  //     this.listingForm.patchValue({
+  //       properties: [...properties, asset]
+  //     });
+  //   }
+  // }
 
   onSubmit(): void {
     if (this.listingForm.valid) {
       const updatedListing = {
-        ...this.listingForm.getRawValue(), // Include id-ul chiar dacă e readonly
         id: this.listingId,
+        ...this.listingForm.value,
+        properties: this.listingForm.value.properties
       };
       this.listingService.updateListing(this.listingId, updatedListing).subscribe(
         () => {
@@ -85,6 +86,9 @@ export class ListingUpdateComponent implements OnInit {
           console.error('Error updating listing:', error);
         }
       );
+    } else {
+      console.log('Form is invalid:', this.listingForm.errors);
+      console.log('Form controls:', this.listingForm.controls);
     }
   }
 }
