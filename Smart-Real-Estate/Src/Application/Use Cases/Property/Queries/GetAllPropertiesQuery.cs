@@ -6,7 +6,7 @@ namespace Application.Use_Cases.Queries
 {
     public class GetAllPropertiesQuery : IRequest<Result<IEnumerable<PropertyDto>>>
     {
-        public int page { get; set; }
-        public int pageSize { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
     }
 }
