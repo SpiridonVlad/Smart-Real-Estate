@@ -9,7 +9,7 @@ import { PropertyCreateComponent } from './components/property-create/property-c
 import { PropertyUpdateComponent } from './components/property-update/property-update.component';
 import { ListingUpdateComponent } from './components/listing-update/listing-update.component';
 export const appRoutes: Routes = [
-  { path: '', redirectTo: '/listings/create', pathMatch: 'full' },
+  { path: '', redirectTo: '/listings', pathMatch: 'full' },
   { path: 'users', component: UserListComponent },
   { path: 'users/create', component: UserCreateComponent},
   { path: 'users/update/:id', component: UserUpdateComponent },

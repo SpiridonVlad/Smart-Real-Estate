@@ -58,18 +58,18 @@ export class ListingUpdateComponent implements OnInit {
     );
   }
 
-  // toggleAsset(asset: string): void {
-  //   const properties = this.listingForm.get('properties')?.value || [];
-  //   if (properties.includes(asset)) {
-  //     this.listingForm.patchValue({
-  //       properties: properties.filter((a: string) => a !== asset)
-  //     });
-  //   } else {
-  //     this.listingForm.patchValue({
-  //       properties: [...properties, asset]
-  //     });
-  //   }
-  // }
+  toggleAsset(asset: string): void {
+    const properties = this.listingForm.get('properties')?.value || [];
+    if (properties.includes(asset)) {
+      this.listingForm.patchValue({
+        properties: properties.filter((a: string) => a !== asset)
+      });
+    } else {
+      this.listingForm.patchValue({
+        properties: [...properties, asset]
+      });
+    }
+  }
 
   onSubmit(): void {
     if (this.listingForm.valid) {
