@@ -1,0 +1,41 @@
+<div class="user-create">
+    <h1>Create New User</h1>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="username">Username:</label>
+        <input id="username" formControlName="username" />
+        <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched">
+          Username is required.
+        </div>
+      </div>
+  
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" type="password" formControlName="password" />
+        <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+          Password is required.
+        </div>
+      </div>
+  
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" formControlName="email" />
+        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+          Enter a valid email.
+        </div>
+      </div>
+  
+      <div>
+        <label for="type">User Type:</label>
+        <select id="type" formControlName="type">
+          <option *ngFor="let type of userTypes" [value]="type">{{ type }}</option>
+        </select>
+        <div *ngIf="userForm.get('type')?.invalid && userForm.get('type')?.touched">
+          User type is required.
+        </div>
+      </div>
+      
+
+      <button type="submit" [disabled]="userForm.invalid">Create User</button>
+    </form>
+  </div>

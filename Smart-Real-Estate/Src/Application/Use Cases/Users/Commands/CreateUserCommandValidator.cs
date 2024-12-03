@@ -20,12 +20,6 @@ namespace Application.Use_Cases.Users.Commands
                 .EmailAddress().WithMessage("Invalid email format.")
                 .MaximumLength(100).WithMessage("Email cannot exceed 100 characters.");
 
-            RuleFor(x => x.Verified)
-                .NotNull().WithMessage("Verified status is required.");
-
-            RuleFor(x => x.Rating)
-                .InclusiveBetween(0, 5).WithMessage("Rating must be between 0 and 5.");
-
             RuleFor(x => x.Type)
                 .IsInEnum().WithMessage("Invalid user type.");
 

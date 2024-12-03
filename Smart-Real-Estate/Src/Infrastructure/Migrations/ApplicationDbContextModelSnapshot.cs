@@ -69,6 +69,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
