@@ -9,7 +9,7 @@ namespace Application.DTOs
         public Guid AddressId { get; set; }
         public required string ImageId { get; set; }
         public Guid UserId { get; set; }
-        public User User { get; set; }        
+        public required User User { get; set; }        
         public PropertyType Type { get; set; }
         public required PropertyFeatures Features { get; set; }
 

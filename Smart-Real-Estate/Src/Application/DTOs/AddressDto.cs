@@ -1,12 +1,7 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Domain.Entities
+﻿namespace Application.DTOs
 {
-    public class Address
+    public class AddressDto
     {
-        [JsonIgnore]
-        public Guid Id { get; set; } = Guid.NewGuid();
-
         public required string Street { get; set; }
         public required string City { get; set; }
         public required string State { get; set; }

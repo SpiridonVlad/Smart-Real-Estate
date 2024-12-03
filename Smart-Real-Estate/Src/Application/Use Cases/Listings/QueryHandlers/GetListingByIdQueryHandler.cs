@@ -7,16 +7,10 @@ using MediatR;
 
 namespace Application.Use_Cases.QueryHandlers
 {
-    public class GetListingByIdQueryHandler: IRequestHandler<GetListingByIdQuery, Result<ListingDto>>
+    public class GetListingByIdQueryHandler(IListingRepository repository, IMapper mapper) : IRequestHandler<GetListingByIdQuery, Result<ListingDto>>
     {
-        private readonly IListingRepository repository;
-        private readonly IMapper mapper;
-
-        public GetListingByIdQueryHandler(IListingRepository repository, IMapper mapper)
-        {
-            this.repository = repository;
-            this.mapper = mapper;
-        }
+        private readonly IListingRepository repository = repository;
+        private readonly IMapper mapper = mapper;
 
         public async Task<Result<ListingDto>> Handle(GetListingByIdQuery request, CancellationToken cancellationToken)
         {

@@ -7,20 +7,14 @@ using MediatR;
 
 namespace Application.Use_Cases.Property.QueryHandlers
 {
-    public class GetAllPropertiesQueryHandler : IRequestHandler<GetAllPropertiesQuery, Result<IEnumerable<PropertyDto>>>
+    public class GetAllPropertiesQueryHandler(IMapper mapper, IPropertyRepository repository) : IRequestHandler<GetAllPropertiesQuery, Result<IEnumerable<PropertyDto>>>
     {
-        private readonly IMapper mapper;
-        private readonly IPropertyRepository repository;
-
-        public GetAllPropertiesQueryHandler(IMapper mapper, IPropertyRepository repository)
-        {
-            this.mapper = mapper;
-            this.repository = repository;
-        }
+        private readonly IMapper mapper = mapper;
+        private readonly IPropertyRepository repository = repository;
 
         public async Task<Result<IEnumerable<PropertyDto>>> Handle(GetAllPropertiesQuery request, CancellationToken cancellationToken)
         {
-            var propertiesResult = await repository.GetAllAsync();
+            var propertiesResult = await repository.GetAllAsync(request.Page, request.PageSize);
             if (propertiesResult.IsSuccess)
             {
                 var propertyDtos = mapper.Map<IEnumerable<PropertyDto>>(propertiesResult.Data);

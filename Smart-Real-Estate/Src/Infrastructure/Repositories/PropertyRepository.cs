@@ -6,14 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class PropertyRepository : IPropertyRepository
+    public class PropertyRepository(ApplicationDbContext context) : IPropertyRepository
     {
-        private readonly ApplicationDbContext context;
-
-        public PropertyRepository(ApplicationDbContext context)
-        {
-            this.context = context;
-        }
+        private readonly ApplicationDbContext context = context;
 
         public async Task<Result<Guid>> AddAsync(Property property)
         {
@@ -49,11 +44,11 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<Result<IEnumerable<Property>>> GetAllAsync()
+        public async Task<Result<IEnumerable<Property>>> GetAllAsync(int page, int pageSize)
         {
             try
             {
-                var properties = await context.Properties.ToListAsync();
+                var properties = await context.Properties.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
                 return Result<IEnumerable<Property>>.Success(properties);
             }
             catch (Exception ex)

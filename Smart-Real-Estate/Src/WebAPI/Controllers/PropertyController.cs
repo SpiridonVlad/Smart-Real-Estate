@@ -6,18 +6,13 @@ using Domain.Common;
 using Application.Use_Cases.Queries;
 using Application.Use_Cases.Property.Commands;
 
-namespace ToDoList.Controllers
+namespace Real_Estate_Management_System.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class PropertyController : ControllerBase
+    public class PropertyController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator mediator;
-
-        public PropertyController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        private readonly IMediator mediator = mediator;
 
         [HttpPost]
         public async Task<ActionResult<Result<Guid>>> CreateProperty([FromBody] CreatePropertyCommand command)
@@ -31,9 +26,9 @@ namespace ToDoList.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PropertyDto>>> GetAllProperties()
+        public async Task<ActionResult<IEnumerable<PropertyDto>>> GetAllProperties(int page,int pageSize)
         {
-            var query = new GetAllPropertiesQuery();
+            var query = new GetAllPropertiesQuery { Page = page, PageSize = pageSize};
             var result = await mediator.Send(query);
             if (!result.IsSuccess)
             {

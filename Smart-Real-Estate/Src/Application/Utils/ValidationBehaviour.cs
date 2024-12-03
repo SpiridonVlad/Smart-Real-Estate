@@ -3,14 +3,10 @@ using MediatR;
 
 namespace Application.Utils
 {
-    public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+    public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
-        private readonly IEnumerable<IValidator<TRequest>> validators;
+        private readonly IEnumerable<IValidator<TRequest>> validators = validators;
 
-        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
-        {
-            this.validators = validators;
-        }
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var context = new ValidationContext<TRequest>(request);
