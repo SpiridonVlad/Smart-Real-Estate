@@ -1,0 +1,82 @@
+<div class="property-create">
+    <h1>Create New Property</h1>
+    <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="addressId">Address ID:</label>
+        <input id="addressId" formControlName="addressId" />
+        <div *ngIf="propertyForm.get('addressId')?.invalid && propertyForm.get('addressId')?.touched">
+          Address ID is required.
+        </div>
+      </div>
+  
+      <div formGroupName="address">
+        <label for="street">Street:</label>
+        <input id="street" formControlName="street" />
+        <div *ngIf="propertyForm.get('address.street')?.invalid && propertyForm.get('address.street')?.touched">
+          Street is required.
+        </div>
+  
+        <label for="city">City:</label>
+        <input id="city" formControlName="city" />
+        <div *ngIf="propertyForm.get('address.city')?.invalid && propertyForm.get('address.city')?.touched">
+          City is required.
+        </div>
+  
+        <label for="state">State:</label>
+        <input id="state" formControlName="state" />
+        <div *ngIf="propertyForm.get('address.state')?.invalid && propertyForm.get('address.state')?.touched">
+          State is required.
+        </div>
+  
+        <label for="postalCode">Postal Code:</label>
+        <input id="postalCode" formControlName="postalCode" />
+        <div *ngIf="propertyForm.get('address.postalCode')?.invalid && propertyForm.get('address.postalCode')?.touched">
+          Postal Code is required.
+        </div>
+  
+        <label for="country">Country:</label>
+        <input id="country" formControlName="country" />
+        <div *ngIf="propertyForm.get('address.country')?.invalid && propertyForm.get('address.country')?.touched">
+          Country is required.
+        </div>
+  
+        <label for="additionalInfo">Additional Info:</label>
+        <input id="additionalInfo" formControlName="additionalInfo" />
+      </div>
+  
+      <div>
+        <label for="imageId">Image ID:</label>
+        <input id="imageId" formControlName="imageId" />
+        <div *ngIf="propertyForm.get('imageId')?.invalid && propertyForm.get('imageId')?.touched">
+          Image ID is required.
+        </div>
+      </div>
+  
+      <div>
+        <label for="userId">User ID:</label>
+        <input id="userId" formControlName="userId" />
+        <div *ngIf="propertyForm.get('userId')?.invalid && propertyForm.get('userId')?.touched">
+          User ID is required.
+        </div>
+      </div>
+  
+      <div>
+        <label for="type">Property Type:</label>
+        <select id="type" formControlName="type">
+          <option *ngFor="let type of propertyTypes | keyvalue" [value]="type.key">{{ type.key }}</option>
+        </select>
+        <div *ngIf="propertyForm.get('type')?.invalid && propertyForm.get('type')?.touched">
+          Property type is required.
+        </div>
+      </div>
+  
+      <div formGroupName="features">
+        <label>Features:</label>
+        <div *ngFor="let feature of featuresList">
+          <input type="checkbox" [formControlName]="feature" /> {{ feature }}
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="propertyForm.invalid">Create Property</button>
+    </form>
+  </div>

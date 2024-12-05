@@ -1,0 +1,58 @@
+<div class="user-update">
+  <h1>Update User</h1>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="username">Username:</label>
+      <input id="username" formControlName="username" />
+      <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched">
+        Username is required.
+      </div>
+    </div>
+
+    <div>
+      <label for="password">Password:</label>
+      <input id="password" type="password" formControlName="password" />
+      <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+        Password is required.
+      </div>
+    </div>
+
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" formControlName="email" />
+      <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+        Enter a valid email.
+      </div>
+    </div>
+
+    <div>
+      <label for="verified">Verified:</label>
+      <input id="verified" type="checkbox" formControlName="verified" />
+    </div>
+
+    <div>
+      <label for="rating">Rating:</label>
+      <input id="rating" type="number" formControlName="rating" />
+      <div *ngIf="userForm.get('rating')?.invalid && userForm.get('rating')?.touched">
+        Rating must be a non-negative number.
+      </div>
+    </div>
+
+    <div>
+      <label for="type">User Type:</label>
+      <select id="type" formControlName="type">
+        <option *ngFor="let type of userTypes" [value]="type">{{ type }}</option>
+      </select>
+      <div *ngIf="userForm.get('type')?.invalid && userForm.get('type')?.touched">
+        User type is required.
+      </div>
+    </div>
+
+    <div>
+      <label for="propertyHistory">Property History:</label>
+      <input id="propertyHistory" formControlName="propertyHistory" />
+    </div>
+
+    <button type="submit" [disabled]="userForm.invalid">Update User</button>
+  </form>
+</div>

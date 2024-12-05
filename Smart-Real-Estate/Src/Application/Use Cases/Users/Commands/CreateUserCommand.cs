@@ -9,8 +9,8 @@ namespace Application.Use_Cases.Commands
         public required string Username { get; set; }
         public required string Password { get; set; }
         public required string Email { get; set; }
-        public bool Verified { get; set; }
-        public decimal Rating { get; set; }
+        public bool Verified { get; set; } = false;
+        public decimal Rating { get; set; } = 0.0m;
         public UserType Type { get; set; }
         public List<Guid>? PropertyHistory { get; set; }
     }
