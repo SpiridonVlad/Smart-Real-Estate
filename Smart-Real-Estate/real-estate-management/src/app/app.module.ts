@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -11,6 +11,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { UserCreateComponent } from './components/user-create/user-create.component';
 import { appRoutes } from './app.routes';
 import { UserService } from './services/user.service';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
     
@@ -26,8 +27,9 @@ import { UserService } from './services/user.service';
     RouterModule.forRoot(appRoutes),
     AppComponent, 
     UserListComponent, 
-    UserCreateComponent 
+    UserCreateComponent,
+    HomeComponent
   ],
-  providers: [UserService]
+  providers: [],
 })
 export class AppModule { }
