@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ListingCreateComponent {
   listingForm: FormGroup;
-  listingAssets = Object.keys(ListingAsset);
+  listingAssets = Object.keys(ListingAsset).map(key => ListingAsset[key as keyof typeof ListingAsset]); // Enum pentru proprietăți
 
   constructor(
     private fb: FormBuilder,
@@ -26,8 +26,14 @@ export class ListingCreateComponent {
       userId: ['', Validators.required],
       description: [''],
       price: [0, [Validators.required, Validators.min(0)]],
-      publicationDate: [new Date().toISOString().substring(0, 10), Validators.required],
-      properties: [[], Validators.required]
+      publicationDate: [new Date().toISOString(), Validators.required],
+      features: this.fb.group({
+        features: this.fb.group({
+          IsSold: [0, Validators.required],
+          IsHighlighted: [0, Validators.required],
+          IsDeleted: [0, Validators.required],
+        })
+      })
     });
   }
 
@@ -35,8 +41,10 @@ export class ListingCreateComponent {
     if (this.listingForm.valid) {
       const listingData = {
         ...this.listingForm.value,
-        property: this.listingForm.value.property,
-      };
+        features: this.listingForm.value.features.features
+      }
+
+      console.log('Listing data:', listingData);
 
       this.listingService.createListing(listingData).subscribe(
         () => {
@@ -50,21 +58,15 @@ export class ListingCreateComponent {
   }
   
 
-  toggleAsset(asset: string): void {
-    const assetEnum = asset as ListingAsset; // Convertim stringul în tipul ListingAsset
-    const properties = this.listingForm.get('properties')?.value || [];
-    if (properties.includes(assetEnum)) {
-      this.listingForm.patchValue({
-        properties: properties.filter((a: ListingAsset) => a !== assetEnum)
-      });
-    } else {
-      this.listingForm.patchValue({
-        properties: [...properties, assetEnum]
-      });
-    }
-  }
+  toggleAsset(asset: ListingAsset): void {
+    const currentValue = this.listingForm.get('features')?.value[asset];
+    const newValue = currentValue === 0 ? 1 : 0;
 
-  navigateToListings(): void {
-    this.router.navigate(['/listings']);
+    this.listingForm.patchValue({
+      features: {
+        ...this.listingForm.value.features,
+        [asset]: newValue
+      }
+    });
   }
 }  

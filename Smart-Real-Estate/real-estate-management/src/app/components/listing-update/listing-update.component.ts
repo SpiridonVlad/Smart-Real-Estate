@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ListingService } from '../../services/listing.service';
-import { ListingAsset } from '../../models/listing.model';
+import { ListingAsset } from '../../models/listing.model'; // Enum pentru asseturi
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { log } from 'console';
 
 @Component({
   selector: 'app-listing-update',
   templateUrl: './listing-update.component.html',
   styleUrls: ['./listing-update.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule]
+  imports: [ReactiveFormsModule, CommonModule]
 })
 export class ListingUpdateComponent implements OnInit {
   listingForm: FormGroup;
-  listingAssets = Object.keys(ListingAsset); // Enum pentru proprietăți
+  listingAssets = Object.keys(ListingAsset).map(key => ListingAsset[key as keyof typeof ListingAsset]);
   listingId!: string;
 
   constructor(
@@ -24,32 +26,41 @@ export class ListingUpdateComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.listingForm = this.fb.group({
-      id: [{ value: '', disabled: true }], // ID readonly
-      propertyId: ['', Validators.required],
-      userId: ['', Validators.required],
-      description: [''],
+      propertyId: [{ value: '', disabled: true }, Validators.required],
+      userId: [{ value: '', disabled: true }, Validators.required],
+      description: ['', Validators.required],
       price: [0, [Validators.required, Validators.min(0)]],
       publicationDate: ['', Validators.required],
-      properties: [[], Validators.required]
+      features: this.fb.group({
+        IsSold: [0, Validators.required],
+        IsHighlighted: [0, Validators.required],
+        IsDeleted: [0, Validators.required],
+      })
     });
   }
 
   ngOnInit(): void {
+    // Se obține ID-ul din URL
     this.listingId = this.route.snapshot.paramMap.get('id')!;
     this.loadListing();
   }
 
   loadListing(): void {
+    // Se preiau datele listing-ului folosind ID-ul
     this.listingService.getListingById(this.listingId).subscribe(
-      (listing) => {
+      (response) => {
+        const listing = response.data;
         this.listingForm.patchValue({
-          id: listing.id, // Populăm ID-ul
           propertyId: listing.propertyId,
           userId: listing.userId,
-          description: listing.description,
-          price: listing.price,
-          publicationDate: listing.publicationDate,
-          properties: listing.properties
+          description: listing.description || '',
+          price: listing.price || 0,
+          publicationDate: listing.publicationDate || '',
+          features: {
+            IsSold: listing.features.features.IsSold || 0,
+            IsHighlighted: listing.features.features.IsHighlighted || 0,
+            IsDeleted: listing.features.features.IsDeleted || 0
+          }
         });
       },
       (error) => {
@@ -58,26 +69,26 @@ export class ListingUpdateComponent implements OnInit {
     );
   }
 
-  toggleAsset(asset: string): void {
-    const properties = this.listingForm.get('properties')?.value || [];
-    if (properties.includes(asset)) {
-      this.listingForm.patchValue({
-        properties: properties.filter((a: string) => a !== asset)
-      });
-    } else {
-      this.listingForm.patchValue({
-        properties: [...properties, asset]
-      });
-    }
-  }
-
   onSubmit(): void {
     if (this.listingForm.valid) {
       const updatedListing = {
         id: this.listingId,
-        ...this.listingForm.value,
-        properties: this.listingForm.value.properties
-      };
+        propertyId: this.listingForm.get('propertyId')?.value,
+        userId: this.listingForm.get('userId')?.value,
+        description: this.listingForm.get('description')?.value,
+        price: this.listingForm.get('price')?.value,
+        publicationDate: this.listingForm.get('publicationDate')?.value,
+        features: {
+          features: {
+            IsSold: this.listingForm.get('features.IsSold')?.value,
+            IsHighlighted: this.listingForm.get('features.IsHighlighted')?.value,
+            IsDeleted: this.listingForm.get('features.IsDeleted')?.value
+          }
+        }
+      }
+      
+      console.log('Updated listing:', updatedListing);
+
       this.listingService.updateListing(this.listingId, updatedListing).subscribe(
         () => {
           this.router.navigate(['/listings']);
@@ -86,9 +97,18 @@ export class ListingUpdateComponent implements OnInit {
           console.error('Error updating listing:', error);
         }
       );
-    } else {
-      console.log('Form is invalid:', this.listingForm.errors);
-      console.log('Form controls:', this.listingForm.controls);
     }
+  }
+
+  toggleAsset(asset: ListingAsset): void {
+    const currentValue = this.listingForm.get('features')?.value[asset];
+    const newValue = currentValue === 0 ? 1 : 0;
+
+    this.listingForm.patchValue({
+      features: {
+        ...this.listingForm.value.features,
+        [asset]: newValue
+      }
+    });
   }
 }

@@ -25,17 +25,25 @@ export class ListingService {
     );
   }
 
-  public createListing(listing: Listing): Observable<any> {
-    return this.http.post<Listing>(this.apiUrl, listing).pipe(
-      catchError((error) => {
-        console.error('Error creating listing:', error);
-        return throwError(error);
-      })
-    );
+  createListing(listingData: Listing): Observable<any> {
+    // Asigură-te că structura JSON e corectă înainte de a trimite cererea
+    const requestData = {
+      propertyId: listingData.propertyId,
+      userId: listingData.userId,
+      price: listingData.price,
+      publicationDate: new Date().toISOString(),  // Dacă nu ai data exactă, poți folosi data curentă
+      description: listingData.description,
+      features: {
+        features: listingData.features  // Transmite obiectul features direct
+      }
+    };
+
+    // Trimite cererea POST cu structura corectă
+    return this.http.post<Listing>(this.apiUrl, requestData);
   }
 
-  public getListingById(id: string): Observable<Listing> {
-    return this.http.get<Listing>(`${this.apiUrl}/${id}`).pipe(
+  public getListingById(id: string): Observable<{data: Listing}> {
+    return this.http.get<{ data: Listing}>(`${this.apiUrl}/${id}`).pipe(
       catchError((error) => {
         console.error('Error fetching listing by ID:', error);
         return throwError(error);

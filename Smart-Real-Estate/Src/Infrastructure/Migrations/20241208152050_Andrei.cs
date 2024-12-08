@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:Smart-Real-Estate/Src/Infrastructure/Migrations/20241202142742_InitialCreate.cs
-    public partial class InitialCreate : Migration
-========
-    public partial class Vlad : Migration
->>>>>>>> master:Smart-Real-Estate/Src/Infrastructure/Migrations/20241201190735_Vlad.cs
+    public partial class Andrei : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,11 +38,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
                     PropertyId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-<<<<<<<< HEAD:Smart-Real-Estate/Src/Infrastructure/Migrations/20241202142742_InitialCreate.cs
-                    Description = table.Column<string>(type: "text", nullable: true),
-========
                     Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
->>>>>>>> master:Smart-Real-Estate/Src/Infrastructure/Migrations/20241201190735_Vlad.cs
                     Price = table.Column<int>(type: "int", nullable: false),
                     PublicationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Features_Features = table.Column<string>(type: "jsonb", nullable: false)

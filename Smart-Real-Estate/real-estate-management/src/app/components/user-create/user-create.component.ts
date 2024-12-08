@@ -36,6 +36,9 @@ export class UserCreateComponent {
         ...this.userForm.value,
         type: this.mapUserType(this.userForm.value.type)
       };
+
+      console.log('User data:', userData);
+      
       this.userService.createUser(userData).subscribe(
         () => {
           this.router.navigate(['/users']);
