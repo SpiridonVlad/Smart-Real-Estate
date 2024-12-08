@@ -30,6 +30,7 @@ export class UserUpdateComponent implements OnInit {
       email: ['example@example.com', [Validators.required, Validators.email]],
       verified: [true, Validators.required],
       rating: [5, [Validators.required, Validators.min(0)]],
+
       type: [UserType.Individual, Validators.required],
       propertyHistory: [[]]
     });
@@ -55,6 +56,7 @@ export class UserUpdateComponent implements OnInit {
           propertyHistory: user.propertyHistory || this.userForm.get('propertyHistory')?.value
         });
         console.log('Form values after patching:', this.userForm.value); // Log the form values after patching
+
       },
       (error) => {
         console.error('Error loading user:', error);

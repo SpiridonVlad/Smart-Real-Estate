@@ -6,12 +6,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(appRoutes),
     BrowserAnimationsModule,
     ReactiveFormsModule,
     importProvidersFrom(HttpClientModule),
+
     [provideHttpClient()]
   ]
 }).catch(err => console.error(err));
