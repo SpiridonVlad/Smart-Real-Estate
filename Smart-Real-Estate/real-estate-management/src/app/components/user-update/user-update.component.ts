@@ -25,11 +25,12 @@ export class UserUpdateComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.userForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      verified: [false, Validators.required],
-      rating: [0, [Validators.required, Validators.min(0)]],
+      username: ['example', Validators.required], // Set default value here
+      password: ['password', Validators.required],
+      email: ['example@example.com', [Validators.required, Validators.email]],
+      verified: [true, Validators.required],
+      rating: [5, [Validators.required, Validators.min(0)]],
+
       type: [UserType.Individual, Validators.required],
       propertyHistory: [[]]
     });
@@ -42,16 +43,20 @@ export class UserUpdateComponent implements OnInit {
 
   loadUser(): void {
     this.userService.getUserById(this.userId).subscribe(
-      (user: User) => {
+      (response: { data: User }) => {
+        const user = response.data;
+        console.log('Loaded user:', user);
         this.userForm.patchValue({
-          username: user.username,
-          password: user.password,
-          email: user.email,
-          verified: user.verified,
-          rating: user.rating,
-          type: UserType[user.type],
-          propertyHistory: user.propertyHistory
+          username: user.username || this.userForm.get('username')?.value,
+          password: user.password || this.userForm.get('password')?.value,
+          email: user.email || this.userForm.get('email')?.value,
+          verified: user.verified !== undefined ? user.verified : this.userForm.get('verified')?.value,
+          rating: user.rating !== undefined ? user.rating : this.userForm.get('rating')?.value,
+          type: user.type !== undefined ? UserType[user.type] : this.userForm.get('type')?.value,
+          propertyHistory: user.propertyHistory || this.userForm.get('propertyHistory')?.value
         });
+        console.log('Form values after patching:', this.userForm.value); // Log the form values after patching
+
       },
       (error) => {
         console.error('Error loading user:', error);
