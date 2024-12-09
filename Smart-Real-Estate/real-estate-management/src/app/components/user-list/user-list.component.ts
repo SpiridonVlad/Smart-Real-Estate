@@ -3,11 +3,11 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-user-list',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
