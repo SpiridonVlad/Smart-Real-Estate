@@ -1,5 +1,12 @@
 <div class="user-list">
   <h1>User List</h1>
+  <div>
+    <label for="page">Page:</label>
+    <input type="number" id="page" [(ngModel)]="page" />
+    <label for="pageSize">Page Size:</label>
+    <input type="number" id="pageSize" [(ngModel)]="pageSize" />
+    <button (click)="loadUsers()">Load Users</button>
+  </div>
   <button (click)="navigateToCreate()">Create New User</button>
   <table>
     <thead>
