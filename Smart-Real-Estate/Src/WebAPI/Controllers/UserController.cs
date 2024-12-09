@@ -6,9 +6,11 @@ using Application.DTOs;
 using Domain.Common;
 using Application.Use_Cases.Queries;
 using Application.Use_Cases.Users.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Real_Estate_Management_System.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class UserController(IMediator mediator) : ControllerBase
