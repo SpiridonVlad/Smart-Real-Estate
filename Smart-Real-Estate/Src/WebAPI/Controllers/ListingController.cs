@@ -6,9 +6,11 @@ using Application.DTOs;
 using Domain.Common;
 using Domain.Filters;
 using Application.Use_Cases.Listings.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Real_Estate_Management_System.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class ListingController(IMediator mediator) : ControllerBase
@@ -26,7 +28,7 @@ namespace Real_Estate_Management_System.Controllers
             return CreatedAtAction(nameof(GetListingById), new { Id = result.Data }, result.Data);
         }
 
-        [HttpGet]
+        [HttpGet("paginated")]
         public async Task<ActionResult<IEnumerable<ListingDto>>> GetPagiantedListings(int page, int pageSize,[FromQuery] ListingFilter filter)
         {
             var query = new GetPaginatedListingsQuery { Page = page, PageSize = pageSize, Filter = filter};
@@ -38,7 +40,7 @@ namespace Real_Estate_Management_System.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<ListingDto>> GetListingById(Guid id)
         {
             var query = new GetListingByIdQuery { Id = id };
@@ -50,7 +52,7 @@ namespace Real_Estate_Management_System.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateListing(Guid id, [FromBody] UpdateListingCommand command)
         {
             if (id != command.Id)
@@ -61,7 +63,7 @@ namespace Real_Estate_Management_System.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteListing(Guid id)
         {
             var command = new DeleteListingCommand { Id = id };

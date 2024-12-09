@@ -11,7 +11,7 @@ namespace Real_Estate_Management_System.Controllers
     {
         private readonly IMediator mediator = mediator;
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<AddressDto>> GetAddressById(Guid id)
         {
             var query = new GetAddressByIdQuery { Id = id };
