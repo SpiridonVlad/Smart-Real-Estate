@@ -12,13 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:Smart-Real-Estate/Src/Infrastructure/Migrations/20241202142742_InitialCreate.Designer.cs
-    [Migration("20241202142742_InitialCreate")]
-    partial class InitialCreate
-========
-    [Migration("20241201190735_Vlad")]
-    partial class Vlad
->>>>>>>> master:Smart-Real-Estate/Src/Infrastructure/Migrations/20241201190735_Vlad.Designer.cs
+    [Migration("20241208152050_Andrei")]
+    partial class Andrei
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,12 +69,8 @@ namespace Infrastructure.Migrations
                         .HasDefaultValueSql("uuid_generate_v4()");
 
                     b.Property<string>("Description")
-<<<<<<<< HEAD:Smart-Real-Estate/Src/Infrastructure/Migrations/20241202142742_InitialCreate.Designer.cs
-                        .HasColumnType("text");
-========
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
->>>>>>>> master:Smart-Real-Estate/Src/Infrastructure/Migrations/20241201190735_Vlad.Designer.cs
 
                     b.Property<int>("Price")
                         .HasColumnType("int");

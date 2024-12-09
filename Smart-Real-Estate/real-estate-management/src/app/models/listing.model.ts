@@ -11,5 +11,11 @@ export interface Listing {
     description?: string;
     price: number;
     publicationDate: Date;
-    properties: ListingAsset[];
+    features: {
+        features: {
+            IsSold: number;
+            IsHighlighted: number;
+            IsDeleted: number;
+        }
+    };
 }
