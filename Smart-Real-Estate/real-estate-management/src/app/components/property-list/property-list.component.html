@@ -11,7 +11,7 @@
     <table>
         <thead>
             <tr>
-                <th>Address</th>
+                <th>Address ID</th>
                 <th>Image ID</th>
                 <th>User ID</th>
                 <th>Type</th>
@@ -20,27 +20,20 @@
         </thead>
         <tbody>
             <tr *ngFor="let property of properties">
-              <td>
-                {{ property.address?.street }}, 
-                {{ property.address?.city }}, 
-                {{ property.address?.state }}, 
-                {{ property.address?.country }}
-              </td>
-              <td>{{ property.imageId }}</td>
-              <td>{{ property.userId }}</td>
-              <td>{{ property.type }}</td>
-              <td>
-                <ul>
-                  <li *ngFor="let feature of getFeatures(property.features)">
-                    {{ feature.key }}: {{ feature.value }}
-                  </li>
-                </ul>
-              </td>
-              <td>
-                <button (click)="navigateToUpdate(property.id)">Update Property</button>
-              </td>
+                <td>{{ property.addressId }}</td>
+                <td>{{ property.imageId }}</td>
+                <td>{{ property.userId }}</td>
+                <td>{{ property.type }}</td>
+                <td>
+                  <ul>
+                    <li *ngFor="let feature of getNonZeroFeatures(property.features.features)">
+                      {{ feature.key }}: {{ feature.value }}
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                    <button (click)="navigateToUpdate(property.id)">Update</button>
+                    <button (click)="deleteProperty(property.id)">Delete</button>
+                </td>
             </tr>
-          </tbody>
-    </table>
-    
-    </div>
+        

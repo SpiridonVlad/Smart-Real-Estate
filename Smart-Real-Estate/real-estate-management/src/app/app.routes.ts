@@ -6,7 +6,7 @@ import { ListingListComponent } from './components/listing-list/listing-list.com
 import { ListingCreateComponent } from './components/listing-create/listing-create.component';
 import { PropertyListComponent } from './components/property-list/property-list.component';
 import { PropertyCreateComponent } from './components/property-create/property-create.component';
-import { PropertyUpdateComponent } from './components/property-update/property-update.component';
+// import { PropertyUpdateComponent } from './components/property-update/property-update.component';
 import { ListingUpdateComponent } from './components/listing-update/listing-update.component';
 import { HomeComponent } from './components/home/home.component';
 export const appRoutes: Routes = [
@@ -16,10 +16,7 @@ export const appRoutes: Routes = [
   { path: 'users/update/:id', component: UserUpdateComponent },
   { path: 'listings', component: ListingListComponent },
   { path: 'listings/create', component: ListingCreateComponent },
-  {path: 'properties',component:PropertyListComponent},
-  {path: 'properties/create',component:PropertyCreateComponent},
-  {path: 'properties/update/:id',component:PropertyUpdateComponent},
-  
-  // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }
+  { path: 'properties',component:PropertyListComponent},
+  { path: 'properties/create',component:PropertyCreateComponent},
 ];
