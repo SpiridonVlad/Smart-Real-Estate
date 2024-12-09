@@ -13,13 +13,15 @@
     <label for="description">Description</label>
     <textarea id="description" formControlName="description"></textarea>
 
-    <!-- <fieldset>
+
+
+    <fieldset>
       <legend>Features</legend>
       <div *ngFor="let asset of listingAssets">
         <label>{{ asset }}</label>
         <input type="checkbox" (change)="toggleAsset(asset)" [checked]="listingForm.get('features')?.value[asset] === 1" />
       </div>
-    </fieldset> -->
+    </fieldset>
     
     <button type="submit" [disabled]="listingForm.invalid">Create Listing</button>
   </form>

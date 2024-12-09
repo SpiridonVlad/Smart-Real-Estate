@@ -11,5 +11,7 @@ namespace Domain.Repositories
         Task<Result<Guid>> AddAsync(User user);
         Task<Result<object>> UpdateAsync(User user);
         Task<Result<object>> DeleteAsync(Guid id);
+        Task<Result<string>> Login(User user);
+        Task<Result<Guid>> Register(User user, CancellationToken cancellationToken);
     }
 }

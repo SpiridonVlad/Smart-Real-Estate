@@ -6,19 +6,16 @@ using Application.DTOs;
 using Domain.Common;
 using Application.Use_Cases.Queries;
 using Application.Use_Cases.Users.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Real_Estate_Management_System.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator mediator;
-
-        public UserController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        private readonly IMediator mediator = mediator;
 
         [HttpPost]
         public async Task<ActionResult<Result<Guid>>> CreateUser([FromBody] CreateUserCommand command)
@@ -31,7 +28,7 @@ namespace Real_Estate_Management_System.Controllers
             return CreatedAtAction(nameof(GetUserById), new { Id = result.Data }, result.Data);
         }
 
-        [HttpGet]
+        [HttpGet("paginated")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers(int page, int pageSize)
         {
             var query = new GetAllUsersQuery { Page = page, PageSize = pageSize };
@@ -43,7 +40,7 @@ namespace Real_Estate_Management_System.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<UserDto>> GetUserById(Guid id)
         {
             var query = new GetUserByIdQuery { Id = id };
@@ -55,7 +52,7 @@ namespace Real_Estate_Management_System.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
             var command = new DeleteUserCommand { Id = id };
@@ -67,7 +64,7 @@ namespace Real_Estate_Management_System.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserCommand command)
         {
             if (id != command.Id)
@@ -81,7 +78,8 @@ namespace Real_Estate_Management_System.Controllers
             }
             return NoContent();
         }
-        [HttpPut("{userId}/add_property/{propertyId}")]
+
+        [HttpPut("{userId:guid}/add_property/{propertyId:guid}")]
         public async Task<IActionResult> AddPropertyToHistory(Guid userId, Guid propertyId)
         {
             var command = new AddPropertyToHistoryCommand
@@ -96,7 +94,7 @@ namespace Real_Estate_Management_System.Controllers
             }
             return NoContent();
         }
-        [HttpPut("{userId}/verify")]
+        [HttpPut("{userId:guid}/verify")]
         public async Task<IActionResult> VerifyUser(Guid userId)
         {
             var command = new VerifyUserCommand

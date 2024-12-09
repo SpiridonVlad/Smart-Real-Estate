@@ -5,9 +5,11 @@ using Application.DTOs;
 using Domain.Common;
 using Application.Use_Cases.Queries;
 using Application.Use_Cases.Property.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Real_Estate_Management_System.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class PropertyController(IMediator mediator) : ControllerBase
@@ -25,7 +27,7 @@ namespace Real_Estate_Management_System.Controllers
             return CreatedAtAction(nameof(GetPropertyById), new { Id = result.Data }, result.Data);
         }
 
-        [HttpGet]
+        [HttpGet("paginated")]
         public async Task<ActionResult<IEnumerable<PropertyDto>>> GetAllProperties(int page,int pageSize)
         {
             var query = new GetAllPropertiesQuery { Page = page, PageSize = pageSize};
@@ -37,7 +39,7 @@ namespace Real_Estate_Management_System.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<PropertyDto>> GetPropertyById(Guid id)
         {
             var query = new GetPropertyByIdQuery { Id = id };
@@ -49,7 +51,7 @@ namespace Real_Estate_Management_System.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateProperty(Guid id, [FromBody] UpdatePropertyCommand command)
         {
             if (id != command.Id)
@@ -60,7 +62,7 @@ namespace Real_Estate_Management_System.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteProperty(Guid id)
         {
             var command = new DeletePropertyCommand { Id = id };
