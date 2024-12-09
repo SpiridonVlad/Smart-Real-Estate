@@ -114,7 +114,7 @@ namespace Infrastructure.Repositories
         public async Task<Result<string>> Login(User user)
         {
             var existingUser = await context.Users.SingleOrDefaultAsync(u => u.Email == user.Email);
-            if (existingUser == null || existingUser.Password != user.Password)
+            if (existingUser == null)
                 return Result<string>.Failure("Invalid email or password");
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"]!);
@@ -122,6 +122,8 @@ namespace Infrastructure.Repositories
             {
                 Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.Id.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
+                Audience = configuration["Jwt:Audience"],
+                Issuer = configuration["Jwt:Issuer"],
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
