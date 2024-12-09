@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-list',
-  imports: [CommonModule],
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  styleUrls: ['./user-list.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
   page: number = 1;
   pageSize: number = 5;
+  pages: number[] = [1, 2, 3, 4, 5]; // Example page numbers
+  pageSizes: number[] = [5, 10, 20, 50]; // Example page sizes
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -24,7 +27,7 @@ export class UserListComponent implements OnInit {
 
   loadUsers(): void {
     this.userService.getPaginatedUsers(this.page, this.pageSize).subscribe(
-      (response: any) => {
+      (response) => {
         this.users = response.data;
       },
       (error) => {

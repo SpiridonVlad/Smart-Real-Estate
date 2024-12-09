@@ -1,6 +1,19 @@
 <div class="user-list">
   <h1>User List</h1>
   <button (click)="navigateToCreate()">Create New User</button>
+  
+  <div class="pagination-controls">
+    <label for="page">Page:</label>
+    <select id="page" [(ngModel)]="page" (change)="loadUsers()">
+      <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
+    </select>
+
+    <label for="pageSize">Page Size:</label>
+    <select id="pageSize" [(ngModel)]="pageSize" (change)="loadUsers()">
+      <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+    </select>
+  </div>
+
   <table>
     <thead>
       <tr>
