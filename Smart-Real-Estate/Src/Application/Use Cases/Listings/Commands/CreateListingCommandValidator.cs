@@ -27,18 +27,18 @@ namespace Application.Use_Cases.Listings.Commands
                 .NotEmpty().WithMessage("Description is required.")
                 .MaximumLength(500).WithMessage("Description must not exceed 500 characters.");
 
-            RuleFor(x => x.Features)
-                .NotNull().WithMessage("Features are required.")
-                .Must(features => features.Features != null && features.Features.Count > 0)
-                .WithMessage("Features must include at least one feature.")
-                .DependentRules(() =>
-                {
-                    RuleForEach(x => x.Features.Features)
-                        .Must(kvp => Enum.IsDefined(typeof(ListingAssetss), kvp.Key))
-                        .WithMessage("Invalid feature type.")
-                        .Must(kvp => kvp.Value >= 0)
-                        .WithMessage("Feature values must be zero or positive.");
-                });
+            //RuleFor(x => x.Features)
+            //    .NotNull().WithMessage("Features are required.")
+            //    .Must(features => features.Features != null && features.Features.Count > 0)
+            //    .WithMessage("Features must include at least one feature.")
+            //    .DependentRules(() =>
+            //    {
+            //        RuleForEach(x => x.Features.Features)
+            //            .Must(kvp => Enum.IsDefined(typeof(ListingAssetss), kvp.Key))
+            //            .WithMessage("Invalid feature type.")
+            //            .Must(kvp => kvp.Value >= 0)
+            //            .WithMessage("Feature values must be zero or positive.");
+            //    });
         }
     }
 }

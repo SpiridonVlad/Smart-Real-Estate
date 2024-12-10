@@ -14,7 +14,9 @@ import { FormsModule } from '@angular/forms';
 export class ListingListComponent implements OnInit {
   listings: Listing[] = [];
   page: number = 1;
+  pages: number[] = [1, 2, 3, 4, 5];
   pageSize: number = 5;
+  pageSizes: number[] = [5, 10, 15, 20];
 
   constructor(private listingService: ListingService, private router: Router) {}
 
