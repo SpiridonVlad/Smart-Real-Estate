@@ -138,7 +138,6 @@ namespace Infrastructure.Persistence
                 });
             });
 
-
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("users");
@@ -182,6 +181,9 @@ namespace Infrastructure.Persistence
                         c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                         c => c.ToList()
                     ));
+
+                entity.HasIndex(e => e.Email).IsUnique();
+                entity.HasIndex(e => e.Username).IsUnique();
             });
         }
     }

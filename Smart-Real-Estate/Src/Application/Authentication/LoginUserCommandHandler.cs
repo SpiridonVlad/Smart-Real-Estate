@@ -15,13 +15,13 @@ namespace Application.Authentication
             var user = new User
             {
                 Email = request.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                Password = request.Password,
                 Username = "",
             };
             var token = await userRepository.Login(user);
             if (token.IsSuccess)
             {
-                return Result<string>.Success("User logged in successfully");
+                return Result<string>.Success(token.Data);
             }
             return Result<string>.Failure("Invalid email or password");
         }
