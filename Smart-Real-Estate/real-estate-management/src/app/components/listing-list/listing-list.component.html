@@ -1,14 +1,18 @@
 <div class="listing-list">
     <h1>Listing List</h1>
   
-    <div>
-      <label for="page">Page:</label>
-      <input type="number" id="page" [(ngModel)]="page" />
-      <label for="pageSize">Page Size:</label>
-      <input type="number" id="pageSize" [(ngModel)]="pageSize" />
-      <button (click)="loadListings()">Load Listings</button>
-    </div>
     <button (click)="navigateToCreate()">Create New Listing</button>
+    <div class="pagination-controls">
+      <label for="page">Page:</label>
+      <select id="page" [(ngModel)]="page" (change)="loadListings()">
+        <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
+      </select>
+  
+      <label for="pageSize">Page Size:</label>
+      <select id="pageSize" [(ngModel)]="pageSize" (change)="loadListings()">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
     <table>
       <thead>
         <tr>

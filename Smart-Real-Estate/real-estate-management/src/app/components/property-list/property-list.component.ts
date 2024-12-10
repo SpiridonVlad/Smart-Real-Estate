@@ -15,6 +15,8 @@ export class PropertyListComponent implements OnInit {
   properties: Property[] = [];
   page: number = 1;
   pageSize: number = 5;
+  pages: number[] = [1, 2, 3, 4, 5];
+  pageSizes: number[] = [5, 10, 15, 20];
 
   constructor(private propertyService: PropertyService, private router: Router) { }
 
@@ -24,29 +26,20 @@ export class PropertyListComponent implements OnInit {
 
   loadProperties(): void {
     this.propertyService.getPaginatedProperties(this.page, this.pageSize).subscribe(
-      (response: Property[]) => {
-        this.properties = response;
-        console.log('Properties loaded:', this.properties); // Log properties
-        this.properties.forEach(property => {
-          this.propertyService.getAddressById(property.addressId).subscribe(
-            address => {
-              property.address = address;
-              console.log(`Address for property ${property.id}:`, address); // Log address
-            },
-            error => {
-              console.error('Error fetching address:', error);
-            }
-          );
-        });
+      (response: any) => {
+        console.log("Response: ",response.data);
+        this.properties = response.data;
       },
       (error) => {
-        console.error('Error loading properties:', error);
+        console.error("Error loading properties:", error);
       }
     );
   }
 
-  getFeatures(features: { [key: string]: number }): { key: string, value: number }[] {
-    return Object.keys(features).map(key => ({ key, value: features[key] }));
+  getNonZeroFeatures(features: { [key: string]: number }): { key: string; value: number }[] {
+    return Object.entries(features)
+      .filter(([key, value]) => value !== 0) // Filtrează doar valorile diferite de 0
+      .map(([key, value]) => ({ key, value })); // Transformă într-un array de obiecte
   }
 
   navigateToCreate(): void {
@@ -55,5 +48,18 @@ export class PropertyListComponent implements OnInit {
 
   navigateToUpdate(propertyId: string): void {
     this.router.navigate(['/properties/update', propertyId]);
+  }
+
+  deleteProperty(propertyId: string): void {
+    if (confirm("Are you sure you want to delete this property?")) {
+      this.propertyService.deleteProperty(propertyId).subscribe(
+        () => {
+          this.loadProperties(); // Reload the property list after deletion
+        },
+        (error) => {
+          console.error("Error deleting property:", error);
+        }
+      );
+    }
   }
 }

@@ -61,7 +61,7 @@ export class PropertyUpdateComponent implements OnInit {
       this.propertyService.getPropertyById(propertyId).subscribe(property => {
         this.propertyForm.patchValue(property);
         this.propertyForm.patchValue({
-          features: this.convertFeaturesToBoolean(property.features)
+          features: this.convertFeaturesToBoolean(property.data.features)
         });
       });
     }
