@@ -1,41 +1,51 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable,throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 import { User } from '../models/user.model';
-import { catchError } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private apiUrl = 'https://localhost:7117/api/v1/User';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
 
   public getPaginatedUsers(page: number, pageSize: number): Observable<{ data: User[] }> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());
 
-    return this.http.get<{ data: User[] }>(this.apiUrl, { params }).pipe(
-      catchError(error => {
-        console.error('Error fetching paginated users:', error);
-        return throwError(error);
-      })
-    );
+    const headers = this.getAuthHeaders();
+
+    return this.http.get<{ data: User[] }>(`${this.apiUrl}/paginated`, { params, headers });
   }
 
   public createUser(user: User): Observable<any> {
-    return this.http.post<User>(this.apiUrl, user);
+    const headers = this.getAuthHeaders();
+    return this.http.post<User>(this.apiUrl, user, { headers });
   }
-  public getUserById(id: string): Observable<{ data: User }> {
-    return this.http.get<{ data: User }>(`${this.apiUrl}/${id}`);
 
+  public getUserById(id: string): Observable<{ data: User }> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<{ data: User }>(`${this.apiUrl}/${id}`, { headers });
   }
 
   public updateUser(id: string, user: User): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, user);
+    const headers = this.getAuthHeaders();
+    return this.http.put(`${this.apiUrl}/${id}`, user, { headers });
   }
+
   public deleteUser(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    const headers = this.getAuthHeaders();
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers });
   }
 }
