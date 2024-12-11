@@ -1,4 +1,5 @@
-﻿using Domain.Types;
+﻿using Domain.Entities.Features;
+using Domain.Types;
 
 namespace Domain.Entities
 {

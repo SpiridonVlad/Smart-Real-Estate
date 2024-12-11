@@ -8,7 +8,7 @@ using Application.Use_Cases.Queries;
 using Application.Use_Cases.Users.Commands;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Real_Estate_Management_System.Controllers
+namespace Real_Estate_Management_System.Controllers.AtomicControllers
 {
     [Authorize]
     [Route("api/v1/[controller]")]

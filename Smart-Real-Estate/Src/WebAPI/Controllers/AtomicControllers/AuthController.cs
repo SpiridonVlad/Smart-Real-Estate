@@ -2,17 +2,18 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Real_Estate_Management_System.Controllers
+namespace Real_Estate_Management_System.Controllers.AtomicControllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
-    public class AuthController(IMediator mediator) : ControllerBase
+    public class AuthenticationController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator mediator = mediator;
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
         {
-           var userId = await mediator.Send(command);
+            var userId = await mediator.Send(command);
             return Ok(userId);
         }
 

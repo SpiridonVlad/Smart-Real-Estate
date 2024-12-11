@@ -1,5 +1,5 @@
 ﻿using Domain.Common;
-using Domain.Entities;
+using Domain.Entities.Features;
 using MediatR;
 
 namespace Application.Use_Cases.Commands

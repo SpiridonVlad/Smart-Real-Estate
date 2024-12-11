@@ -1,4 +1,5 @@
-﻿using Application.Utils;
+﻿using Application.Email;
+using Application.Utils;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ namespace Application
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddTransient<EmailService>();
             return services;
         }
     }

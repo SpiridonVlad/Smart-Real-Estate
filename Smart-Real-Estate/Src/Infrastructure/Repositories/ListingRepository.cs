@@ -3,7 +3,6 @@ using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Domain.Filters;
 
 
 namespace Infrastructure.Repositories
@@ -46,35 +45,11 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<Result<IEnumerable<Listing>>> GetAllAsync()
-        {
-            try
-            {
-                var listings = await context.Listings.ToListAsync();
-                return Result<IEnumerable<Listing>>.Success(listings);
-            }
-            catch (Exception ex)
-            {
-                return Result<IEnumerable<Listing>>.Failure(ex.Message);
-            }
-        }
-
-        public async Task<Result<IEnumerable<Listing>>> GetPaginatedAsync(int page, int pageSize, ListingFilter? filter)
+        public async Task<Result<IEnumerable<Listing>>> GetPaginatedAsync(int page, int pageSize)
         {
             try
             {
                 IQueryable<Listing> query = context.Listings;
-
-                if (filter != null)
-                {
-
-                    if (filter.MinPrice.HasValue)
-                        query = query.Where(l => l.Price >= filter.MinPrice.Value);
-
-                    if (filter.MaxPrice.HasValue)
-                        query = query.Where(l => l.Price <= filter.MaxPrice.Value);
-
-                }
 
                 var listings = await query
                     .Skip((page - 1) * pageSize)

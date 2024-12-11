@@ -23,6 +23,7 @@ namespace Application.Utils
             CreateMap<UpdateUserCommand, User>().ReverseMap();
 
             CreateMap<Address, AddressDto>().ReverseMap();
+            CreateMap<Record, RecordDto>().ReverseMap();
         }
     }
 }

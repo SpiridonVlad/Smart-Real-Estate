@@ -1,6 +1,6 @@
 ﻿using Domain.Types;
 
-namespace Domain.Entities
+namespace Domain.Entities.Features
 {
     public class PropertyFeatures
     {

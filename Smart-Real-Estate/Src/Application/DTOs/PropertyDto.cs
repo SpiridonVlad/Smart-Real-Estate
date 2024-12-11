@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Features;
 using Domain.Types;
 
 namespace Application.DTOs

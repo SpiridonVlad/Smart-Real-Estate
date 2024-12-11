@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Real_Estate_Management_System.Controllers
+namespace Real_Estate_Management_System.Controllers.AtomicControllers
 {
     [Authorize]
     [Route("api/v1/address")]

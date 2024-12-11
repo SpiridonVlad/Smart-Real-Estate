@@ -1,4 +1,5 @@
 using Application;
+using Application.Email;
 using FluentValidation.AspNetCore;
 using Infrastructure;
 using Infrastructure.Persistence;
@@ -11,16 +12,17 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
+
 builder.Services.AddInfrastructure(builder.Configuration);
+
 builder.Services.AddControllers();
 
-
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Real Estate API", Version = "v1" });
 
-    // Add JWT authentication support in Swagger
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -49,8 +51,8 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-
 builder.Services.AddFluentValidationAutoValidation();
+
 builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -101,7 +103,9 @@ app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
+
 
 app.MapControllers();
 

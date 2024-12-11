@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using Domain.Entities.Features;
+
+namespace Domain.Entities
 {
     public class Listing
     {
