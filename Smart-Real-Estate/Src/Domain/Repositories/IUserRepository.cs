@@ -13,5 +13,6 @@ namespace Domain.Repositories
         Task<Result<object>> DeleteAsync(Guid id);
         Task<Result<string>> Login(User user);
         Task<Result<Guid>> Register(User user, CancellationToken cancellationToken);
+        string GenerateEmailConfirmationToken(string email, string username, string password);
     }
 }

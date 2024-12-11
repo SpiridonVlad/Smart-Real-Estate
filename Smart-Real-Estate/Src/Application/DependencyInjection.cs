@@ -1,4 +1,5 @@
 ﻿using Application.Email;
+using Application.Use_Cases.Authentication;
 using Application.Utils;
 using FluentValidation;
 using MediatR;
@@ -18,6 +19,7 @@ namespace Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddTransient<EmailService>();
+            services.AddTransient<ConfirmEmailCommandHandler>();
             return services;
         }
     }

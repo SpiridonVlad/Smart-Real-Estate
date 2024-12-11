@@ -137,6 +137,26 @@ namespace Identity.Repositories
             return Result<Guid>.Success(user.Id);
         }
 
+        public string GenerateEmailConfirmationToken(string email, string username, string password)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            var claims = new[]
+            {
+        new Claim(JwtRegisteredClaimNames.Sub, email),
+        new Claim("Username", username),
+        new Claim("Password", password) 
+    };
+
+            var token = new JwtSecurityToken(
+                issuer: configuration["Jwt:Issuer"],
+                audience: configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
 }

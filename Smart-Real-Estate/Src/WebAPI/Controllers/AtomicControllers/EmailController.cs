@@ -44,20 +44,6 @@ namespace Real_Estate_Management_System.Controllers.AtomicControllers
             return Ok("Verification email sent.");
         }
 
-
-        //[HttpGet("verify")]
-        //public IActionResult VerifyEmail(string email, string token)
-        //{
-        //    // Validate the token against the stored value.
-        //    bool isValid = CheckTokenInDatabase(email, token);
-
-        //    if (!isValid)
-        //        return BadRequest("Invalid or expired token.");
-
-        //    MarkEmailAsVerified(email);
-        //    return Ok("Email verified successfully!");
-        //}
-
     }
 
 }

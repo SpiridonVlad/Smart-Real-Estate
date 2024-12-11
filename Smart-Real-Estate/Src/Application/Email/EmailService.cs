@@ -6,10 +6,10 @@ namespace Application.Email
 {
     public class EmailService(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration = configuration;
+        private readonly IConfiguration configuration = configuration;
         public async Task SendEmailAsync(string toEmail, string subject, string body)
         {
-            var emailSettings = _configuration.GetSection("EmailSettings");
+            var emailSettings = configuration.GetSection("EmailSettings");
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(emailSettings["SenderEmail"]));
             email.To.Add(MailboxAddress.Parse(toEmail));

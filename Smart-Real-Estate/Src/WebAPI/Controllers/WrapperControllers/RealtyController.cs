@@ -12,8 +12,7 @@ namespace Real_Estate_Management_System.Controllers.WrapperControllers
     {
         private readonly IMediator mediator = mediator;
 
-
-        [HttpGet("{id:guid}/paginated")]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<IEnumerable<RealtyDto>>> GetUsersRealtys(Guid id)
         {
             var query = new GetRealtyQuery {Id = id };
