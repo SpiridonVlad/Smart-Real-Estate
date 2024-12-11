@@ -1,12 +1,10 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
-public class UsersDbContext : DbContext
+namespace Identity
 {
-    public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options)
+    public class UsersDbContext(DbContextOptions<UsersDbContext> options) : DbContext(options)
     {
+        public required DbSet<User> Users { get; set; }
     }
-
-    public DbSet<User> Users { get; set; }
 }

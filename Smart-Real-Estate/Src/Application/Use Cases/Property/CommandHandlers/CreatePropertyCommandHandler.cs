@@ -1,5 +1,4 @@
 ﻿using Application.Use_Cases.Commands;
-using Application.Use_Cases.Property.Commands;
 using AutoMapper;
 using Domain.Common;
 using Domain.Repositories;
@@ -21,13 +20,6 @@ namespace Application.Use_Cases.Property.CommandHandlers
 
         public async Task<Result<Guid>> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
-            CreatePropertyCommandValidator validator = new();
-            var validationResult = await validator.ValidateAsync(request, cancellationToken);
-            if (!validationResult.IsValid)
-            {
-                return Result<Guid>.Failure(validationResult.ToString());
-            }
-
             var userExists = await userRepository.GetByIdAsync(request.UserId);
             if (!userExists.IsSuccess)
             {

@@ -81,7 +81,7 @@ namespace Infrastructure.Repositories
             try
             {
                 context.Addresses.Update(address);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 return Result<object>.Success(address);
             }
             catch (Exception ex)

@@ -10,11 +10,11 @@ using System.Security.Claims;
 using System.Text;
 
 
-namespace Infrastructure.Repositories
+namespace Identity.Repositories
 {
-    public class UserRepository(ApplicationDbContext context, IConfiguration configuration) : IUserRepository
+    public class UserRepository(UsersDbContext context, IConfiguration configuration) : IUserRepository
     {
-        private readonly ApplicationDbContext context = context;
+        private readonly UsersDbContext context = context;
         private readonly IConfiguration configuration = configuration;
 
         public async Task<Result<Guid>> AddAsync(User user)
@@ -120,7 +120,7 @@ namespace Infrastructure.Repositories
             var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"]!);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.Id.ToString()) }),
+                Subject = new ClaimsIdentity([new Claim(ClaimTypes.Name, user.Id.ToString())]),
                 Expires = DateTime.UtcNow.AddDays(7),
                 Audience = configuration["Jwt:Audience"],
                 Issuer = configuration["Jwt:Issuer"],

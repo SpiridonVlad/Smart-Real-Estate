@@ -4,6 +4,7 @@ using Application.Use_Cases.Commands;
 using AutoMapper;
 using Domain.Common;
 using Domain.Entities;
+using Domain.Entities.Features;
 using Domain.Repositories;
 using Domain.Types;
 using FluentAssertions;
@@ -173,7 +174,7 @@ namespace RealEstateManager.Application.UnitTests.UserTests
                 Verified = user.Verified,
                 Rating = user.Rating,
                 Type = user.Type,
-                PropertyHistory = new List<Guid> { Guid.NewGuid() }
+                PropertyHistory = [Guid.NewGuid()]
             };
             repository.AddAsync(Arg.Any<User>()).Returns(Result<Guid>.Success(user.Id));
             mapper.Map<User>(Arg.Any<CreateUserCommand>()).Returns(user);
@@ -189,7 +190,7 @@ namespace RealEstateManager.Application.UnitTests.UserTests
             result.ErrorMessage.Should().Be("Property not found");
         }
 
-        private User GenerateUser()
+        private static User GenerateUser()
         {
             return new User
             {
@@ -200,22 +201,7 @@ namespace RealEstateManager.Application.UnitTests.UserTests
                 Verified = true,
                 Rating = 4.5m,
                 Type = UserType.Individual,
-                PropertyHistory = new List<Guid> { Guid.NewGuid() }
-            };
-        }
-
-        private UserDto GenerateUserDto(User user)
-        {
-            return new UserDto
-            {
-                Id = user.Id,
-                Username = user.Username,
-                Password = user.Password,
-                Email = user.Email,
-                Verified = user.Verified,
-                Rating = user.Rating,
-                Type = user.Type,
-                PropertyHistory = user.PropertyHistory
+                PropertyHistory = [Guid.NewGuid()]
             };
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Application.Use_Cases.Commands;
-using Application.Use_Cases.Listings.Commands;
 using AutoMapper;
 using Domain.Common;
 using Domain.Entities;
@@ -18,12 +17,6 @@ namespace Application.Use_Cases.CommandHandlers
 
         public async Task<Result<Guid>> Handle(CreateListingCommand request, CancellationToken cancellationToken)
         {
-            CreateListingCommandValidator validator = new CreateListingCommandValidator();
-            var validatorResult = validator.Validate(request);
-            if(!validatorResult.IsValid)
-            {
-                return Result<Guid>.Failure(validatorResult.ToString());
-            }
             var userId = await ValidateUSerId(request.UserId);
             var propertyId = await ValidatePropertyId(request.PropertyId);
             if (!userId.IsSuccess)

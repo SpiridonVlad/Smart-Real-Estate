@@ -6,16 +6,11 @@ using MediatR;
 
 namespace Application.Use_Cases.Users.CommandHandlers
 {
-    public class AddPropertyToHistoryCommandHandler : IRequestHandler<AddPropertyToHistoryCommand, Result<string>>
+    public class AddPropertyToHistoryCommandHandler(IUserRepository repository, IMapper mapper, IPropertyRepository propertyRepository) : IRequestHandler<AddPropertyToHistoryCommand, Result<string>>
     {
-        private readonly IUserRepository repository;
-        private readonly IPropertyRepository propertyRepository;
+        private readonly IUserRepository repository = repository;
+        private readonly IPropertyRepository propertyRepository = propertyRepository;
 
-        public AddPropertyToHistoryCommandHandler(IUserRepository repository, IMapper mapper, IPropertyRepository propertyRepository)
-        {
-            this.repository = repository;
-            this.propertyRepository = propertyRepository;
-        }
         public async Task<Result<string>> Handle(AddPropertyToHistoryCommand request, CancellationToken cancellationToken)
         {
             var userResult = await repository.GetByIdAsync(request.UserId);
@@ -33,7 +28,7 @@ namespace Application.Use_Cases.Users.CommandHandlers
             var user = userResult.Data;
             if (user.PropertyHistory == null)
             {
-                user.PropertyHistory = new List<Guid>();
+                user.PropertyHistory = [];
             }
             user.PropertyHistory.Add(request.PropertyId);
 

@@ -4,6 +4,7 @@ using Application.Use_Cases.Queries;
 using AutoMapper;
 using Domain.Common;
 using Domain.Entities;
+using Domain.Entities.Features;
 using Domain.Repositories;
 using Domain.Types;
 using FluentAssertions;
@@ -77,7 +78,7 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
             await act.Should().ThrowAsync<Exception>().WithMessage("Database error");
         }
 
-        private Property GenerateProperty()
+        private static Property GenerateProperty()
         {
             return new Property
             {
@@ -102,7 +103,7 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
                     Verified = true,
                     Rating = 4.5m,
                     Type = UserType.Individual,
-                    PropertyHistory = new List<Guid> { Guid.NewGuid() }
+                    PropertyHistory = [Guid.NewGuid()]
                 },
                 Type = PropertyType.Apartment,
                 Features = new PropertyFeatures
@@ -117,7 +118,7 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
         }
 
 
-        private PropertyDto GeneratePropertyDto(Property property)
+        private static PropertyDto GeneratePropertyDto(Property property)
         {
             return new PropertyDto
             {

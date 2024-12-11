@@ -12,6 +12,14 @@ namespace Application.Authentication
                 .MaximumLength(100).WithMessage("Email must be less than 100 characters")
                 .Matches(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").WithMessage("Invalid email format");
             RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required");
+            RuleFor(x => x.Username)
+                .NotEmpty().WithMessage("Username is required.")
+                .MinimumLength(3).WithMessage("Username must be at least 3 characters long.")
+                .MaximumLength(50).WithMessage("Username must be less than 50 characters long.")
+                .Matches(@"^[a-zA-Z0-9]([._-]?[a-zA-Z0-9]+)*$")
+                    .WithMessage("Username must start and end with an alphanumeric character and can only contain letters, numbers, underscores, hyphens, or periods. Special characters cannot be consecutive.");
+
+            RuleFor(x => x.Type).IsInEnum().WithMessage("Invalid user type");
         }
     }
 }

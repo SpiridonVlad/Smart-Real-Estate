@@ -14,13 +14,6 @@ namespace Application.Use_Cases.CommandHandlers
 
         public async Task<Result<string>> Handle(UpdatePropertyCommand request, CancellationToken cancellationToken)
         {
-            UpdatePropertyCommandValidator validator = new();
-            var validationResult = await validator.ValidateAsync(request, cancellationToken);
-            if (!validationResult.IsValid)
-            {
-                return Result<string>.Failure(validationResult.ToString());
-            }
-
             var propertyResult = await propertyRepository.GetByIdAsync(request.Id);
             if (!propertyResult.IsSuccess)
             {

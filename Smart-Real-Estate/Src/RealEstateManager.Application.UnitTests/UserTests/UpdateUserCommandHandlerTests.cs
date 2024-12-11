@@ -39,7 +39,7 @@ namespace RealEstateManager.Application.UnitTests.UserTests
                 Type = user.Type,
                 PropertyHistory = user.PropertyHistory
             };
-            repository.UpdateAsync(Arg.Any<User>()).Returns(Result<object>.Success(null));
+            repository.UpdateAsync(Arg.Any<User>()).Returns(Result<object>.Success(""));
             mapper.Map<User>(Arg.Any<UpdateUserCommand>()).Returns(user);
 
             // Act
@@ -121,7 +121,7 @@ namespace RealEstateManager.Application.UnitTests.UserTests
                 Verified = true,
                 Rating = 4.5m,
                 Type = UserType.Individual,
-                PropertyHistory = new List<Guid> { Guid.NewGuid() }
+                PropertyHistory = [Guid.NewGuid()]
             };
         }
 

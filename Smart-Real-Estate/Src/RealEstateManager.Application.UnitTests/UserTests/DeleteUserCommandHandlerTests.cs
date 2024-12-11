@@ -23,7 +23,7 @@ namespace RealEstateManager.Application.UnitTests.UserTests
             // Arrange
             var userId = Guid.NewGuid();
             var command = new DeleteUserCommand { Id = userId };
-            repository.DeleteAsync(Arg.Any<Guid>()).Returns(Result<object>.Success(null));
+            repository.DeleteAsync(Arg.Any<Guid>()).Returns(Result<object>.Success(""));
 
             // Act
             var handler = new DeleteUserCommandHandler(repository);

@@ -45,7 +45,7 @@ namespace Application.Use_Cases.Commands
             RuleFor(x => x.Features).NotNull().WithMessage("Features must not be null.");
 
             RuleForEach(x => x.Features.Features)
-                .Must(feature => Enum.IsDefined(typeof(PropertyFeatureType), feature.Key))
+                .Must(feature => Enum.IsDefined(feature.Key))
                 .WithMessage("Invalid property feature type.");
         }
     }

@@ -6,13 +6,10 @@ using MediatR;
 
 namespace Application.Use_Cases.Users.CommandHandlers
 {
-    public class VerifyUserCommandHandler : IRequestHandler<VerifyUserCommand, Result<string>>
+    public class VerifyUserCommandHandler(IUserRepository repository, IMapper mapper) : IRequestHandler<VerifyUserCommand, Result<string>>
     {
-        private readonly IUserRepository repository;
-        public VerifyUserCommandHandler(IUserRepository repository, IMapper mapper)
-        {
-            this.repository = repository;
-        }
+        private readonly IUserRepository repository = repository;
+
         public async Task<Result<string>> Handle(VerifyUserCommand request, CancellationToken cancellationToken)
         {
             var userResult = await repository.GetByIdAsync(request.UserId);

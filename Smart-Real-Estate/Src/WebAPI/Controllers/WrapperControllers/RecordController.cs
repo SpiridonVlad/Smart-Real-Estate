@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using Application.Use_Cases.Queries;
 using Application.DTOs;
 using Domain.Filters;
 using Microsoft.AspNetCore.Authorization;
-using Domain.Entities;
 using Application.Use_Cases.Wrappers;
 
 namespace Real_Estate_Management_System.Controllers.WrapperControllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class RecordController(IMediator mediator) : ControllerBase
