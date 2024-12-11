@@ -12,7 +12,7 @@ namespace Application.Use_Cases.Wrappers
      IPropertyRepository propertyRepository,
      IAddressRepository addressRepository,
      IListingRepository listingRepository,
-     IMapper mapper) : IRequestHandler<GetPaginatedRecordsQuery, Result<IEnumerable<RecordDto>>>
+     IMapper mapper) : IRequestHandler<GetRecordQuery, Result<IEnumerable<RecordDto>>>
     {
         private readonly IUserRepository userRepository = userRepository;
         private readonly IPropertyRepository propertyRepository = propertyRepository;
@@ -20,7 +20,7 @@ namespace Application.Use_Cases.Wrappers
         private readonly IListingRepository listingRepository = listingRepository;
         private readonly IMapper mapper = mapper;
 
-        public async Task<Result<IEnumerable<RecordDto>>> Handle(GetPaginatedRecordsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<RecordDto>>> Handle(GetRecordQuery request, CancellationToken cancellationToken)
         {
             var listingsResult = await listingRepository.GetPaginatedAsync(request.Page, request.PageSize);
             if (!listingsResult.IsSuccess)

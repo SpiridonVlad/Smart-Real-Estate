@@ -13,11 +13,9 @@ namespace Identity
     {
         public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
         {
-            // Configure DbContext for user-related data
             services.AddDbContext<UsersDbContext>(options =>
                 options.UseSqlite(configuration.GetConnectionString("UserConnection")));
 
-            // Configure Authentication
             var jwtSettingsSection = configuration.GetSection("Jwt");
             var secretKey = jwtSettingsSection["Key"];
             var key = Encoding.ASCII.GetBytes(secretKey);
@@ -41,7 +39,6 @@ namespace Identity
                 };
             });
 
-            // Add Repositories
             services.AddScoped<IUserRepository, UserRepository>();
 
             return services;

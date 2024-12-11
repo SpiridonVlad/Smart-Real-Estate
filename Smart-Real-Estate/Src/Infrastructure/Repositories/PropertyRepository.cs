@@ -57,6 +57,19 @@ namespace Infrastructure.Repositories
             }
         }
 
+        public async Task<Result<IEnumerable<Property>>> GetAllForUser(Guid userId)
+        {
+            try
+            {
+                var properties = await context.Properties.Where(p => p.UserId == userId).ToListAsync();
+                return Result<IEnumerable<Property>>.Success(properties);
+            }
+            catch (Exception ex)
+            {
+                return Result<IEnumerable<Property>>.Failure(ex.Message);
+            }
+        }
+
         public async Task<Result<Property>> GetByIdAsync(Guid id)
         {
             try

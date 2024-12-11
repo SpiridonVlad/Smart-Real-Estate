@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Use_Cases.Wrappers
 {
-    public class GetPaginatedRecordsQuery : IRequest<Result<IEnumerable<RecordDto>>>
+    public class GetRecordQuery : IRequest<Result<IEnumerable<RecordDto>>>
     {
         public required int Page { get; set; }
         public required int PageSize { get; set; }

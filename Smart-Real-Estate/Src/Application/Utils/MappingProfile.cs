@@ -24,6 +24,7 @@ namespace Application.Utils
 
             CreateMap<Address, AddressDto>().ReverseMap();
             CreateMap<Record, RecordDto>().ReverseMap();
+            CreateMap<Realty, RealtyDto>().ReverseMap();
         }
     }
 }
