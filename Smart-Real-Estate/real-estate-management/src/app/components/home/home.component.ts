@@ -17,4 +17,10 @@ export class HomeComponent {
       this.router.navigate(['/login']);
     }
   }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }
+
