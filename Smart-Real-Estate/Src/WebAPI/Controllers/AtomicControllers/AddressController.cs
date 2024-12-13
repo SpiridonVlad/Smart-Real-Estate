@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Real_Estate_Management_System.Controllers.AtomicControllers
 {
     [Authorize]
-    [Route("api/v1/address")]
+    [Route("api/v1/Address")]
     [ApiController]
     public class AddressController(IMediator mediator) : ControllerBase
     {

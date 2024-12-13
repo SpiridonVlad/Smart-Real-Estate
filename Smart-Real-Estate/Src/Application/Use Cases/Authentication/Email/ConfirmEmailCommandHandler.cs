@@ -19,7 +19,6 @@ namespace Application.Use_Cases.Authentication
         {
             var handler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(jwtSecretKey);
-
             try
             {
                 var tokenValidationParameters = new TokenValidationParameters
@@ -37,20 +36,11 @@ namespace Application.Use_Cases.Authentication
 
                 var jwtToken = handler.ReadJwtToken(request.Token);
 
-                var email = string.Empty;
-
-                foreach (var claim in jwtToken.Claims)
-                {
-                    if (claim.Type == "sub")
-                    {
-                        email = claim.Value;
-                    }
-                }
+                var email = jwtToken.Claims.First(claim => claim.Type == "Email").Value;
 
                 var username = claims.FindFirst("Username")?.Value;
 
                 var hashedPassword = claims.FindFirst("Password")?.Value;
-
 
                 if (email == null || username == null || hashedPassword == null)
                 {
@@ -84,12 +74,10 @@ namespace Application.Use_Cases.Authentication
             }
             catch (SecurityTokenException ex)
             {
-                Console.WriteLine($"Token validation failed: {ex.Message}");
                 return Result<string>.Failure($"Token validation failed: {ex.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
                 return Result<string>.Failure($"Error: {ex.Message}");
             }
         }

@@ -12,10 +12,11 @@ namespace Real_Estate_Management_System.Controllers.WrapperControllers
     {
         private readonly IMediator mediator = mediator;
 
-        [HttpGet("{id:guid}")]
-        public async Task<ActionResult<IEnumerable<RealtyDto>>> GetUsersRealtys(Guid id)
+        [AuthorizeUser]
+        [HttpGet("{userId:guid}")]
+        public async Task<ActionResult<IEnumerable<RealtyDto>>> GetUsersRealtys(Guid userId)
         {
-            var query = new GetRealtyQuery {Id = id };
+            var query = new GetRealtyQuery {Id = userId };
             var result = await mediator.Send(query);
             if (!result.IsSuccess)
             {
