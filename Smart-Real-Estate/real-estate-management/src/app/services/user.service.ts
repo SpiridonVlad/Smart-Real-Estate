@@ -19,14 +19,28 @@ export class UserService {
     });
   }
 
-  public getPaginatedUsers(page: number, pageSize: number): Observable<{ data: User[] }> {
-    const params = new HttpParams()
+  getPaginatedUsers(page: number, pageSize: number, minRating?: number, maxRating?: number, verified?: boolean, type?: number, username?: string): Observable<{ data: User[] }> {
+    let params = new HttpParams()
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());
 
-    const headers = this.getAuthHeaders();
+    if (minRating !== undefined) {
+      params = params.set('minRating', minRating.toString());
+    }
+    if (maxRating !== undefined) {
+      params = params.set('maxRating', maxRating.toString());
+    }
+    if (verified !== undefined) {
+      params = params.set('verified', verified.toString());
+    }
+    if (type) {
+      params = params.set('type', type);
+    }
+    if (username) {
+      params = params.set('username', username);
+    }
 
-    return this.http.get<{ data: User[] }>(`${this.apiUrl}/paginated`, { params, headers });
+    return this.http.get<{ data: User[] }>(`${this.apiUrl}/Paginated`, { params });
   }
 
   public createUser(user: User): Observable<any> {
