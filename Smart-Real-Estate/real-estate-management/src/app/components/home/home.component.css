@@ -1,8 +1,24 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f8ff; /* Light blue background */
+}
+
 .home {
+  width: 100%;
+  height: 100%;
   position: relative;
   padding: 20px;
   text-align: center;
   background-color: #f0f8ff; /* Light blue background */
+  box-sizing: border-box;
 }
 
 .header {
@@ -11,18 +27,9 @@
   margin-bottom: 20px;
 }
 
-.login-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.login-button:hover {
-  background-color: #0056b3;
+.login-button, .logout-button {
+  justify-content: end;
+  width: 10rem;
 }
 
 h1 {
@@ -30,12 +37,43 @@ h1 {
   margin-bottom: 20px;
 }
 
+.button-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row; /* Ensure elements are in a row */
+  flex-wrap: nowrap; /* Prevent wrapping */
+  gap: 20px; /* Space between the boxes */
+}
+
+.button-box {
+  display: inline-block;
+  width: 400px;
+  padding: 20px;
+  margin: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.button-box h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.button-box p {
+  color: #666;
+}
+
 button {
+  width: 100%;
   background-color: #28a745; /* Green button */
   color: white;
   border: none;
-  padding: 10px 20px;
-  margin: 10px;
+  padding: 15px;
+  margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -50,9 +88,12 @@ button:hover {
     padding: 15px;
   }
 
-  button {
+  .button-box {
     width: 100%;
+    margin: 10px 0;
+  }
+
+  button {
     padding: 10px;
-    margin: 5px 0;
   }
 }
