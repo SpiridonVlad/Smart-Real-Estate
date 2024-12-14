@@ -10,6 +10,7 @@ import { PropertyUpdateComponent } from './components/property-update/property-u
 import { ListingUpdateComponent } from './components/listing-update/listing-update.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { RegisterComponent } from './components/register/register.component';
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,6 +24,7 @@ export const appRoutes: Routes = [
   {path: 'properties',component:PropertyListComponent},
   {path: 'properties/create',component:PropertyCreateComponent},
   {path: 'properties/update/:id',component:PropertyUpdateComponent},
+  { path: 'email-verification', component: EmailVerificationComponent },
   
   // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }

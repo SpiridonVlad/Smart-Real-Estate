@@ -27,7 +27,7 @@ namespace Application.Authentication
         {
             try
             {
-                var confirmationLink = $"http://localhost:5214/api/v1/authentication/confirm?token={token}";
+                var confirmationLink = $"http://localhost:4200/email-verification?token={token}";
 
                 string emailBody = $@"
         <html>

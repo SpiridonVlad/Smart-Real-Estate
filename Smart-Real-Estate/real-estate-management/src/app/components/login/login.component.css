@@ -1,7 +1,7 @@
 .login {
-  max-width: 400px;
+   max-width: 400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 2rem; 
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -65,7 +65,14 @@ button:hover:not(:disabled) {
 .register-link a:hover {
   text-decoration: underline;
 }
-
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+  word-wrap: break-word; /* Ensure long words break to the next line */
+  white-space: pre-wrap; /* Preserve whitespace and wrap text */
+  max-width: 16rem;
+}
 @media (max-width: 600px) {
   .login {
     padding: 15px;

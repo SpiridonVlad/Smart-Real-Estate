@@ -25,6 +25,11 @@ export class AuthService {
       catchError(this.handleError('register', []))
     );
   }
+  verifyEmail(token: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Confirm`, { token }).pipe(
+      catchError(this.handleError('verifyEmail', []))
+    );
+  }
 
   private setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
