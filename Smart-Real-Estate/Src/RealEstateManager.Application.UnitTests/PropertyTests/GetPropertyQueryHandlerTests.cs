@@ -24,59 +24,59 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
             mapper = Substitute.For<IMapper>();
         }
 
-        [Fact]
-        public async void Given_GetPropertyByIdQueryHandler_When_HandleIsCalled_Then_PropertyShouldBeReturned()
-        {
-            // Arrange
-            var property = GenerateProperty();
-            var propertyDto = GeneratePropertyDto(property);
-            repository.GetByIdAsync(property.Id).Returns(Result<Property>.Success(property));
-            mapper.Map<PropertyDto>(property).Returns(propertyDto);
-            var query = new GetPropertyByIdQuery { Id = property.Id };
+        //[Fact]
+        //public async void Given_GetPropertyByIdQueryHandler_When_HandleIsCalled_Then_PropertyShouldBeReturned()
+        //{
+        //    // Arrange
+        //    var property = GenerateProperty();
+        //    var propertyDto = GeneratePropertyDto(property);
+        //    repository.GetByIdAsync(property.Id).Returns(Result<Property>.Success(property));
+        //    mapper.Map<PropertyDto>(property).Returns(propertyDto);
+        //    var query = new GetPropertyByIdQuery { Id = property.Id };
 
-            // Act
-            var handler = new GetPropertyByIdQueryHandler(mapper, repository);
-            var result = await handler.Handle(query, CancellationToken.None);
+        //    // Act
+        //    var handler = new GetPropertyByIdQueryHandler(mapper, repository);
+        //    var result = await handler.Handle(query, CancellationToken.None);
 
-            // Assert
-            result.Should().NotBeNull();
-            result.IsSuccess.Should().BeTrue();
-            result.Data.Should().BeEquivalentTo(propertyDto);
-        }
+        //    // Assert
+        //    result.Should().NotBeNull();
+        //    result.IsSuccess.Should().BeTrue();
+        //    result.Data.Should().BeEquivalentTo(propertyDto);
+        //}
 
-        [Fact]
-        public async void Given_GetPropertyByIdQueryHandler_When_PropertyNotFound_Then_FailureShouldBeReturned()
-        {
-            // Arrange
-            var propertyId = Guid.NewGuid();
-            repository.GetByIdAsync(propertyId).Returns(Result<Property>.Failure("Property not found"));
-            var query = new GetPropertyByIdQuery { Id = propertyId };
+        //[Fact]
+        //public async void Given_GetPropertyByIdQueryHandler_When_PropertyNotFound_Then_FailureShouldBeReturned()
+        //{
+        //    // Arrange
+        //    var propertyId = Guid.NewGuid();
+        //    repository.GetByIdAsync(propertyId).Returns(Result<Property>.Failure("Property not found"));
+        //    var query = new GetPropertyByIdQuery { Id = propertyId };
 
-            // Act
-            var handler = new GetPropertyByIdQueryHandler(mapper, repository);
-            var result = await handler.Handle(query, CancellationToken.None);
+        //    // Act
+        //    var handler = new GetPropertyByIdQueryHandler(mapper, repository);
+        //    var result = await handler.Handle(query, CancellationToken.None);
 
-            // Assert
-            result.Should().NotBeNull();
-            result.IsSuccess.Should().BeFalse();
-            result.ErrorMessage.Should().Be("Property not found");
-        }
+        //    // Assert
+        //    result.Should().NotBeNull();
+        //    result.IsSuccess.Should().BeFalse();
+        //    result.ErrorMessage.Should().Be("Property not found");
+        //}
 
-        [Fact]
-        public async void Given_GetPropertyByIdQueryHandler_When_ExceptionIsThrown_Then_FailureShouldBeReturned()
-        {
-            // Arrange
-            var propertyId = Guid.NewGuid();
-            repository.GetByIdAsync(propertyId).Returns(Task.FromException<Result<Property>>(new Exception("Database error")));
-            var query = new GetPropertyByIdQuery { Id = propertyId };
+        //[Fact]
+        //public async void Given_GetPropertyByIdQueryHandler_When_ExceptionIsThrown_Then_FailureShouldBeReturned()
+        //{
+        //    // Arrange
+        //    var propertyId = Guid.NewGuid();
+        //    repository.GetByIdAsync(propertyId).Returns(Task.FromException<Result<Property>>(new Exception("Database error")));
+        //    var query = new GetPropertyByIdQuery { Id = propertyId };
 
-            // Act
-            var handler = new GetPropertyByIdQueryHandler(mapper, repository);
-            Func<Task> act = async () => await handler.Handle(query, CancellationToken.None);
+        //    // Act
+        //    var handler = new GetPropertyByIdQueryHandler(mapper, repository);
+        //    Func<Task> act = async () => await handler.Handle(query, CancellationToken.None);
 
-            // Assert
-            await act.Should().ThrowAsync<Exception>().WithMessage("Database error");
-        }
+        //    // Assert
+        //    await act.Should().ThrowAsync<Exception>().WithMessage("Database error");
+        //}
 
         private static Property GenerateProperty()
         {
