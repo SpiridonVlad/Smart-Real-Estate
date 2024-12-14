@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using Application.DTOs;
-using Domain.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Application.Use_Cases.Wrappers;
 
-namespace Real_Estate_Management_System.Controllers.WrapperControllers
+namespace Real_Estate_Management_System.Controllers
 {
     [Authorize]
     [Route("api/v1/[controller]")]
@@ -15,8 +14,8 @@ namespace Real_Estate_Management_System.Controllers.WrapperControllers
         private readonly IMediator mediator = mediator;
 
 
-        [HttpGet("paginated")]
-        public async Task<ActionResult<IEnumerable<RecordDto>>> GetPagiantedRecords(int page, int pageSize, [FromQuery] ListingFilter filter)
+        [HttpGet("Paginated")]
+        public async Task<ActionResult<IEnumerable<RecordDto>>> GetPagiantedRecords(int page, int pageSize)
         {
             var query = new GetRecordQuery { Page = page, PageSize = pageSize };
             var result = await mediator.Send(query);

@@ -2,9 +2,9 @@
 using Domain.Types;
 using System.Linq.Expressions;
 
-namespace Application.Use_Cases.Filters
+namespace Application.Filters
 {
-    public class UserFilters
+    public class UserFilter
     {
         public bool? Verified { get; set; }
         public UserType? Type { get; set; }

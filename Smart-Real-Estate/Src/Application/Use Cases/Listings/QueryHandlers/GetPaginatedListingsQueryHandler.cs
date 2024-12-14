@@ -14,7 +14,8 @@ namespace Application.Use_Cases.QueryHandlers
 
         public async Task<Result<IEnumerable<ListingDto>>> Handle(GetPaginatedListingsQuery request, CancellationToken cancellationToken)
         {
-            var listings = await repository.GetPaginatedAsync(request.Page, request.PageSize);
+            var filter = request.Filters.BuildFilterExpression();
+            var listings = await repository.GetPaginatedAsync(request.Page, request.PageSize,filter);
             if (listings.IsSuccess)
             {
                 return Result<IEnumerable<ListingDto>>.Success(mapper.Map<IEnumerable<ListingDto>>(listings.Data));

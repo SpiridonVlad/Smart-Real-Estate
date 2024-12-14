@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 
 namespace Infrastructure.Repositories
@@ -45,15 +46,23 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<Result<IEnumerable<Listing>>> GetPaginatedAsync(int page, int pageSize)
+        public async Task<Result<IEnumerable<Listing>>> GetPaginatedAsync(
+            int page,
+            int pageSize,
+            Expression<Func<Listing, bool>>? filter = null)
         {
             try
             {
                 IQueryable<Listing> query = context.Listings;
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
 
-                var listings = await query
+                    var listings = await query
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
+                    .OrderByDescending(l => l.PublicationDate)
                     .ToListAsync();
 
                 return Result<IEnumerable<Listing>>.Success(listings);
@@ -89,6 +98,41 @@ namespace Infrastructure.Repositories
                 context.Listings.Update(listing);
                 await context.SaveChangesAsync();
                 return Result<object>.Success("Updated succesfully");
+            }
+            catch (Exception ex)
+            {
+                return Result<object>.Failure(ex.Message);
+            }
+        }
+
+        public async Task<Result<IEnumerable<Listing>>> GetAllForUser(Guid userId)
+        {
+            try
+            {
+                var listings = await context.Listings
+                    .Where(l => l.UserId == userId)
+                    .ToListAsync();
+                return Result<IEnumerable<Listing>>.Success(listings);
+            }
+            catch (Exception ex)
+            {
+                return Result<IEnumerable<Listing>>.Failure(ex.Message);
+            }
+        }
+
+        public async Task<Result<object>> DeleteUsersListings(Guid userId)
+        {
+            try
+            {
+                var listings = await context.Listings.Where(l => l.UserId == userId).ToListAsync();
+                if (listings == null)
+                {
+                    return Result<object>.Failure("Listings not found");
+                }
+                context.Listings.RemoveRange(listings);
+                await context.SaveChangesAsync();
+
+                return Result<object>.Success("");
             }
             catch (Exception ex)
             {

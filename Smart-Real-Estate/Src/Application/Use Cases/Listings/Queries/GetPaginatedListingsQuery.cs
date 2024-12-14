@@ -1,6 +1,6 @@
 ﻿using Application.DTOs;
+using Application.Filters;
 using Domain.Common;
-using Domain.Filters;
 using MediatR;
 
 namespace Application.Use_Cases.Queries
@@ -9,5 +9,6 @@ namespace Application.Use_Cases.Queries
     {
         public int Page { get; set; }
         public int PageSize { get; set; }
+        public ListingFilter Filters { get; set; } = new ListingFilter();
     }
 }

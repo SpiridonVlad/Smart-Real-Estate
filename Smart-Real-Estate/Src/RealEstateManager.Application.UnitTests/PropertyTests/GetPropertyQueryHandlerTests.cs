@@ -94,17 +94,7 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
                 },
                 ImageId = "image123",
                 UserId = Guid.NewGuid(),
-                User = new User
-                {
-                    Id = Guid.NewGuid(),
-                    Username = "testuser",
-                    Password = "password",
-                    Email = "testuser@example.com",
-                    Verified = true,
-                    Rating = 4.5m,
-                    Type = UserType.Individual,
-                    PropertyHistory = [Guid.NewGuid()]
-                },
+                
                 Type = PropertyType.Apartment,
                 Features = new PropertyFeatures
                 {
@@ -126,7 +116,6 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
                 AddressId = property.AddressId,
                 ImageId = property.ImageId,
                 UserId = property.UserId,
-                User = property.User,
                 Type = property.Type,
                 Features = property.Features
             };

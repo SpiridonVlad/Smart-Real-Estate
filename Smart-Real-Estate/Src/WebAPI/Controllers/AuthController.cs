@@ -3,7 +3,7 @@ using Application.Use_Cases.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Real_Estate_Management_System.Controllers.AtomicControllers
+namespace Real_Estate_Management_System.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -32,10 +32,10 @@ namespace Real_Estate_Management_System.Controllers.AtomicControllers
             var result = await mediator.Send(command);
             if (result.IsSuccess)
             {
-                return Ok(result.Data); 
+                return Ok(result.Data);
             }
 
-            return BadRequest(result.Data); 
+            return BadRequest(result.Data);
         }
 
     }

@@ -22,7 +22,12 @@ namespace Application.Use_Cases.Wrappers
 
         public async Task<Result<IEnumerable<RecordDto>>> Handle(GetRecordQuery request, CancellationToken cancellationToken)
         {
-            var listingsResult = await listingRepository.GetPaginatedAsync(request.Page, request.PageSize);
+            var filter = request.Filters.ListingFilter.BuildFilterExpression();
+            var listingsResult = await listingRepository.GetPaginatedAsync(
+                request.Page,
+                request.PageSize,
+                filter
+                );
             if (!listingsResult.IsSuccess)
             {
                 return Result<IEnumerable<RecordDto>>.Failure("Failed to retrieve listings.");

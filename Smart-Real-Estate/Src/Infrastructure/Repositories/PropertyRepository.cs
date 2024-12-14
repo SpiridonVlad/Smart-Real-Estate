@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
@@ -29,6 +30,7 @@ namespace Infrastructure.Repositories
             try
             {
                 var property = await context.Properties.FindAsync(id);
+
                 if (property == null)
                 {
                     return Result<object>.Failure("Property not found");
@@ -44,11 +46,45 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<Result<IEnumerable<Property>>> GetAllAsync(int page, int pageSize)
+        public async Task<Result<object>> DeleteUsersPropertys(Guid userId)
         {
             try
             {
-                var properties = await context.Properties.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+                var properties = await context.Properties.Where(p => p.UserId == userId).ToListAsync();
+                if (properties == null)
+                {
+                    return Result<object>.Failure("Properties not found");
+                }
+                context.Properties.RemoveRange(properties);
+                await context.SaveChangesAsync();
+
+                return Result<object>.Success(properties);
+            }
+            catch (Exception ex)
+            {
+                return Result<object>.Failure(ex.Message);
+            }
+        }
+
+        public async Task<Result<IEnumerable<Property>>> GetPaginatedAsync(
+            int page, 
+            int pageSize,
+            Expression<Func<Property, bool>>? filter = null)
+        {
+            try
+            {
+                IQueryable<Property> query = context.Properties;
+
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
+
+                var properties = await query
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+
                 return Result<IEnumerable<Property>>.Success(properties);
             }
             catch (Exception ex)

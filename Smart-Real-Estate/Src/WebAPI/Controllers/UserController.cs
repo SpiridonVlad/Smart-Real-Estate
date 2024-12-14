@@ -7,10 +7,10 @@ using Domain.Common;
 using Application.Use_Cases.Queries;
 using Application.Use_Cases.Users.Commands;
 using Microsoft.AspNetCore.Authorization;
-using Application.Use_Cases.Filters;
 using Domain.Types;
+using Application.Filters;
 
-namespace Real_Estate_Management_System.Controllers.AtomicControllers
+namespace Real_Estate_Management_System.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -45,7 +45,7 @@ namespace Real_Estate_Management_System.Controllers.AtomicControllers
             {
                 Page = page,
                 PageSize = pageSize,
-                Filters = new UserFilters
+                Filters = new UserFilter
                 {
                     Verified = verified,
                     Type = type,

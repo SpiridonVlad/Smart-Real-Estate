@@ -52,12 +52,7 @@ namespace RealEstateManager.Application.UnitTests.UserTests
                     Country = "Default Country"
                 },
                 ImageId = "defaultImageId", // Set a default or valid ImageId
-                User = new User
-                {
-                    Username = "defaultUsername",
-                    Password = "defaultPassword",
-                    Email = "defaultEmail@example.com"
-                }, // Assuming User is a required member
+                
                 Features = new PropertyFeatures() // Assuming PropertyFeatures is a required member
             }));
             // Act
@@ -97,12 +92,7 @@ namespace RealEstateManager.Application.UnitTests.UserTests
                     Country = "Default Country"
                 },
                 ImageId = "defaultImageId", // Set a default or valid ImageId
-                User = new User
-                {
-                    Username = "defaultUsername",
-                    Password = "defaultPassword",
-                    Email = "defaultEmail@example.com"
-                }, // Assuming User is a required member
+                
                 Features = new PropertyFeatures() // Assuming PropertyFeatures is a required member
             }));
 
@@ -143,12 +133,7 @@ namespace RealEstateManager.Application.UnitTests.UserTests
                     Country = "Default Country"
                 },
                 ImageId = "defaultImageId", // Set a default or valid ImageId
-                User = new User
-                {
-                    Username = "defaultUsername",
-                    Password = "defaultPassword",
-                    Email = "defaultEmail@example.com"
-                }, // Assuming User is a required member
+                
                 Features = new PropertyFeatures() // Assuming PropertyFeatures is a required member
             }));
             // Act
