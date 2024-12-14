@@ -42,7 +42,7 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: row; /* Ensure elements are in a row */
-  flex-wrap: nowrap; /* Prevent wrapping */
+  /* flex-wrap: nowrap; /* Prevent wrapping */
   gap: 20px; /* Space between the boxes */
 }
 
