@@ -11,6 +11,7 @@ import { ListingUpdateComponent } from './components/listing-update/listing-upda
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { RecordListComponent } from './components/record-list/record-list.component';
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -23,6 +24,7 @@ export const appRoutes: Routes = [
   {path: 'properties',component:PropertyListComponent},
   {path: 'properties/create',component:PropertyCreateComponent},
   {path: 'properties/update/:id',component:PropertyUpdateComponent},
+  { path: 'records', component: RecordListComponent },
   
   // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }

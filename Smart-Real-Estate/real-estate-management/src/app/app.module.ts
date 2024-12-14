@@ -16,9 +16,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './services/auth.guard';
+import { RecordListComponent } from './components/record-list/record-list.component';
 @NgModule({
     declarations: [
-
+      
     ],
   imports: [
     
@@ -36,7 +37,8 @@ import { AuthGuard } from './services/auth.guard';
     AppComponent, 
     UserListComponent, 
     UserCreateComponent,
-    HomeComponent
+    HomeComponent,
+    RecordListComponent
   ],
   providers: [
     AuthGuard,

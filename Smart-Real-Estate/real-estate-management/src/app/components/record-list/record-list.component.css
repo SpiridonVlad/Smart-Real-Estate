@@ -1,0 +1,46 @@
+.record-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .pagination {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .record-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .card {
+    flex: 1 1 calc(33% - 20px);
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #ffffff;
+  }
+  
+  .card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .card ul {
+    padding: 0;
+    list-style: none;
+  }
+  
+  .card ul li {
+    margin: 5px 0;
+  }
+  

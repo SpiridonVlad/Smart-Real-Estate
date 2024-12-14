@@ -1,0 +1,44 @@
+<div class="record-list">
+    <h1>Property Records</h1>
+  
+    <!-- Pagination Controls -->
+    <div class="pagination">
+      <label for="page">Page:</label>
+      <select id="page" [(ngModel)]="page" (change)="loadRecords()">
+        <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
+      </select>
+  
+      <label for="pageSize">Page Size:</label>
+      <select id="pageSize" [(ngModel)]="pageSize" (change)="loadRecords()">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+  
+    <!-- Record List -->
+    <div *ngFor="let record of records" class="record-card">
+      <div class="card">
+        <h3>{{ record.property.pType }}</h3>
+        <p>Address: {{ record.address.street }}, {{ record.address.city }}</p>
+        <img [src]="record.property.imageId" alt="Property Image" />
+        <p>Features:</p>
+        <ul>
+          <li *ngFor="let feature of getFeatures(record.property.pFeatures)">
+            {{ feature.key }}: {{ feature.value }}
+          </li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Listing Details</h3>
+        <p>Description: {{ record.listing.description }}</p>
+        <p>Price: ${{ record.listing.price }}</p>
+        <p>Publication Date: {{ record.listing.publicationDate | date }}</p>
+      </div>
+      <div class="card">
+        <h3>User Details</h3>
+        <p>Username: {{ record.user.username }}</p>
+        <p>Verified: {{ record.user.verified ? 'Yes' : 'No' }}</p>
+        <p>User Type: {{ record.user.uType }}</p>
+      </div>
+    </div>
+  </div>
+  
