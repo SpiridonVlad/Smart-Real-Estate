@@ -4,7 +4,9 @@ using AutoMapper;
 using Domain.Common;
 using Domain.Entities;
 using Domain.Repositories;
+using Domain.Types;
 using MediatR;
+using Newtonsoft.Json;
 
 namespace Application.Use_Cases.Property.QueryHandlers
 {
@@ -19,19 +21,53 @@ namespace Application.Use_Cases.Property.QueryHandlers
 
         public async Task<Result<IEnumerable<PropertyDto>>> Handle(GetPaginatedPropertiesQuery request, CancellationToken cancellationToken)
         {
-            var filterExpression = request.Filters.BuildFilterExpression();
+            var filterExpression = request.Filter.BuildFilterExpression();
 
             var propertiesResult = await repository.GetPaginatedAsync(
                 request.Page,
                 request.PageSize,
                 filterExpression
-                );
+            );
 
             if (propertiesResult.IsSuccess)
             {
                 var Properties = new List<PropertyDto>();
                 foreach (var property in propertiesResult.Data)
                 {
+                    Dictionary<PropertyFeatureType, int> features = new Dictionary<PropertyFeatureType, int>();
+                    var minValues = request.Filter.PropertyFeaturesMinValues;
+                    var maxValues = request.Filter.PropertyFeaturesMaxValues;
+
+                    features = property.Features;
+
+                    bool isValidProperty = true;
+                    if (minValues != null)
+                    {
+                        foreach (var feature in features)
+                        {
+
+                            if (minValues.TryGetValue(feature.Key, out int minValue) && maxValues.TryGetValue(feature.Key, out int maxValue))
+                            {
+                                Console.WriteLine(feature.Key);
+                                Console.WriteLine(feature.Value);
+                                Console.WriteLine(minValue);
+                                Console.WriteLine(maxValue);
+                                int featureValue = feature.Value;
+
+                                if (featureValue < minValue || featureValue > maxValue)
+                                {
+                                    isValidProperty = false;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                isValidProperty = false;
+                                break;
+                            }
+                        }
+                    }
+
                     var address = await addressRepository.GetByIdAsync(property.AddressId);
                     if (!address.IsSuccess)
                     {
@@ -47,13 +83,17 @@ namespace Application.Use_Cases.Property.QueryHandlers
                         State = address.Data.State,
                     };
 
-                    Properties.Add(mapper.Map<PropertyDto>(property));
+                    if (isValidProperty)
+                    {
+                        Properties.Add(mapper.Map<PropertyDto>(property));
+                    }
                 }
 
                 return Result<IEnumerable<PropertyDto>>.Success(mapper.Map<IEnumerable<PropertyDto>>(Properties));
-
             }
+
             return Result<IEnumerable<PropertyDto>>.Failure(propertiesResult.ErrorMessage);
         }
+
     }
 }

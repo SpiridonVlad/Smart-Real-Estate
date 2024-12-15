@@ -15,6 +15,7 @@ namespace Identity
         {
             services.AddDbContext<UsersDbContext>(options =>
                 options.UseSqlite(configuration.GetConnectionString("UserConnection")));
+            services.AddScoped<IUserRepository, UserRepository>();
 
             var jwtSettingsSection = configuration.GetSection("Jwt");
             var secretKey = jwtSettingsSection["Key"];
@@ -38,8 +39,6 @@ namespace Identity
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
             });
-
-            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }

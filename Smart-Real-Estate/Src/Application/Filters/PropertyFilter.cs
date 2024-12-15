@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Types;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Application.Filters
@@ -9,6 +10,7 @@ namespace Application.Filters
         public PropertyType? PropertyType { get; set; }
         public Dictionary<PropertyFeatureType, int>? PropertyFeaturesMinValues { get; set; }
         public Dictionary<PropertyFeatureType, int>? PropertyFeaturesMaxValues { get; set; }
+
         public Expression<Func<Property, bool>> BuildFilterExpression()
         {
             Expression<Func<Property, bool>> filter = r => true;
@@ -20,9 +22,11 @@ namespace Application.Filters
             {
                 foreach (var feature in PropertyFeaturesMinValues)
                 {
+                    var featureKey = feature.Key.ToString();
+                    var featureValue = feature.Value;
+
                     filter = filter.And(r =>
-                        r.Features.Features.ContainsKey(feature.Key) &&
-                        r.Features.Features[feature.Key] >= feature.Value);
+                        EF.Functions.JsonContains(r.Features, $"{{\"{featureKey}\":{{\"$gte\":{featureValue}}}}}}}"));
                 }
             }
 
@@ -30,12 +34,16 @@ namespace Application.Filters
             {
                 foreach (var feature in PropertyFeaturesMaxValues)
                 {
+                    var featureKey = feature.Key.ToString();
+                    var featureValue = feature.Value;
+
                     filter = filter.And(r =>
-                        r.Features.Features.ContainsKey(feature.Key) &&
-                        r.Features.Features[feature.Key] <= feature.Value);
+                        EF.Functions.JsonContains(r.Features, $"{{\"{featureKey}\":{{\"$lte\":{featureValue}}}}}}}"));
                 }
             }
+
             return filter;
         }
+
     }
 }

@@ -78,6 +78,8 @@ namespace Infrastructure.Repositories
                 if (filter != null)
                 {
                     query = query.Where(filter);
+                    Console.WriteLine("Filtering properties");
+                    Console.WriteLine(filter);
                 }
 
                 var properties = await query

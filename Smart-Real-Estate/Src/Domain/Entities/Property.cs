@@ -1,5 +1,4 @@
-﻿using Domain.Entities.Features;
-using Domain.Types;
+﻿using Domain.Types;
 
 namespace Domain.Entities
 {
@@ -11,7 +10,6 @@ namespace Domain.Entities
         public required string ImageId { get; set; } 
         public Guid UserId { get; set; }
         public PropertyType Type { get; set; }
-        public required PropertyFeatures Features { get; set; }
-
+        public Dictionary<PropertyFeatureType, int> Features { get; set; } = [];
     }
 }

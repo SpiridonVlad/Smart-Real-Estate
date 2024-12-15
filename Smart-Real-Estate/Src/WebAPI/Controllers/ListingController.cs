@@ -5,6 +5,8 @@ using Application.Use_Cases.Queries;
 using Application.DTOs;
 using Domain.Common;
 using Application.Use_Cases.Listings.Commands;
+using Application.Filters;
+using Domain.Types;
 
 namespace Real_Estate_Management_System.Controllers
 {
@@ -25,10 +27,35 @@ namespace Real_Estate_Management_System.Controllers
             return CreatedAtAction(nameof(GetListingById), new { Id = result.Data }, result.Data);
         }
 
-        [HttpGet("paginated")]
-        public async Task<ActionResult<IEnumerable<ListingDto>>> GetPagiantedListings(int page, int pageSize)
+        [HttpGet("Paginated")]
+        public async Task<ActionResult<IEnumerable<ListingDto>>> GetPaginatedListings(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] int? minPrice = null,
+            [FromQuery] int? maxPrice = null,
+            [FromQuery] DateTime? minPublicationDate = null,
+            [FromQuery] DateTime? maxPublicationDate = null,
+            [FromQuery] string? descriptionContains = null,
+            [FromQuery(Name = "features")] Dictionary<ListingAssetss, int>? minFeatures = null)
         {
-            var query = new GetPaginatedListingsQuery { Page = page, PageSize = pageSize };
+            Console.WriteLine(minFeatures);
+            var filter = new ListingFilter
+            {
+                MinPrice = minPrice,
+                MaxPrice = maxPrice,
+                MinPublicationDate = minPublicationDate,
+                MaxPublicationDate = maxPublicationDate,
+                ListingDescriptionContains = descriptionContains,
+                ListingFeatures = minFeatures,
+            };
+
+            var query = new GetPaginatedListingsQuery
+            {
+                Page = page,
+                PageSize = pageSize,
+                Filter = filter
+            };
+
             var result = await mediator.Send(query);
             if (!result.IsSuccess)
             {

@@ -6,6 +6,8 @@ using Domain.Common;
 using Application.Use_Cases.Queries;
 using Application.Use_Cases.Property.Commands;
 using Microsoft.AspNetCore.Authorization;
+using Application.Filters;
+using Domain.Types;
 
 namespace Real_Estate_Management_System.Controllers
 {
@@ -28,10 +30,26 @@ namespace Real_Estate_Management_System.Controllers
 
         [HttpGet("Paginated")]
         public async Task<ActionResult<IEnumerable<PropertyDto>>> GetPaginatedProperties(
-            int page,
-            int pageSize)
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10,
+    [FromQuery] PropertyType? propertyType = null,
+    [FromQuery(Name = "minFeatures")] Dictionary<PropertyFeatureType, int>? minFeatures = null,
+    [FromQuery(Name = "maxFeatures")] Dictionary<PropertyFeatureType, int>? maxFeatures = null)
         {
-            var query = new GetPaginatedPropertiesQuery { Page = page, PageSize = pageSize };
+            var filter = new PropertyFilter
+            {
+                PropertyType = propertyType,
+                PropertyFeaturesMinValues = minFeatures,
+                PropertyFeaturesMaxValues = maxFeatures
+            };
+
+            var query = new GetPaginatedPropertiesQuery
+            {
+                Page = page,
+                PageSize = pageSize,
+                Filter = filter
+            };
+
             var result = await mediator.Send(query);
             if (!result.IsSuccess)
             {
