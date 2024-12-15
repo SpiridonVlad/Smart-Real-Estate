@@ -51,7 +51,7 @@ def generate_users(num_users=50):
     users = []
 
     for _ in range(num_users):
-        user_id = str(uuid.uuid4())
+        user_id = str(uuid.uuid4()).upper()
         username = fake.user_name()
         email = fake.email()
         verified = random.choice([True, False])

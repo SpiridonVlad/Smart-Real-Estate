@@ -18,7 +18,6 @@ namespace Real_Estate_Management_System.Controllers
     {
         private readonly IMediator mediator = mediator;
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Result<Guid>>> CreateUser([FromBody] CreateUserCommand command)
         {
