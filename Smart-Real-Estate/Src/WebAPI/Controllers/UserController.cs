@@ -18,6 +18,7 @@ namespace Real_Estate_Management_System.Controllers
     {
         private readonly IMediator mediator = mediator;
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Result<Guid>>> CreateUser([FromBody] CreateUserCommand command)
         {
@@ -70,6 +71,7 @@ namespace Real_Estate_Management_System.Controllers
         public async Task<ActionResult<UserDto>> GetUserById(Guid userId)
         {
             var query = new GetUserByIdQuery { Id = userId };
+            Console.WriteLine("Query: " + query.Id);
             var result = await mediator.Send(query);
             if (!result.IsSuccess)
             {

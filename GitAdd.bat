@@ -7,7 +7,7 @@ git rm -r --cached .\Smart-Real-Estate\Src\WebAPI\.sonarqube\
 
 echo Running git rm -r --cached .\Smart-Real-Estate\SonarQube\ ...
 git rm -r --cached .\Smart-Real-Estate\SonarQube\
-
+git rm -r --cached .\Smart-Real-Estate\Src\WebAPI\.idea\
 echo Running git status ...
 git status
 

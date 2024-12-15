@@ -6,11 +6,10 @@ import uuid
 from faker import Faker
 import json
 
-# Enums matching the provided C# definitions
 class ListingAssets:
-    IS_SOLD = 'IsSold'
-    IS_HIGHLIGHTED = 'IsHighlighted'
-    IS_DELETED = 'IsDeleted'
+    IS_SOLD = 'isSold'
+    IS_HIGHLIGHTED = 'isHighlighted'
+    IS_DELETED = 'isDeleted'
 
 class PropertyFeatureType:
     GARDEN = 'Garden'
@@ -58,12 +57,9 @@ def generate_users(num_users=50):
         verified = random.choice([True, False])
         raw_password = fake.password(length=12)
         hashed_password = bcrypt.hashpw(raw_password.encode('utf-8'), bcrypt.gensalt())
-
-        user_type = random.choice([
-            UserType.LEGAL_ENTITY,
-            UserType.INDIVIDUAL,
-            UserType.ADMIN
-        ])
+        property_history = None
+        
+        user_type = random.choice(range(3))
 
         users.append({
             'id': user_id,
@@ -71,7 +67,8 @@ def generate_users(num_users=50):
             'email': email,
             'verified': verified,
             'password': hashed_password,
-            'type': user_type
+            'type': user_type,
+            'property_history': property_history
         })
 
     return users
@@ -101,8 +98,8 @@ def populate_sqlite_users(db_path):
 
     for user in users:
         cursor.execute('''
-        INSERT INTO Users (Id, Username, Email, Password, Verified, Rating, Type)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO Users (Id, Username, Email, Password, Verified, Rating, Type, PropertyHistory)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             user['id'],
             user['username'],
@@ -110,7 +107,8 @@ def populate_sqlite_users(db_path):
             user['password'].decode('utf-8'),
             user['verified'],
             random.randint(0, 5),
-            user['type']
+            user['type'],
+            user['property_history']
         ))
 
     conn.commit()
@@ -143,16 +141,23 @@ def generate_properties(users, addresses, num_properties=50):
 
     for _ in range(num_properties):
         property_features = {
-            feature: random.randint(0, 10)
-            for feature in PropertyFeatureType.__dict__.values() if not feature.startswith('__')
+                feature: random.randint(0, 30)
+                for feature in vars(PropertyFeatureType).values()
+                if isinstance(feature, str) and feature.startswith('__') is False
         }
-        print(property_features)
+        property_types = {
+                value: index for index, value in enumerate([
+                        value for value in dir(PropertyType)
+                        if not value.startswith('__')
+                ])
+        }
+        
         property_obj = {
             'id': str(uuid.uuid4()),
             'user_id': random.choice(users)['id'],
             'address_id': random.choice(addresses)['id'],
             'image_id': str(uuid.uuid4()),
-            'type': random.choice(list(PropertyType.__dict__.keys())),
+            'type': property_types[random.choice(list(property_types.keys()))],
             'features': json.dumps(property_features)
         }
         properties.append(property_obj)
@@ -165,10 +170,11 @@ def generate_listings(users, properties, num_listings=50):
     for _ in range(num_listings):
         property_choice = random.choice(properties)
         available_users = [u for u in users if u['id'] != property_choice['user_id']]
-
+        
         listing_features = {
-            feature: random.choice([True, False])
-            for feature in ListingAssets.__dict__.keys() if not feature.startswith('__')
+                feature: random.choice([1, 0])
+                for feature in vars(ListingAssets).values()
+                if isinstance(feature, str) and feature.startswith('__') is False
         }
         print(listing_features)
         listing = {
@@ -255,7 +261,7 @@ def populate_postgres_database(connection_string, users):
                 listing['features']
         ))
 
-    #conn.commit()
+    conn.commit()
     conn.close()
 
     print(f"Successfully populated PostgreSQL database:")

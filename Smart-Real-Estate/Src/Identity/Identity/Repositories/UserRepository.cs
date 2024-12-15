@@ -72,7 +72,7 @@ namespace Identity.Repositories
            
             try
             {
-                var user = await context.Users.FirstAsync(u => u.Id == id);
+                var user = await context.Users.FindAsync(id);
 
                 if (user == null)
                 {
