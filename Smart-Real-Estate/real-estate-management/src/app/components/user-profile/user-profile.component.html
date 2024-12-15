@@ -1,0 +1,21 @@
+<div class="profile-container" *ngIf="userDetails; else loading">
+    <h1>User Profile</h1>
+    <div class="profile-details">
+      <p><strong>ID:</strong> {{ userDetails?.id }}</p>
+      <p><strong>Username:</strong> {{ userDetails?.username }}</p>
+      <p><strong>Email:</strong> {{ userDetails?.email }}</p>
+      <p><strong>Verified:</strong> {{ userDetails?.verified ? 'Yes' : 'No' }}</p>
+      <p><strong>Rating:</strong> {{ userDetails?.rating }}</p>
+      <p><strong>Type:</strong> {{ getUserType(userDetails?.type ?? -1) }}</p>
+    </div>
+    
+    <!-- Update Button -->
+    <div class="profile-actions">
+      <button class="update-button" (click)="navigateTo('/users/update', userDetails?.id)">Update Profile</button>
+    </div>
+  </div>
+  
+  <ng-template #loading>
+    <p>Loading user details...</p>
+  </ng-template>
+  
