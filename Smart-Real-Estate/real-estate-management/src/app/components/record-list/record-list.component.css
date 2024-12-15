@@ -1,46 +1,84 @@
-.record-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .pagination {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .record-card {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
+.container {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.scroll-container {
+  max-height: 500px; /* Înălțime maximă pentru scroll */
+  overflow-y: auto; /* Activare scroll vertical */
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f0f8ff; /* Light blue background */
+}
+
+.record-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #e6f7ff; /* Light blue card background */
+  margin-bottom: 15px; /* Spațiu între înregistrări */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Umbră ușoară */
+}
+
+.card {
+  flex: 1 1 calc(33% - 20px); /* 3 carduri pe rând */
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Umbră ușoară */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Umbră mai pronunțată la hover */
+}
+
+.card img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.card-title {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card-description {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.card-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
   .card {
-    flex: 1 1 calc(33% - 20px);
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #ffffff;
+    flex: 1 1 calc(50% - 20px); /* 2 carduri pe rând pe ecrane medii */
   }
-  
-  .card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
+}
+
+@media (max-width: 480px) {
+  .card {
+    flex: 1 1 100%; /* 1 card pe rând pe ecrane mici */
   }
-  
-  .card ul {
-    padding: 0;
-    list-style: none;
-  }
-  
-  .card ul li {
-    margin: 5px 0;
-  }
-  
+}

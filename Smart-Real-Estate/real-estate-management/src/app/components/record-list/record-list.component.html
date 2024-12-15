@@ -1,21 +1,24 @@
 <div class="record-list">
-    <h1>Property Records</h1>
-  
-    <!-- Pagination Controls -->
-    <div class="pagination">
-      <label for="page">Page:</label>
-      <select id="page" [(ngModel)]="page" (change)="loadRecords()">
-        <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
-      </select>
-  
-      <label for="pageSize">Page Size:</label>
-      <select id="pageSize" [(ngModel)]="pageSize" (change)="loadRecords()">
-        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
-      </select>
-    </div>
-  
+  <h1>Property Records</h1>
+
+  <!-- Pagination Controls -->
+  <div class="pagination">
+    <label for="page">Page:</label>
+    <select id="page" [(ngModel)]="page" (change)="loadRecords()">
+      <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
+    </select>
+
+    <label for="pageSize">Page Size:</label>
+    <select id="pageSize" [(ngModel)]="pageSize" (change)="loadRecords()">
+      <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+    </select>
+  </div>
+
+  <!-- Scrollable Container -->
+  <div class="scroll-container">
     <!-- Record List -->
     <div *ngFor="let record of records" class="record-card">
+      <!-- Property Card -->
       <div class="card">
         <h3>{{ record.property.pType }}</h3>
         <p>Address: {{ record.address.street }}, {{ record.address.city }}</p>
@@ -27,12 +30,14 @@
           </li>
         </ul>
       </div>
+      <!-- Listing Details -->
       <div class="card">
         <h3>Listing Details</h3>
         <p>Description: {{ record.listing.description }}</p>
         <p>Price: ${{ record.listing.price }}</p>
         <p>Publication Date: {{ record.listing.publicationDate | date }}</p>
       </div>
+      <!-- User Details -->
       <div class="card">
         <h3>User Details</h3>
         <p>Username: {{ record.user.username }}</p>
@@ -41,4 +46,4 @@
       </div>
     </div>
   </div>
-  
+</div>

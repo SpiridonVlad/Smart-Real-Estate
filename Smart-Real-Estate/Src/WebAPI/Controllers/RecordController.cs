@@ -6,7 +6,7 @@ using Application.Use_Cases.Wrappers;
 
 namespace Real_Estate_Management_System.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class RecordController(IMediator mediator) : ControllerBase

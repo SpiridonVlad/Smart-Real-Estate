@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -49,21 +50,21 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "users",
+                name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
-                    Username = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Password = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Username = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
                     Verified = table.Column<bool>(type: "boolean", nullable: false),
                     Rating = table.Column<decimal>(type: "numeric", nullable: false),
-                    Type = table.Column<string>(type: "text", nullable: false),
-                    PropertyHistory = table.Column<string>(type: "jsonb", nullable: true)
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    PropertyHistory = table.Column<List<Guid>>(type: "uuid[]", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,23 +87,12 @@ namespace Infrastructure.Migrations
                         principalTable: "addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_properties_users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_properties_AddressId",
                 table: "properties",
                 column: "AddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_properties_UserId",
-                table: "properties",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -115,10 +105,10 @@ namespace Infrastructure.Migrations
                 name: "properties");
 
             migrationBuilder.DropTable(
-                name: "addresses");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "addresses");
         }
     }
 }
