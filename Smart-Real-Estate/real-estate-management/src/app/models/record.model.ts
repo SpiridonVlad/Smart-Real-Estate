@@ -18,7 +18,9 @@ export enum PropertyType {
   export interface PropertyCard {
     imageId: string;
     pType: PropertyType;
-    pFeatures: { [key: string]: number };
+    pFeatures: {
+        features: { [key: string]: number }
+    };
   }
   
   export interface UserCard {

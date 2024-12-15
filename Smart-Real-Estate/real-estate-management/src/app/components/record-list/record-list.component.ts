@@ -63,4 +63,22 @@ export class RecordListComponent implements OnInit {
       this.loadRecords();
     }
   }
+
+  getPropertyType(type: string): string {
+    const propertyTypes = [
+      'Apartment',
+      'Office',
+      'Studio',
+      'Commercial Space',
+      'House',
+      'Garage',
+    ];
+    return propertyTypes[parseInt(type)] || 'Unknown';
+  }
+
+  getNonZeroFeatures(features: { [key: string]: number }): { key: string; value: number }[] {
+    return Object.entries(features)
+      .map(([key, value]) => ({ key, value })) // Transformă într-un array de obiecte
+      .filter(feature => feature.value !== 0); // Filtrează doar valorile diferite de 0
+  }
 }

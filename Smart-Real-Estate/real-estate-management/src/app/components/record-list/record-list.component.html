@@ -44,12 +44,12 @@
     <div *ngFor="let record of records" class="record-card">
       <!-- Property Card -->
       <div class="card">
-        <h3>{{ record.property.pType }}</h3>
+        <h3>Property type: {{ getPropertyType(record.property.pType) }}</h3>
         <p>Address: {{ record.address.street }}, {{ record.address.city }}</p>
         <img [src]="record.property.imageId" alt="Property Image" />
         <p>Features:</p>
         <ul>
-          <li *ngFor="let feature of getFeatures(record.property.pFeatures)">
+          <li *ngFor="let feature of getNonZeroFeatures(record.property.pFeatures.features)">
             {{ feature.key }}: {{ feature.value }}
           </li>
         </ul>
