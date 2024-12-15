@@ -13,13 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:Smart-Real-Estate/Src/Infrastructure/Migrations/20241214140512_NewMigration.Designer.cs
-    [Migration("20241214140512_NewMigration")]
-    partial class NewMigration
-========
-    [Migration("20241214212357_VladFinal")]
-    partial class VladFinal
->>>>>>>> master:Smart-Real-Estate/Src/Infrastructure/Migrations/20241214212357_VladFinal.Designer.cs
+    [Migration("20241215123045_Emil")]
+    partial class Emil
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +73,11 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
+                    b.Property<string>("Features")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("features");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
@@ -104,6 +104,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid>("AddressId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Features")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("features");
 
                     b.Property<string>("ImageId")
                         .IsRequired()
@@ -158,30 +163,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Listing", b =>
-                {
-                    b.OwnsOne("Domain.Entities.Features.ListingFeatures", "Features", b1 =>
-                        {
-                            b1.Property<Guid>("ListingId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("Features")
-                                .IsRequired()
-                                .HasColumnType("jsonb");
-
-                            b1.HasKey("ListingId");
-
-                            b1.ToTable("listings");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ListingId");
-                        });
-
-                    b.Navigation("Features")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entities.Property", b =>
                 {
                     b.HasOne("Domain.Entities.Address", "Address")
@@ -190,28 +171,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Domain.Entities.Features.PropertyFeatures", "Features", b1 =>
-                        {
-                            b1.Property<Guid>("PropertyId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("Features")
-                                .IsRequired()
-                                .HasColumnType("jsonb");
-
-                            b1.HasKey("PropertyId");
-
-                            b1.ToTable("properties");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PropertyId");
-                        });
-
                     b.Navigation("Address");
-
-                    b.Navigation("Features")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

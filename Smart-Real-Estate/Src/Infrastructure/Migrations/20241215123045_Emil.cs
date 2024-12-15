@@ -7,11 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:Smart-Real-Estate/Src/Infrastructure/Migrations/20241214140512_NewMigration.cs
-    public partial class NewMigration : Migration
-========
-    public partial class VladFinal : Migration
->>>>>>>> master:Smart-Real-Estate/Src/Infrastructure/Migrations/20241214212357_VladFinal.cs
+    public partial class Emil : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,7 +42,7 @@ namespace Infrastructure.Migrations
                     Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
                     Price = table.Column<int>(type: "int", nullable: false),
                     PublicationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Features_Features = table.Column<string>(type: "jsonb", nullable: false)
+                    features = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +76,7 @@ namespace Infrastructure.Migrations
                     ImageId = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Type = table.Column<string>(type: "text", nullable: false),
-                    Features_Features = table.Column<string>(type: "jsonb", nullable: false)
+                    features = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
                 {

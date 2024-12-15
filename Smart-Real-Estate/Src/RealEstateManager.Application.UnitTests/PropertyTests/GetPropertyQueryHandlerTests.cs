@@ -4,7 +4,7 @@ using Application.Use_Cases.Queries;
 using AutoMapper;
 using Domain.Common;
 using Domain.Entities;
-using Domain.Entities.Features;
+
 using Domain.Repositories;
 using Domain.Types;
 using FluentAssertions;
@@ -78,48 +78,49 @@ namespace RealEstateManager.Application.UnitTests.PropertyTests
         //    await act.Should().ThrowAsync<Exception>().WithMessage("Database error");
         //}
 
-        private static Property GenerateProperty()
-        {
-            return new Property
-            {
-                Id = Guid.NewGuid(),
-                AddressId = Guid.NewGuid(),
-                Address = new Address
-                {
-                    Id = Guid.NewGuid(),
-                    Street = "123 Main St",
-                    City = "Sample City",
-                    State = "Sample State",
-                    Country = "Sample Country"
-                },
-                ImageId = "image123",
-                UserId = Guid.NewGuid(),
-                
-                Type = PropertyType.Apartment,
-                Features = new PropertyFeatures
-                {
-                    Features = new Dictionary<PropertyFeatureType, int>
-            {
-                { PropertyFeatureType.Balcony, 1 },
-                { PropertyFeatureType.Garage, 1 }
-            }
-                }
-            };
-        }
+        //    private static Property GenerateProperty()
+        //    {
+        //        return new Property
+        //        {
+        //            Id = Guid.NewGuid(),
+        //            AddressId = Guid.NewGuid(),
+        //            Address = new Address
+        //            {
+        //                Id = Guid.NewGuid(),
+        //                Street = "123 Main St",
+        //                City = "Sample City",
+        //                State = "Sample State",
+        //                Country = "Sample Country"
+        //            },
+        //            ImageId = "image123",
+        //            UserId = Guid.NewGuid(),
+
+        //            Type = PropertyType.Apartment,
+        //            Features = new PropertyFeatures
+        //            {
+        //                Features = new Dictionary<PropertyFeatureType, int>
+        //        {
+        //            { PropertyFeatureType.Balcony, 1 },
+        //            { PropertyFeatureType.Garage, 1 }
+        //        }
+        //            }
+        //        };
+        //    }
 
 
-        private static PropertyDto GeneratePropertyDto(Property property)
-        {
-            return new PropertyDto
-            {
-                Id = property.Id,
-                AddressId = property.AddressId,
-                ImageId = property.ImageId,
-                UserId = property.UserId,
-                Type = property.Type,
-                Features = property.Features
-            };
-        }
+        //    private static PropertyDto GeneratePropertyDto(Property property)
+        //    {
+        //        return new PropertyDto
+        //        {
+        //            Id = property.Id,
+        //            AddressId = property.AddressId,
+        //            ImageId = property.ImageId,
+        //            UserId = property.UserId,
+        //            Type = property.Type,
+        //            Features = property.Features
+        //        };
+        //    }
+        //}
     }
 }
 
