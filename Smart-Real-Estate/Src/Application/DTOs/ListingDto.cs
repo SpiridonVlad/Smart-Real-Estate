@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Features;
+﻿using Domain.Types;
 
 namespace Application.DTOs
 {
@@ -10,6 +10,6 @@ namespace Application.DTOs
         public decimal Price { get; set; }
         public DateTime PublicationDate { get; set; }
         public string? Description { get; set; }
-        public required ListingFeatures Features { get; set; }
+        public Dictionary<ListingAssetss, int> Features { get; set; } = [];
     }
 }

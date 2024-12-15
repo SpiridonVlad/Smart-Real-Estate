@@ -9,6 +9,6 @@ namespace Application.Use_Cases.Queries
     {
         public int Page { get; set; }
         public int PageSize { get; set; }
-        public ListingFilter Filters { get; set; } = new ListingFilter();
+        public ListingFilter Filter { get; set; } = new ListingFilter();
     }
 }

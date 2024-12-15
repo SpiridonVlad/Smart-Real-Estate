@@ -7,6 +7,6 @@ namespace Domain.Entities.Cards
         public required string Username { get; set; }
         public bool Verified { get; set; }
         public decimal Rating { get; set; }
-        public UserType UType { get; set; }
+        public UserType Type { get; set; }
     }
 }

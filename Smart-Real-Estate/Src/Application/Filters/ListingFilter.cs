@@ -1,6 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Types;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Application.Filters
 {
@@ -11,8 +13,7 @@ namespace Application.Filters
         public DateTime? MinPublicationDate { get; set; }
         public DateTime? MaxPublicationDate { get; set; }
         public string? ListingDescriptionContains { get; set; }
-        public Dictionary<ListingAssetss, int>? ListingFeaturesMinValues { get; set; }
-        public Dictionary<ListingAssetss, int>? ListingFeaturesMaxValues { get; set; }
+        public Dictionary<ListingAssetss, int>? ListingFeatures { get; set; }
 
         public Expression<Func<Listing, bool>> BuildFilterExpression()
         {
@@ -33,25 +34,17 @@ namespace Application.Filters
             if (!string.IsNullOrWhiteSpace(ListingDescriptionContains))
                 filter = filter.And(r => r.Description.Contains(ListingDescriptionContains));
 
-            if (ListingFeaturesMinValues != null)
+            if (ListingFeatures != null && ListingFeatures.Count != 0)
             {
-                foreach (var feature in ListingFeaturesMinValues)
+                foreach (var feature in ListingFeatures)
                 {
-                    filter = filter.And(r =>
-                        r.Features.Features.ContainsKey(feature.Key) &&
-                        r.Features.Features[feature.Key] >= feature.Value);
+                    var featureKey = feature.Key.ToString();
+                    var featureValue = feature.Value;
+
+                    filter = filter.And(r => EF.Functions.JsonContains(r.Features, $"{{\"{featureKey}\":{featureValue}}}"));
                 }
             }
 
-            if (ListingFeaturesMaxValues != null)
-            {
-                foreach (var feature in ListingFeaturesMaxValues)
-                {
-                    filter = filter.And(r =>
-                        r.Features.Features.ContainsKey(feature.Key) &&
-                        r.Features.Features[feature.Key] <= feature.Value);
-                }
-            }
             return filter;
         }
     }

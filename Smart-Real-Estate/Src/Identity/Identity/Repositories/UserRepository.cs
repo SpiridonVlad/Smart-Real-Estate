@@ -67,9 +67,13 @@ namespace Identity.Repositories
 
         public async Task<Result<User>> GetByIdAsync(Guid id)
         {
+            if (context == null)
+                return Result<User>.Failure("Database context is not initialized.");
+           
             try
             {
-                var user = await context.Users.FindAsync(id);
+                var user = await context.Users.FirstAsync(u => u.Id == id);
+
                 if (user == null)
                 {
                     return Result<User>.Failure("User not found");
@@ -77,9 +81,13 @@ namespace Identity.Repositories
 
                 return Result<User>.Success(user);
             }
+            catch (DbUpdateException ex)
+            {
+                return Result<User>.Failure("Database update error: " + ex.Message);
+            }
             catch (Exception ex)
             {
-                return Result<User>.Failure(ex.Message);
+                return Result<User>.Failure("An unexpected error occurred: " + ex.Message);
             }
         }
 

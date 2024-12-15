@@ -1,5 +1,5 @@
 ﻿using Domain.Common;
-using Domain.Entities.Features;
+using Domain.Types;
 using MediatR;
 
 namespace Application.Use_Cases.Commands
@@ -11,6 +11,6 @@ namespace Application.Use_Cases.Commands
         public decimal Price { get; set; }
         public DateTime PublicationDate { get; set; }
         public string? Description { get; set; }
-        public required ListingFeatures Features { get; set; }
+        public Dictionary<ListingAssetss, int>? Features { get; set; }
     }
 }
