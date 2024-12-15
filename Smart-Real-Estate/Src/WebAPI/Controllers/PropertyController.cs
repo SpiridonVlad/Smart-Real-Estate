@@ -30,17 +30,15 @@ namespace Real_Estate_Management_System.Controllers
 
         [HttpGet("Paginated")]
         public async Task<ActionResult<IEnumerable<PropertyDto>>> GetPaginatedProperties(
-    [FromQuery] int page = 1,
-    [FromQuery] int pageSize = 10,
-    [FromQuery] PropertyType? propertyType = null,
-    [FromQuery(Name = "minFeatures")] Dictionary<PropertyFeatureType, int>? minFeatures = null,
-    [FromQuery(Name = "maxFeatures")] Dictionary<PropertyFeatureType, int>? maxFeatures = null)
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] PropertyType? propertyType = null,
+            [FromQuery(Name = "minFeatures")] Dictionary<PropertyFeatureType, int>? minFeatures = null)
         {
             var filter = new PropertyFilter
             {
                 PropertyType = propertyType,
                 PropertyFeaturesMinValues = minFeatures,
-                PropertyFeaturesMaxValues = maxFeatures
             };
 
             var query = new GetPaginatedPropertiesQuery

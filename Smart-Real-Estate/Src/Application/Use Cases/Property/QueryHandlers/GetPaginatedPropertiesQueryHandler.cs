@@ -34,39 +34,35 @@ namespace Application.Use_Cases.Property.QueryHandlers
                 var Properties = new List<PropertyDto>();
                 foreach (var property in propertiesResult.Data)
                 {
-                    Dictionary<PropertyFeatureType, int> features = new Dictionary<PropertyFeatureType, int>();
                     var minValues = request.Filter.PropertyFeaturesMinValues;
                     var maxValues = request.Filter.PropertyFeaturesMaxValues;
 
-                    features = property.Features;
+                    Dictionary<PropertyFeatureType, int> features = property.Features;
 
                     bool isValidProperty = true;
-                    if (minValues != null)
-                    {
-                        foreach (var feature in features)
-                        {
+                    //foreach (var feature in features)
+                    //{
 
-                            if (minValues.TryGetValue(feature.Key, out int minValue) && maxValues.TryGetValue(feature.Key, out int maxValue))
-                            {
-                                Console.WriteLine(feature.Key);
-                                Console.WriteLine(feature.Value);
-                                Console.WriteLine(minValue);
-                                Console.WriteLine(maxValue);
-                                int featureValue = feature.Value;
+                    //    if (minValues.TryGetValue(feature.Key, out int minValue) )
+                    //    {
 
-                                if (featureValue < minValue || featureValue > maxValue)
-                                {
-                                    isValidProperty = false;
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                isValidProperty = false;
-                                break;
-                            }
-                        }
-                    }
+                    //        Console.WriteLine("KEy:", feature.Key);
+                    //        Console.WriteLine(feature.Value);
+                    //        Console.WriteLine(minValue);
+                    //        int featureValue = feature.Value;
+
+                    //        if (featureValue < minValue)
+                    //        {
+                    //            isValidProperty = false;
+                    //            break;
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        isValidProperty = false;
+                    //        break;
+                    //    }
+                    //}
 
                     var address = await addressRepository.GetByIdAsync(property.AddressId);
                     if (!address.IsSuccess)

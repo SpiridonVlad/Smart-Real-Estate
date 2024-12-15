@@ -18,29 +18,29 @@ namespace Application.Filters
             if (PropertyType.HasValue)
                 filter = filter.And(r => r.Type == PropertyType.Value);
 
-            if (PropertyFeaturesMinValues != null)
-            {
-                foreach (var feature in PropertyFeaturesMinValues)
-                {
-                    var featureKey = feature.Key.ToString();
-                    var featureValue = feature.Value;
+            //if (PropertyFeaturesMinValues != null)
+            //{
+            //    foreach (var feature in PropertyFeaturesMinValues)
+            //    {
+            //        var featureKey = feature.Key.ToString();
+            //        var featureValue = feature.Value;
 
-                    filter = filter.And(r =>
-                        EF.Functions.JsonContains(r.Features, $"{{\"{featureKey}\":{{\"$gte\":{featureValue}}}}}}}"));
-                }
-            }
+            //        filter = filter.And(r =>
+            //            EF.Functions.JsonContains(r.Features, $"{{\"{featureKey}\":{{\"$gte\":{featureValue}}}}}}}"));
+            //    }
+            //}
 
-            if (PropertyFeaturesMaxValues != null)
-            {
-                foreach (var feature in PropertyFeaturesMaxValues)
-                {
-                    var featureKey = feature.Key.ToString();
-                    var featureValue = feature.Value;
+            //if (PropertyFeaturesMaxValues != null)
+            //{
+            //    foreach (var feature in PropertyFeaturesMaxValues)
+            //    {
+            //        var featureKey = feature.Key.ToString();
+            //        var featureValue = feature.Value;
 
-                    filter = filter.And(r =>
-                        EF.Functions.JsonContains(r.Features, $"{{\"{featureKey}\":{{\"$lte\":{featureValue}}}}}}}"));
-                }
-            }
+            //        filter = filter.And(r =>
+            //            EF.Functions.JsonContains(r.Features, $"{{\"{featureKey}\":{{\"$lte\":{featureValue}}}}}}}"));
+            //    }
+            //}
 
             return filter;
         }
