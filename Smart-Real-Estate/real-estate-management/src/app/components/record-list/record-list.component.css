@@ -14,6 +14,16 @@
   background-color: #f0f8ff; /* Light blue background */
 }
 
+.pagination-controls, .pagination-controls-bottom {
+  
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.pagination-controls-bottom {
+  display: flex;
+  margin-top: 20px;
+}
+
 .record-card {
   display: flex;
   flex-wrap: wrap;
@@ -69,6 +79,74 @@
 
 .card-button:hover {
   background-color: #0056b3;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.filter-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.filter-popup h2 {
+  margin-top: 0;
+}
+
+.filter-popup label {
+  display: block;
+  margin-top: 10px;
+}
+
+.filter-popup input, .filter-popup select {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.filter-popup button {
+  margin-top: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-popup button:hover {
+  background-color: #218838;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button {
+  background-color: #009113;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {

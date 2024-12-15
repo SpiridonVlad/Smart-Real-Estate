@@ -14,6 +14,30 @@
     </select>
   </div>
 
+  <button (click)="toggleFilterPopup()">Filters</button>
+
+  <!-- Filter Popup -->
+  <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
+  <div *ngIf="showFilterPopup" class="filter-popup">
+    <h2>Filters</h2>
+    <label for="pType">Property Type</label>
+    <select id="pType" [(ngModel)]="filter.pType">
+      <option value="">All</option>
+      <option *ngFor="let pType of pTypes" [value]="pType">{{ pType }}</option>
+    </select>
+    <label for="city">City</label>
+    <select id="city" [(ngModel)]="filter.city">
+      <option value="">All</option>
+      <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+    </select>
+    <label for="minPrice">Min Price</label>
+    <input type="number" id="minPrice" [(ngModel)]="filter.minPrice" />
+    <label for="maxPrice">Max Price</label>
+    <input type="number" id="maxPrice" [(ngModel)]="filter.maxPrice" />
+    <button (click)="applyFilters()">Apply Filters</button>
+    <button (click)="toggleFilterPopup()">Close</button>
+  </div>
+
   <!-- Scrollable Container -->
   <div class="scroll-container">
     <!-- Record List -->
@@ -45,5 +69,9 @@
         <p>User Type: {{ record.user.uType }}</p>
       </div>
     </div>
+  </div>
+  <div class="pagination-controls-bottom">
+    <button *ngIf="page > 1" (click)="previousPage()">Previous Page</button>
+    <button (click)="nextPage()">Next Page</button>
   </div>
 </div>
