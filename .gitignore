@@ -362,5 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsdReal 
 Real Estate Management System API/src/Infrastructure/Migrations/
-Smart-Real-Estate\SonarQube
+Smart-Real-Estate/SonarQube
 
