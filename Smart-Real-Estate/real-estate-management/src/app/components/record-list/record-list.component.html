@@ -23,24 +23,42 @@
   <!-- Filter Popup -->
   <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
   <div *ngIf="showFilterPopup" class="filter-popup">
-    <h2>Filters</h2>
-    <label for="pType">Property Type</label>
-    <select id="pType" [(ngModel)]="filter.pType">
-      <option value="">All</option>
-      <option *ngFor="let pType of pTypes" [value]="pType">{{ pType }}</option>
-    </select>
-    <label for="city">City</label>
-    <select id="city" [(ngModel)]="filter.city">
-      <option value="">All</option>
-      <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
-    </select>
-    <label for="minPrice">Min Price</label>
-    <input type="number" id="minPrice" [(ngModel)]="filter.minPrice" />
-    <label for="maxPrice">Max Price</label>
-    <input type="number" id="maxPrice" [(ngModel)]="filter.maxPrice" />
-    <button (click)="applyFilters()">Apply Filters</button>
-    <button (click)="toggleFilterPopup()">Close</button>
-  </div>
+  <h2>Filters</h2>
+  
+  <!-- Tipul proprietății -->
+  <label for="pType">Property Type</label>
+  <select id="pType" [(ngModel)]="filter.pType">
+    <option value="">All</option>
+    <option *ngFor="let pType of pTypes" [value]="pType">{{ pType }}</option>
+  </select>
+
+  <!-- Oraș -->
+  <label for="city">City</label>
+  <input type="text" id="city" [(ngModel)]="filter.city" placeholder="Enter city name" />
+  
+
+  <!-- Preț minim/maxim -->
+  <label for="minPrice">Min Price</label>
+  <input type="number" id="minPrice" [(ngModel)]="filter.minPrice" />
+
+  <label for="maxPrice">Max Price</label>
+  <input type="number" id="maxPrice" [(ngModel)]="filter.maxPrice" />
+
+  <!-- Date de publicare -->
+  <label for="minPublicationDate">Min Publication Date</label>
+  <input type="date" id="minPublicationDate" [(ngModel)]="filter.minPublicationDate" />
+
+  <label for="maxPublicationDate">Max Publication Date</label>
+  <input type="date" id="maxPublicationDate" [(ngModel)]="filter.maxPublicationDate" />
+
+  <!-- Căutare în descriere -->
+  <label for="descriptionContains">Description Contains</label>
+  <input type="text" id="descriptionContains" [(ngModel)]="filter.descriptionContains" />
+
+  <button (click)="applyFilters()">Apply Filters</button>
+  <button (click)="toggleFilterPopup()">Close</button>
+</div>
+
 
   <!-- Scrollable Container -->
   <div class="scroll-container">
