@@ -1,10 +1,24 @@
 <div class="home">
   <div class="header">
-    <button class="login-button" (click)="navigateTo('login')">Login</button>
-    <button class="logout-button" (click)="logout()">Logout</button>
+    @if (!isLoggedIn) {
+      <button class="login-button" (click)="navigateTo('login')">Login</button>
+    }
+    @else {
+      <button class="profile-button" (click)="navigateTo('profile')">Profile</button>
+      <button class="logout-button" (click)="logout()">Logout</button>
+    }
   </div>
   <h1>Welcome to the Real Estate Management System</h1>
-  <button (click)="navigateTo('users')">Go to Users</button>
-  <button (click)="navigateTo('properties')">Go to Properties</button>
-  <button (click)="navigateTo('listings')">Go to Listings</button>
+  <div class="button-container">
+    <div class="button-box">
+      <h2>Users</h2>
+      <p>Manage all users in the system.</p>
+      <button (click)="navigateTo('users')">Go to Users</button>
+    </div>
+    <div class="button-box">
+      <h2>Listings</h2>
+      <p>View and manage property listings.</p>
+      <button (click)="navigateTo('listings')">Go to Listings</button>
+    </div>
+  </div>
 </div>

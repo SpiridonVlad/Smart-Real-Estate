@@ -1,0 +1,77 @@
+<div class="record-list">
+  <h1>Property Records</h1>
+
+  <!-- Pagination Controls -->
+  <div class="pagination">
+    <label for="page">Page:</label>
+    <select id="page" [(ngModel)]="page" (change)="loadRecords()">
+      <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
+    </select>
+
+    <label for="pageSize">Page Size:</label>
+    <select id="pageSize" [(ngModel)]="pageSize" (change)="loadRecords()">
+      <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+    </select>
+  </div>
+
+  <button (click)="toggleFilterPopup()">Filters</button>
+
+  <!-- Filter Popup -->
+  <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
+  <div *ngIf="showFilterPopup" class="filter-popup">
+    <h2>Filters</h2>
+    <label for="pType">Property Type</label>
+    <select id="pType" [(ngModel)]="filter.pType">
+      <option value="">All</option>
+      <option *ngFor="let pType of pTypes" [value]="pType">{{ pType }}</option>
+    </select>
+    <label for="city">City</label>
+    <select id="city" [(ngModel)]="filter.city">
+      <option value="">All</option>
+      <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+    </select>
+    <label for="minPrice">Min Price</label>
+    <input type="number" id="minPrice" [(ngModel)]="filter.minPrice" />
+    <label for="maxPrice">Max Price</label>
+    <input type="number" id="maxPrice" [(ngModel)]="filter.maxPrice" />
+    <button (click)="applyFilters()">Apply Filters</button>
+    <button (click)="toggleFilterPopup()">Close</button>
+  </div>
+
+  <!-- Scrollable Container -->
+  <div class="scroll-container">
+    <!-- Record List -->
+    <div *ngFor="let record of records" class="record-card">
+      <!-- Property Card -->
+      <div class="card">
+        <h3>{{ record.property.pType }}</h3>
+        <p>Address: {{ record.address.street }}, {{ record.address.city }}</p>
+        <img [src]="record.property.imageId" alt="Property Image" />
+        <p>Features:</p>
+        <ul>
+          <li *ngFor="let feature of getFeatures(record.property.pFeatures)">
+            {{ feature.key }}: {{ feature.value }}
+          </li>
+        </ul>
+      </div>
+      <!-- Listing Details -->
+      <div class="card">
+        <h3>Listing Details</h3>
+        <p>Description: {{ record.listing.description }}</p>
+        <p>Price: ${{ record.listing.price }}</p>
+        <p>Publication Date: {{ record.listing.publicationDate | date }}</p>
+      </div>
+      <!-- User Details -->
+      <div class="card">
+        <h3>User Details</h3>
+        <p>Username: {{ record.user.username }}</p>
+        <p>Verified: {{ record.user.verified ? 'Yes' : 'No' }}</p>
+        <p>User Type: {{ record.user.uType }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="pagination-controls-bottom">
+    <button *ngIf="page > 1" (click)="previousPage()">Previous Page</button>
+    <button (click)="nextPage()">Next Page</button>
+  </div>
+</div>
