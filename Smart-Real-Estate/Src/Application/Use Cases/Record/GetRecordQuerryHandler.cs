@@ -22,17 +22,21 @@ namespace Application.Use_Cases.Wrappers
 
         public async Task<Result<IEnumerable<RecordDto>>> Handle(GetRecordQuery request, CancellationToken cancellationToken)
         {
-            var filter = request.Filters.ListingFilter.BuildFilterExpression();
+            var listingExpression = request.Filter.ListingFilter.BuildFilterExpression();
+            var propertyExpression = request.Filter.PropertyFilter.BuildFilterExpression();
+            var AddressExpression = request.Filter.AddressFilter.BuildFilterExpression();
+            var UserExpression = request.Filter.UserFilters.BuildFilterExpression();
+
             var listingsResult = await listingRepository.GetPaginatedAsync(
                 request.Page,
                 request.PageSize,
-                filter
+                listingExpression
                 );
+
             if (!listingsResult.IsSuccess)
             {
                 return Result<IEnumerable<RecordDto>>.Failure("Failed to retrieve listings.");
             }
-
             var Records = new List<Record>();
             foreach (var listing in listingsResult.Data)
             {
@@ -69,8 +73,8 @@ namespace Application.Use_Cases.Wrappers
                     Property = new PropertyCard
                     {
                         ImageId = property.Data.ImageId,
-                        PType = property.Data.Type,
-                        PFeatures = property.Data.Features
+                        Type = property.Data.Type,
+                        Features = property.Data.Features
                     },
 
                     User = new UserCard
@@ -78,7 +82,7 @@ namespace Application.Use_Cases.Wrappers
                         Username = user.Data.Username,
                         Verified = user.Data.Verified,
                         Rating = user.Data.Rating,
-                        UType = user.Data.Type
+                        Type = user.Data.Type
                     },
 
                     Listing = new ListingCard
@@ -86,9 +90,10 @@ namespace Application.Use_Cases.Wrappers
                         Description = listing.Description,
                         Price = listing.Price,
                         PublicationDate = listing.PublicationDate,
-                        LFeatures = listing.Features
+                        Features = listing.Features
                     }
                 };
+                Console.WriteLine(record.Listing.Features);
 
                 Records.Add(record);
             }

@@ -13,6 +13,5 @@ namespace Domain.Repositories
         Task<Result<Guid>> AddAsync(Listing listing);
         Task<Result<object>> UpdateAsync(Listing listing);
         Task<Result<object>> DeleteAsync(Guid id);
-
     }
 }

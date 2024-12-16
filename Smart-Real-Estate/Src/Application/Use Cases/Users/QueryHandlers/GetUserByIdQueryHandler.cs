@@ -8,20 +8,15 @@ using MediatR;
 
 namespace Application.Use_Cases.QueryHandlers
 {
-    public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, Result<UserDto>>
+    public class GetUserByIdQueryHandler(IMapper mapper, IUserRepository repository) : IRequestHandler<GetUserByIdQuery, Result<UserDto>>
     {
-        private readonly IMapper mapper;
-        private readonly IUserRepository repository;
-
-        public GetUserByIdQueryHandler(IMapper mapper, IUserRepository repository)
-        {
-            this.mapper = mapper;
-            this.repository = repository;
-        }
+        private readonly IMapper mapper = mapper;
+        private readonly IUserRepository repository = repository;
 
         public async Task<Result<UserDto>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var userResult = await repository.GetByIdAsync(request.Id);
+           
             if (userResult.IsSuccess)
             {
                 return Result<UserDto>.Success(mapper.Map<UserDto>(userResult.Data));

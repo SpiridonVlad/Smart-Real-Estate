@@ -1,6 +1,5 @@
 ﻿using Domain.Common;
 using Domain.Entities;
-using Domain.Entities.Features;
 using Domain.Types;
 using MediatR;
 
@@ -14,6 +13,6 @@ namespace Application.Use_Cases.Commands
         public string? ImageId { get; set; }
         public Guid? UserId { get; set; }
         public PropertyType? Type { get; set; }
-        public PropertyFeatures? Features { get; set; }
+        public Dictionary<PropertyFeatureType, int>? Features { get; set; }
     }
 }

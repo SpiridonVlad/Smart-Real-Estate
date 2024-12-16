@@ -1,5 +1,4 @@
-﻿using Domain.Types;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Application.Use_Cases.Commands
 {
@@ -44,7 +43,7 @@ namespace Application.Use_Cases.Commands
 
             RuleFor(x => x.Features).NotNull().WithMessage("Features must not be null.");
 
-            RuleForEach(x => x.Features.Features)
+            RuleForEach(x => x.Features)
                 .Must(feature => Enum.IsDefined(feature.Key))
                 .WithMessage("Invalid property feature type.");
         }

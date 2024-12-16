@@ -61,8 +61,8 @@ namespace Application.Use_Cases.Wrappers
                 Property = new PropertyCard
                 {
                     ImageId = property.Data.ImageId,
-                    PType = property.Data.Type,
-                    PFeatures = property.Data.Features
+                    Type = property.Data.Type,
+                    Features = property.Data.Features
                 },
 
                 User = new UserCard
@@ -70,7 +70,7 @@ namespace Application.Use_Cases.Wrappers
                     Username = user.Data.Username,
                     Verified = user.Data.Verified,
                     Rating = user.Data.Rating,
-                    UType = user.Data.Type
+                    Type = user.Data.Type
                 },
 
                 Listing = new ListingCard
@@ -78,7 +78,7 @@ namespace Application.Use_Cases.Wrappers
                     Description = listing.Data.Description,
                     Price = listing.Data.Price,
                     PublicationDate = listing.Data.PublicationDate,
-                    LFeatures = listing.Data.Features
+                    Features = listing.Data.Features
                 }
             };
 

@@ -10,7 +10,6 @@ namespace Infrastructure.Persistence
     {
         public required DbSet<Property> Properties { get; set; }
         public required DbSet<Listing> Listings { get; set; }
-        public required DbSet<User> Users { get; set; }
         public required DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,20 +65,19 @@ namespace Infrastructure.Persistence
                     .HasConversion<string>()
                     .IsRequired();
 
-                entity.OwnsOne(e => e.Features, features =>
-                {
-                    features.Property(f => f.Features)
-                        .HasColumnType("jsonb")
-                        .HasConversion(
-                            v => JsonConvert.SerializeObject(v),
-                            v => JsonConvert.DeserializeObject<Dictionary<PropertyFeatureType, int>>(v)
-                        )
-                        .Metadata.SetValueComparer(new ValueComparer<Dictionary<PropertyFeatureType, int>>(
-                            (c1, c2) => c1.SequenceEqual(c2),
-                            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.Key.GetHashCode(), v.Value)),
-                            c => c.ToDictionary(k => k.Key, v => v.Value)
-                        ));
-                });
+                entity.Property(e => e.Features)
+                    .HasColumnName("features")
+                    .HasColumnType("jsonb") 
+                    .HasConversion(
+                        v => JsonConvert.SerializeObject(v), // Convert to JSON for storage
+                        v => JsonConvert.DeserializeObject<Dictionary<PropertyFeatureType, int>>(v) // Deserialize back
+                    )
+                    .Metadata.SetValueComparer(new ValueComparer<Dictionary<PropertyFeatureType, int>>(
+                        (c1, c2) => c1.SequenceEqual(c2), // Compare dictionaries for equality
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.Key.GetHashCode(), v.Value)), // Compute hash code
+                        c => c.ToDictionary(k => k.Key, v => v.Value) // Create a deep copy
+                    ));
+
             });
 
             modelBuilder.Entity<Listing>(static entity =>
@@ -111,21 +109,20 @@ namespace Infrastructure.Persistence
                     .HasMaxLength(1000)
                     .IsRequired(false);
 
-                entity.OwnsOne(e => e.Features, features =>
-                {
-                    features.Property(f => f.Features)
-                        .HasColumnType("jsonb")
+                entity.Property(e => e.Features)
+                        .HasColumnName("features")
+                        .HasColumnType("jsonb") 
                         .HasConversion(
                             v => JsonConvert.SerializeObject(v), 
                             v => JsonConvert.DeserializeObject<Dictionary<ListingAssetss, int>>(v) 
                         )
                         .Metadata.SetValueComparer(new ValueComparer<Dictionary<ListingAssetss, int>>(
-                            (c1, c2) => c1.SequenceEqual(c2), 
+                            (c1, c2) => c1.SequenceEqual(c2),
                             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.Key.GetHashCode(), v.Value)), 
                             c => c.ToDictionary(k => k.Key, v => v.Value) 
                         ));
-                });
             });
+
 
         }
     }
