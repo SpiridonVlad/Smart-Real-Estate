@@ -30,4 +30,3 @@ export class HomeComponent {
     this.router.navigate(['']);
   }
 }
-

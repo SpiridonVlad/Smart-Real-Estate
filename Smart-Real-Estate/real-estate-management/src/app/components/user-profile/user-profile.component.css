@@ -1,0 +1,78 @@
+.profile-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .profile-details p {
+    font-size: 16px;
+    color: #555;
+    margin: 0;
+  }
+  
+  .profile-details p strong {
+    color: #333;
+  }
+  
+  .profile-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .update-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .update-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+  }
+  
+  .update-button:active {
+    background-color: #1d712f;
+    transform: translateY(0);
+  }
+  
+  ng-template p {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .profile-container {
+      margin: 20px;
+      padding: 15px;
+    }
+  
+    .update-button {
+      width: 100%;
+    }
+  }
+  
