@@ -19,7 +19,7 @@ export class RecordService {
 
       console.log('params', params);
 
-    return this.http.get<{ data: Record[]}>(`${this.apiUrl}/paginated`, { params }).pipe(
+    return this.http.get<{ data: Record[]}>(`${this.apiUrl}/Paginated`, { params }).pipe(
       catchError((error) => {
         console.error('Error fetching paginated records:', error);
         return throwError(error);

@@ -26,9 +26,8 @@ namespace Real_Estate_Management_System.Controllers
         }
 
         [HttpPost("Confirm")]
-        public async Task<IActionResult> ConfirmEmail(string token)
+        public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailCommand command)
         {
-            var command = new ConfirmEmailCommand() { Token = token };
             var result = await mediator.Send(command);
             if (result.IsSuccess)
             {

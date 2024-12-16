@@ -73,7 +73,6 @@ namespace Identity.Repositories
             try
             {
                 var user = await context.Users.FirstAsync(u => u.Id == id);
-                Console.WriteLine("User: " + user);
 
                 if (user == null)
                 {
@@ -136,7 +135,6 @@ namespace Identity.Repositories
         public async Task<Result<string>> Login(User user)
         {
             var existingUser = await context.Users.SingleOrDefaultAsync(u => u.Email == user.Email);
-            Console.WriteLine("Existing user: " + existingUser.Password);
             if (existingUser == null)
                 return Result<string>.Failure("Invalid email or password");
             if (user.Password != existingUser.Password && !BCrypt.Net.BCrypt.Verify(user.Password, existingUser.Password))

@@ -15,14 +15,14 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password }).pipe(
+    return this.http.post<any>(`${this.apiUrl}/Login`, { email, password }).pipe(
       tap(response => this.setToken(response.data)),
       catchError(this.handleError('login', []))
     );
   }
 
   register(username: string, password: string, email: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, { username, password, email, type: 0 }).pipe(
+    return this.http.post<any>(`${this.apiUrl}/Register`, { username, password, email, type: 0 }).pipe(
       catchError(this.handleError('register', []))
     );
   }
