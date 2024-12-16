@@ -21,7 +21,7 @@ namespace Application.AIML
             var dataView = mlContext.Data.LoadFromEnumerable(trainingData);
 
             var pipeline = mlContext.Transforms.CopyColumns("Label", nameof(PropertyData.Price))
-                .Append(mlContext.Transforms.Conversion.ConvertType(nameof(PropertyData.Price), outputKind: DataKind.Single))
+                .Append(mlContext.Transforms.Conversion.ConvertType("Label", outputKind: DataKind.Single))
                 .Append(mlContext.Transforms.Categorical.OneHotEncoding("AddressEncoded", nameof(PropertyData.Address)))
                 .Append(mlContext.Transforms.Categorical.OneHotEncoding("DescriptionEncoded", nameof(PropertyData.Description)))
                 .Append(mlContext.Transforms.Conversion.ConvertType(nameof(PropertyData.Surface), outputKind: DataKind.Single))
