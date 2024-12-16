@@ -1,0 +1,32 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #333;
+    color: #fff; /* Ensure text color is readable on dark background */
+  }
+  
+  .email-verification-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw; /* Ensure it covers the full viewport width */
+  }
+  
+  .email-verification-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 16px;
+  }

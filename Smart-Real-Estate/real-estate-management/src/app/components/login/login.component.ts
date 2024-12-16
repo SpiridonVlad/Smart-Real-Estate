@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -32,11 +33,17 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe(
-        () => {
-          //this.authService.printToken();
-          this.router.navigate(['/']);},
-        error => console.error('Login failed', error)
-        
+        response => {
+          if (response && response.isSuccess) {
+            this.router.navigate(['/']);
+          } else {
+            this.errorMessage = 'Login failed. Please check your email and password and try again.';
+          }
+        },
+        error => {
+          console.error('Login failed', error);
+          this.errorMessage = 'Login failed. Please check your email and password and try again.';
+        }
       );
     }
   }

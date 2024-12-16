@@ -25,7 +25,7 @@ namespace Real_Estate_Management_System.Controllers
             return Ok(token);
         }
 
-        [HttpGet("Confirm")]
+        [HttpPost("Confirm")]
         public async Task<IActionResult> ConfirmEmail(string token)
         {
             var command = new ConfirmEmailCommand() { Token = token };

@@ -1,7 +1,7 @@
 <div class="user-list">
   <h1>User List</h1>
   
-  <button (click)="navigateToCreate()">Create New User</button>
+
   
   <div class="pagination-controls">
     <label for="page">Page:</label>
@@ -15,29 +15,48 @@
     </select>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Verified</th>
-        <th>Rating</th>
-        <th>Type</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.username }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.verified }}</td>
-        <td>{{ user.rating }}</td>
-        <td>{{ user.type }}</td>
-        <td>
-          <button (click)="navigateToUpdate(user.id)">Update</button>
-          <button (click)="deleteUser(user.id)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <button (click)="toggleFilterPopup()">Filters</button>
+  
+  <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
+  <div *ngIf="showFilterPopup" class="filter-popup">
+    <h2>Filters</h2>
+    <label for="minRating">Min Rating:</label>
+    <input id="minRating" type="number" [(ngModel)]="minRating" />
+    
+    <label for="maxRating">Max Rating:</label>
+    <input id="maxRating" type="number" [(ngModel)]="maxRating" />
+    
+    <label for="verified">Verified:</label>
+    <select id="verified" [(ngModel)]="verified">
+      <option [value]="true">Yes</option>
+      <option [value]="false">No</option>
+    </select>
+
+    <label for="type">Type:</label>
+    <select id="type" [(ngModel)]="type">
+      <option [value]="0">Individual</option>
+      <option [value]="1">LegalEntity</option>
+      <option [value]="2">Admin</option>
+    </select>
+    
+    <label for="username">Username:</label>
+    <input id="username" type="text" [(ngModel)]="username" />
+    
+    <button (click)="applyFilters()">Apply Filters</button>
+    <button (click)="toggleFilterPopup()">Close</button>
+  </div>
+    
+    <div class="user-buttons">
+      <div *ngFor="let user of users" class="user-button" (click)="navigateToUpdate(user.id)">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Verified:</strong> {{ user.verified }}</p>
+        <p><strong>Rating:</strong> {{ user.rating }}</p>
+        <p><strong>Type:</strong> {{  getUserType(user.type) }}</p>
+      </div>
+    </div>
+    <div class="pagination-controls-bottom">
+      <button *ngIf="page > 1" (click)="previousPage()">Previous Page</button>
+      <button (click)="nextPage()">Next Page</button>
+    </div>
+  </div>

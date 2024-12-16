@@ -11,6 +11,6 @@ export interface User {
     email: string;
     verified: boolean;
     rating: number;
-    type: UserType;
+    type: number;
     propertyHistory?: string[];
 }

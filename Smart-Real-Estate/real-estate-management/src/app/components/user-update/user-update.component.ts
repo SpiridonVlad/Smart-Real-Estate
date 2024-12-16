@@ -52,7 +52,7 @@ export class UserUpdateComponent implements OnInit {
           email: user.email || this.userForm.get('email')?.value,
           verified: user.verified !== undefined ? user.verified : this.userForm.get('verified')?.value,
           rating: user.rating !== undefined ? user.rating : this.userForm.get('rating')?.value,
-          type: user.type !== undefined ? UserType[user.type] : this.userForm.get('type')?.value,
+          type: user.type !== undefined ? user.type: this.userForm.get('type')?.value,
           propertyHistory: user.propertyHistory || this.userForm.get('propertyHistory')?.value
         });
         console.log('Form values after patching:', this.userForm.value); // Log the form values after patching
@@ -97,4 +97,5 @@ export class UserUpdateComponent implements OnInit {
         return 0; // Default to Individual if type is not recognized
     }
   }
+  
 }

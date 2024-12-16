@@ -8,7 +8,7 @@ import { tap, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:7117/api/Auth'; // Base API URL
+  private apiUrl = 'https://localhost:7117/api/v1/Authentication'; // Base API URL
   private tokenKey = 'authToken';
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -23,6 +23,11 @@ export class AuthService {
   register(username: string, password: string, email: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, { username, password, email, type: 0 }).pipe(
       catchError(this.handleError('register', []))
+    );
+  }
+  verifyEmail(token: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Confirm`, { token }).pipe(
+      catchError(this.handleError('verifyEmail', []))
     );
   }
 

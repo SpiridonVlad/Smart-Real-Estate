@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.model';
+import { User, UserType } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -16,8 +16,14 @@ export class UserListComponent implements OnInit {
   users: User[] = [];
   page: number = 1;
   pageSize: number = 5;
-  pages: number[] = [1, 2, 3, 4, 5]; // Example page numbers
-  pageSizes: number[] = [5, 10, 20, 50]; // Example page sizes
+  pages: number[] = [1, 2, 3, 4, 5]; 
+  pageSizes: number[] = [5, 10, 20, 50]; 
+  showFilterPopup: boolean = false;
+  minRating: number = 0;
+  maxRating: number = 5;
+  verified: boolean | null = null;
+  type: number | null = null;
+  username: string = '';
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -55,5 +61,46 @@ export class UserListComponent implements OnInit {
         }
       );
     }
+  }
+  getUserType(type: number): string {
+    switch (type) {
+      case 0:
+        return 'Individual';
+      case 1:
+        return 'LegalEntity';
+      case 2:
+        return 'Admin';
+      default:
+        return 'Unknown';
+    }
+  }
+  nextPage(): void {
+    if (this.page < this.pages.length) {
+      this.page++;
+      this.loadUsers();
+    }
+  }
+  previousPage(): void {
+    if (this.page > 1) {
+      this.page--;
+      this.loadUsers();
+    }
+  }
+  toggleFilterPopup(): void {
+    this.showFilterPopup = !this.showFilterPopup;
+  }
+
+  applyFilters(): void {
+    const verified = this.verified !== null ? this.verified : undefined;
+    const type = this.type !== null ? this.type : undefined;
+    this.userService.getPaginatedUsers(this.page, this.pageSize, this.minRating, this.maxRating, verified, type, this.username).subscribe(
+      (response) => {
+        this.users = response.data;
+        this.toggleFilterPopup();
+      },
+      (error) => {
+        console.error('Error loading users:', error);
+      }
+    );
   }
 }
