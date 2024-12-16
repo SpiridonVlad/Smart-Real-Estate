@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { RegisterComponent } from './components/register/register.component';
+import { RecordListComponent } from './components/record-list/record-list.component';
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -25,6 +26,7 @@ export const appRoutes: Routes = [
   {path: 'properties/create',component:PropertyCreateComponent},
   {path: 'properties/update/:id',component:PropertyUpdateComponent},
   { path: 'email-verification', component: EmailVerificationComponent },
+  { path: 'records', component: RecordListComponent },
   
   // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }

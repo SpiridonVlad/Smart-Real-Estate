@@ -1,12 +1,9 @@
+import { Address } from "./address.model";
+
 export interface Property {
     id: string;
     addressId: string;
-    address: {
-      street: string;
-      city: string;
-      state: string;
-      country: string;
-    };
+    address: Address;
     imageId: string;
     userId: string;
     type: string;
