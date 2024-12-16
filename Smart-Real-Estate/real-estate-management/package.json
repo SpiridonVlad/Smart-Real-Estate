@@ -45,6 +45,7 @@
     "@types/express-serve-static-core": "^5.0.2",
     "@types/jasmine": "~5.1.0",
     "@types/json-schema": "^7.0.15",
+    "@types/jwt-decode": "^3.1.0",
     "@types/node": "^18.18.0",
     "@types/serve-static": "^1.15.7",
     "jasmine-core": "~5.4.0",

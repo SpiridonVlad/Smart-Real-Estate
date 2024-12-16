@@ -77,6 +77,9 @@ def create_sqlite_users_table(db_path):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
+    cursor.execute('DROP TABLE IF EXISTS Users')  # Șterge tabelul existent
+
+
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Users (
         Id TEXT PRIMARY KEY,
@@ -85,7 +88,8 @@ def create_sqlite_users_table(db_path):
         Password TEXT NOT NULL,
         Verified BOOLEAN NOT NULL,
         Rating INTEGER,
-        Type TEXT NOT NULL
+        Type TEXT NOT NULL,
+        PropertyHistory TEXT
     )
     ''')
 
@@ -193,6 +197,11 @@ def generate_listings(users, properties, num_listings=50):
 def populate_postgres_database(connection_string, users):
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor()
+
+    cursor.execute('DROP TABLE IF EXISTS Users')
+    cursor.execute('DROP TABLE IF EXISTS Addresses CASCADE')
+    cursor.execute('DROP TABLE IF EXISTS Properties CASCADE')
+    cursor.execute('DROP TABLE IF EXISTS Listings CASCADE')
     
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Addresses (

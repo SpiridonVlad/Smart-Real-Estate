@@ -12,15 +12,28 @@
   padding: 10px;
   border-radius: 8px;
   background-color: #f0f8ff; /* Light blue background */
+  width: 50rem; /* Set width to 50rem */
 }
 
 .pagination-controls, .pagination-controls-bottom {
-  
+  display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.pagination-controls .filters-button {
+  margin-top: 5px; /* Position the Filters button 5px lower */
+}
+
 .pagination-controls-bottom {
   display: flex;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
@@ -31,7 +44,7 @@
   border: 1px solid #ddd;
   padding: 15px;
   border-radius: 8px;
-  background-color: #e6f7ff; /* Light blue card background */
+  background-color: #ffffff; /* White card background */
   margin-bottom: 15px; /* Spațiu între înregistrări */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Umbră ușoară */
 }
@@ -99,25 +112,29 @@
   background-color: white;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
 .filter-popup h2 {
   margin-top: 0;
+  color: #333;
 }
 
 .filter-popup label {
   display: block;
   margin-top: 10px;
+  color: #555;
 }
 
 .filter-popup input, .filter-popup select {
   width: 100%;
-  padding: 5px;
+  padding: 10px;
   margin-top: 5px;
   margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .filter-popup button {
@@ -135,18 +152,19 @@
   background-color: #218838;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
 button {
-  background-color: #009113;
+  background-color: #007bff;
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
   margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 @media (max-width: 768px) {

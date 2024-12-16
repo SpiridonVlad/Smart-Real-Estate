@@ -4,37 +4,57 @@
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  background-color: #f0f8ff; /* Light blue background */
 }
 
 h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: #333;
 }
 
 button {
-  background-color: #009113;
+  background-color: #007bff;
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
   margin-bottom: 20px;
+  transition: background-color 0.3s ease;
 }
 
-.pagination-controls, .pagination-controls-bottom {
-  
-  justify-content: space-between;
-  margin-bottom: 20px;
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
+
+button:hover:enabled {
+  background-color: #0056b3;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-controls .filters-button {
+  margin-top: 25px; /* Position the Filters button 5px lower */
+}
+
 .pagination-controls-bottom {
   display: flex;
+  justify-content: space-between;
   margin-top: 20px;
-}
-
-button:hover {
-  background-color: #0056b3;
 }
 
 .user-buttons {
@@ -47,22 +67,48 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   padding: 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  height: 150px; /* Fixed height for user cards */
+  width: 100%; /* Fixed width for user cards */
+  box-sizing: border-box;
 }
 
 .user-button:hover {
-  background-color: #e9e9e9;
+  background-color: #e6f7ff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .user-button p {
   margin: 8px 0;
   flex: 1 1 20%; /* Adjust the flex-basis as needed */
 }
+
+.user-button .username,
+.user-button .email {
+  flex: 1 1 100%; /* Allow full width for username and email */
+  white-space: normal; /* Allow text to wrap */
+}
+
+.user-button .username .verified {
+  margin-left: 5px;
+  color: green;
+}
+
+.user-button .rating {
+  display: flex;
+  align-items: center;
+}
+
+.user-button .rating .star {
+  color: gold;
+  margin-right: 2px;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -81,27 +127,42 @@ button:hover {
   background-color: white;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
 .filter-popup h2 {
   margin-top: 0;
+  color: #333;
 }
 
 .filter-popup label {
   display: block;
   margin-top: 10px;
+  color: #555;
 }
 
 .filter-popup input, .filter-popup select {
   width: 100%;
-  padding: 5px;
+  padding: 10px;
   margin-top: 5px;
   margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .filter-popup button {
   margin-top: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-popup button:hover {
+  background-color: #218838;
 }

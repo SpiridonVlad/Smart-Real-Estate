@@ -2,19 +2,23 @@
   <h1>Property Records</h1>
 
   <!-- Pagination Controls -->
-  <div class="pagination">
-    <label for="page">Page:</label>
-    <select id="page" [(ngModel)]="page" (change)="loadRecords()">
-      <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
-    </select>
+  <div class="pagination-controls">
+    <div>
+      <label for="page">Page:</label>
+      <select id="page" [(ngModel)]="page" (change)="loadRecords()">
+        <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
+      </select>
+    </div>
 
-    <label for="pageSize">Page Size:</label>
-    <select id="pageSize" [(ngModel)]="pageSize" (change)="loadRecords()">
-      <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
-    </select>
+    <div>
+      <label for="pageSize">Page Size:</label>
+      <select id="pageSize" [(ngModel)]="pageSize" (change)="loadRecords()">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+
+    <button class="filters-button" (click)="toggleFilterPopup()">Filters</button>
   </div>
-
-  <button (click)="toggleFilterPopup()">Filters</button>
 
   <!-- Filter Popup -->
   <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
@@ -71,7 +75,7 @@
     </div>
   </div>
   <div class="pagination-controls-bottom">
-    <button *ngIf="page > 1" (click)="previousPage()">Previous Page</button>
-    <button (click)="nextPage()">Next Page</button>
+    <button [disabled]="page <= 1" (click)="previousPage()">Previous Page</button>
+    <button [disabled]="page >= pages.length" (click)="nextPage()">Next Page</button>
   </div>
 </div>
