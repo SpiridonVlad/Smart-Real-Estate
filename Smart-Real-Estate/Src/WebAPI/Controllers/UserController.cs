@@ -70,6 +70,7 @@ namespace Real_Estate_Management_System.Controllers
         public async Task<ActionResult<UserDto>> GetUserById(Guid userId)
         {
             var query = new GetUserByIdQuery { Id = userId };
+            Console.WriteLine("Query: " + query.Id);
             var result = await mediator.Send(query);
             if (!result.IsSuccess)
             {
@@ -79,10 +80,10 @@ namespace Real_Estate_Management_System.Controllers
         }
 
         [AuthorizeUser]
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteUser(Guid id)
+        [HttpDelete("{userId:guid}")]
+        public async Task<IActionResult> DeleteUser(Guid userId)
         {
-            var command = new DeleteUserCommand { Id = id };
+            var command = new DeleteUserCommand { Id = userId };
             var result = await mediator.Send(command);
             if (!result.IsSuccess)
             {
@@ -92,10 +93,10 @@ namespace Real_Estate_Management_System.Controllers
         }
 
         [AuthorizeUser]
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserCommand command)
+        [HttpPut("{userId:guid}")]
+        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UpdateUserCommand command)
         {
-            if (id != command.Id)
+            if (userId != command.Id)
             {
                 return BadRequest("The id should be identical with the command.id");
             }

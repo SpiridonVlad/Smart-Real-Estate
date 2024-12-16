@@ -10,7 +10,6 @@ namespace Infrastructure.Persistence
     {
         public required DbSet<Property> Properties { get; set; }
         public required DbSet<Listing> Listings { get; set; }
-        public required DbSet<User> Users { get; set; }
         public required DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -68,7 +67,7 @@ namespace Infrastructure.Persistence
 
                 entity.Property(e => e.Features)
                     .HasColumnName("features")
-                    .HasColumnType("jsonb") // Use "nvarchar(max)" for SQL Server
+                    .HasColumnType("jsonb") 
                     .HasConversion(
                         v => JsonConvert.SerializeObject(v), // Convert to JSON for storage
                         v => JsonConvert.DeserializeObject<Dictionary<PropertyFeatureType, int>>(v) // Deserialize back

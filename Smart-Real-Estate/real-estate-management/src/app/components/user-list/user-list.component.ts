@@ -16,8 +16,8 @@ export class UserListComponent implements OnInit {
   users: User[] = [];
   page: number = 1;
   pageSize: number = 5;
-  pages: number[] = [1, 2, 3, 4, 5]; 
-  pageSizes: number[] = [5, 10, 20, 50]; 
+  pages: number[] = [1, 2, 3, 4, 5];
+  pageSizes: number[] = [5, 10, 20, 50];
   showFilterPopup: boolean = false;
   minRating: number = 0;
   maxRating: number = 5;
@@ -48,6 +48,10 @@ export class UserListComponent implements OnInit {
 
   navigateToUpdate(userId: string): void {
     this.router.navigate(['/users/update', userId]);
+  }
+
+  navigateToProfile(userId: string): void {
+    this.router.navigate(['/users/profile', userId]);
   }
 
   deleteUser(userId: string): void {

@@ -8,7 +8,13 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  isLoggedIn: boolean = false;
+
   constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+  }
 
   navigateTo(route: string): void {
     if (this.authService.isLoggedIn()) {
@@ -20,7 +26,7 @@ export class HomeComponent {
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.isLoggedIn = false;
+    this.router.navigate(['']);
   }
 }
-
