@@ -14,15 +14,19 @@ import { appRoutes } from './app.routes';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthInterceptor } from './services/auth.interceptor';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent, PredictionDialog } from './components/home/home.component';
 import { AuthGuard } from './services/auth.guard';
 import { RecordListComponent } from './components/record-list/record-list.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
     declarations: [
-      
+      PredictionDialog
     ],
   imports: [
-    
     LoginComponent,
     RegisterComponent,
     UserListComponent,
@@ -38,7 +42,12 @@ import { RecordListComponent } from './components/record-list/record-list.compon
     UserListComponent, 
     UserCreateComponent,
     HomeComponent,
-    RecordListComponent
+    RecordListComponent,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
   ],
   providers: [
     AuthGuard,

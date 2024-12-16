@@ -5,6 +5,7 @@ using Identity;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Application.AIML;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,9 @@ builder.Services.AddCors(options =>
                    .AllowAnyMethod();
         });
 });
+
+builder.Services.AddSingleton<PropertyPricePredictionModel>();
+builder.Services.AddSingleton<PropertyDataParser>();
 
 var app = builder.Build();
 
