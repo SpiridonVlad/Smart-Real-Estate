@@ -13,7 +13,7 @@ namespace Application.Use_Cases.Commands
         public int? Price { get; set; }
         public DateTime? PublicationDate { get; set; }
         public string? Description { get; set; }
-        public Dictionary<ListingAssetss, int> Features { get; set; } = [];
+        public Dictionary<ListingType, int> Features { get; set; } = [];
 
     }
 }

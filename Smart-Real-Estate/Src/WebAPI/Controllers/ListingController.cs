@@ -36,7 +36,7 @@ namespace Real_Estate_Management_System.Controllers
             [FromQuery] DateTime? minPublicationDate = null,
             [FromQuery] DateTime? maxPublicationDate = null,
             [FromQuery] string? descriptionContains = null,
-            [FromQuery(Name = "features")] Dictionary<ListingAssetss, int>? minFeatures = null)
+            [FromQuery(Name = "features")] Dictionary<ListingType, int>? minFeatures = null)
         {
             Console.WriteLine(minFeatures);
             var filter = new ListingFilter

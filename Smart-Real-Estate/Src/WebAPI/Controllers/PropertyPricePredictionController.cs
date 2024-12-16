@@ -1,9 +1,5 @@
-﻿// File: Controllers/PropertyPricePredictionController.cs
-using Application.AIML;
+﻿using Application.AIML;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace Real_Estate_Management_System.Controllers
 {

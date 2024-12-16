@@ -11,5 +11,6 @@ namespace Domain.Entities
         public Guid UserId { get; set; }
         public PropertyType Type { get; set; }
         public Dictionary<PropertyFeatureType, int> Features { get; set; } = [];
+        //public List<Guid> UserWaitingList { get; set; } = [];
     }
 }

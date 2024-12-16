@@ -114,9 +114,9 @@ namespace Infrastructure.Persistence
                         .HasColumnType("jsonb") 
                         .HasConversion(
                             v => JsonConvert.SerializeObject(v), 
-                            v => JsonConvert.DeserializeObject<Dictionary<ListingAssetss, int>>(v) 
+                            v => JsonConvert.DeserializeObject<Dictionary<ListingType, int>>(v) 
                         )
-                        .Metadata.SetValueComparer(new ValueComparer<Dictionary<ListingAssetss, int>>(
+                        .Metadata.SetValueComparer(new ValueComparer<Dictionary<ListingType, int>>(
                             (c1, c2) => c1.SequenceEqual(c2),
                             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.Key.GetHashCode(), v.Value)), 
                             c => c.ToDictionary(k => k.Key, v => v.Value) 

@@ -14,5 +14,7 @@ namespace Domain.Entities
         public decimal Rating { get; set; }
         public UserType Type { get; set; }
         public List<Guid>? PropertyHistory { get; set; } 
+        //public List<Guid>? PropertyWaitingList { get; set; } = [];
+        //public List<Guid>? ChatId { get; set; } = [];
     }
 }

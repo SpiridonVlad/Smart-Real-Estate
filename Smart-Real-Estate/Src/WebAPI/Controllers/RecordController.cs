@@ -27,7 +27,7 @@ namespace Real_Estate_Management_System.Controllers
             [FromQuery] string? descriptionContains = null,
             [FromQuery(Name = "propertyMinFeatures")] Dictionary<PropertyFeatureType, int>? propertyMinFeatures = null,
             [FromQuery(Name = "propertyMaxFeatures")] Dictionary<PropertyFeatureType, int>? propertyMaxFeatures = null,
-            [FromQuery(Name = "listingMinFeatures")] Dictionary<ListingAssetss, int>? listingMinFeatures = null)
+            [FromQuery(Name = "listingMinFeatures")] Dictionary<ListingType, int>? listingMinFeatures = null)
         {
 
             var filter = new RecordFilter

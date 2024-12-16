@@ -13,7 +13,7 @@ namespace Application.Filters
         public DateTime? MinPublicationDate { get; set; }
         public DateTime? MaxPublicationDate { get; set; }
         public string? ListingDescriptionContains { get; set; }
-        public Dictionary<ListingAssetss, int>? ListingFeatures { get; set; }
+        public Dictionary<ListingType, int>? ListingFeatures { get; set; }
 
         public Expression<Func<Listing, bool>> BuildFilterExpression()
         {

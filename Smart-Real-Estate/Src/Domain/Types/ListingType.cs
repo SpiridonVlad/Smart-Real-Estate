@@ -1,6 +1,6 @@
 ﻿namespace Domain.Types
 {
-    public enum ListingAssetss
+    public enum ListingType
     {
         IsSold,
         IsHighlighted,

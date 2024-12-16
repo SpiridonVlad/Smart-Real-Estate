@@ -160,6 +160,9 @@ namespace Identity.Repositories
 
         public async Task<Result<Guid>> Register(User user, CancellationToken cancellationToken)
         {
+            var existingUser = await context.Users.SingleOrDefaultAsync(u => u.Email == user.Email, cancellationToken: cancellationToken);
+            if (existingUser != null)
+                return Result<Guid>.Failure("Email already in use");
             context.Users.Add(user);
             await context.SaveChangesAsync(cancellationToken);
             return Result<Guid>.Success(user.Id);

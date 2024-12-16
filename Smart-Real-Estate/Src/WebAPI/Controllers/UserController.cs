@@ -31,8 +31,8 @@ namespace Real_Estate_Management_System.Controllers
 
         [HttpGet("Paginated")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers(
-            int page,
-            int pageSize,
+            int page = 1,
+            int pageSize = 10,
             bool? verified = null,
             UserType? type = null,
             decimal? minRating = null,
