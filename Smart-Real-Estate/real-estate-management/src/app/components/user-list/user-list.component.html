@@ -22,6 +22,7 @@
   <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
   <div *ngIf="showFilterPopup" class="filter-popup">
     <h2>Filters</h2>
+    
     <label for="minRating">Min Rating:</label>
     <input id="minRating" type="number" [(ngModel)]="minRating" />
     
@@ -38,8 +39,10 @@
     <label for="username">Username:</label>
     <input id="username" type="text" [(ngModel)]="username" />
     
-    <button (click)="applyFilters()">Apply Filters</button>
-    <button (click)="toggleFilterPopup()">Close</button>
+    <div class="button-group">
+      <button (click)="applyFilters()">Apply Filters</button>
+      <button (click)="toggleFilterPopup()">Close</button>
+    </div>
   </div>
     
   <div class="user-buttons">
