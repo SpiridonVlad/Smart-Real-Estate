@@ -48,7 +48,7 @@ button:hover:enabled {
 }
 
 .pagination-controls .filters-button {
-  margin-top: 25px; /* Position the Filters button 5px lower */
+  margin-top: 5px; /* Position the Filters button 5px lower */
 }
 
 .pagination-controls-bottom {
@@ -130,26 +130,35 @@ button:hover:enabled {
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80%; /* Set maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
 }
 
 .filter-popup h2 {
   margin-top: 0;
   color: #333;
+  text-align: center;
 }
 
 .filter-popup label {
   display: block;
   margin-top: 10px;
   color: #555;
+  text-align: center; /* Center align labels */
 }
 
 .filter-popup input, .filter-popup select {
-  width: 100%;
+  width: calc(100% - 40px); /* Ensure equal margins on left and right */
   padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 10px;
+  margin: 5px 20px; /* Equal margins on left and right */
   border: 1px solid #ccc;
   border-radius: 4px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .filter-popup button {
@@ -161,8 +170,15 @@ button:hover:enabled {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%;
 }
 
 .filter-popup button:hover {
   background-color: #218838;
+}
+
+.filter-popup .button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
