@@ -1,20 +1,16 @@
 <div class="login">
   <h1>Login</h1>
   <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" formControlName="email" required />
+    <div class="form-group">
+      <input id="email" formControlName="email" placeholder="Email" required />
     </div>
-    <div>
-      <label for="password">Password:</label>
-      <input id="password" type="password" formControlName="password" required />
+    <div class="form-group">
+      <input id="password" type="password" formControlName="password" placeholder="Password" required />
     </div>
     <button type="submit" [disabled]="loginForm.invalid">Login</button>
-    
   </form>
   <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
   <p class="register-link">
     Don't have an account? <a (click)="navigateToRegister()">Register here</a>
   </p>
-   
 </div>
