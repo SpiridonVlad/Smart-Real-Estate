@@ -19,10 +19,10 @@ export class RecordListComponent implements OnInit {
   showFilterPopup: boolean = false;
   pTypes: string[] = ['Apartment', 'Office', 'Studio', 'CommercialSpace', 'House', 'Garage'];
   cities: string[] = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'];
-  filter: { 
-    pType: string; 
-    city: string ; 
-    minPrice: number; 
+  filter: {
+    pType: string;
+    city: string ;
+    minPrice: number;
     maxPrice: number;
     minPublicationDate?: string | null;
     maxPublicationDate?: string | null;
@@ -98,7 +98,7 @@ export class RecordListComponent implements OnInit {
       }
     };
   }
-  
+
 
   loadRecords(): void {
     this.recordService.getPaginatedRecords(this.page, this.pageSize, {
@@ -121,11 +121,17 @@ export class RecordListComponent implements OnInit {
       }
     );
   }
-  
 
-  getFeatures(features: { [key: string]: number }): { key: string; value: number }[] {
+
+  getFeatures(features: { [key: string]: number } | null | undefined): { key: string; value: number }[] {
+    // Ensure the input is a valid object
+    if (!features || typeof features !== 'object') {
+      return [];
+    }
+    // Map features to the required format
     return Object.entries(features).map(([key, value]) => ({ key, value }));
   }
+
 
   toggleFilterPopup(): void {
     this.showFilterPopup = !this.showFilterPopup;
@@ -143,7 +149,7 @@ export class RecordListComponent implements OnInit {
     this.loadRecords();
     this.showFilterPopup = false;
   }
-  
+
 
   nextPage(): void {
     if (this.page < this.pages.length) {
