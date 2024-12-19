@@ -9,9 +9,16 @@ namespace Identity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(u => u.Id);
+                entity.HasIndex(u => u.Email).IsUnique();
+                entity.Property(u => u.Username).IsRequired();
+                entity.Property(u => u.Password).IsRequired();
+                entity.Property(u => u.Email).IsRequired();
+                entity.Property(u => u.Verified).HasDefaultValue(false);
+                entity.Property(u => u.Rating).HasColumnType("decimal(5, 2)");
+            });
 
             base.OnModelCreating(modelBuilder);
         }

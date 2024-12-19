@@ -4,6 +4,9 @@
     {
         IsSold,
         IsHighlighted,
-        IsDeleted
+        IsDeleted,
+        ForSale,
+        ForRent,
+        ForLease
     }
 }

@@ -11,5 +11,6 @@ namespace Domain.Entities
         public int Price { get; set; }
         public DateTime PublicationDate { get; set; }
         public Dictionary<ListingType, int> Features { get; set; } = [];
+        public List<Guid> UserWaitingList { get; set; } = [];
     }
 }

@@ -11,5 +11,6 @@ namespace Application.DTOs
         public DateTime PublicationDate { get; set; }
         public string? Description { get; set; }
         public Dictionary<ListingType, int> Features { get; set; } = [];
+        public List<Guid> UserWaitingList { get; set; } = [];
     }
 }

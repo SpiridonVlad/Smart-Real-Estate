@@ -15,7 +15,6 @@ namespace Application.Use_Cases.Actions
         {
             try
             {
-                // Fetch properties
                 var basePropertyResult = await propertyRepository.GetByIdAsync(request.Initial);
                 var comparedPropertyResult = await propertyRepository.GetByIdAsync(request.Secondary);
 
@@ -27,7 +26,6 @@ namespace Application.Use_Cases.Actions
                 var baseProperty = basePropertyResult.Data;
                 var comparedProperty = comparedPropertyResult.Data;
 
-                // Perform comparison logic
                 var result = new PropertyComparison
                 {
                     TypeCompatibility = ComparePropertyTypes(baseProperty.Type, comparedProperty.Type),
@@ -35,7 +33,7 @@ namespace Application.Use_Cases.Actions
                 };
 
                 result.OverallSimilarityScore = CalculateOverallSimilarityScore(result);
-                result.AddressProximity = CompareAddressProximity(); // Mock for now
+                result.AddressProximity = CompareAddressProximity();
 
                 DetermineBetterProperty(baseProperty, comparedProperty, result);
 
