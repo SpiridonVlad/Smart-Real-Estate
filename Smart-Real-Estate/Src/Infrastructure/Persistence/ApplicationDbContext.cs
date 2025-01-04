@@ -80,6 +80,8 @@ namespace Infrastructure.Persistence
                         c => c.ToDictionary(k => k.Key, v => v.Value)
                     ));
 
+                entity.Property(e => e.Title)
+                    .IsRequired();
             });
 
             modelBuilder.Entity<Listing>(static entity =>
@@ -128,6 +130,9 @@ namespace Infrastructure.Persistence
                             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.Key.GetHashCode(), v.Value)), 
                             c => c.ToDictionary(k => k.Key, v => v.Value) 
                         ));
+
+                entity.Property(entity => entity.UserWaitingList)
+                    .HasColumnType("uuid[]");
             });
 
             modelBuilder.Entity<Message>(entity =>
