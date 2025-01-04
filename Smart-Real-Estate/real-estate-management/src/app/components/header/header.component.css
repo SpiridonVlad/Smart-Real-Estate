@@ -1,0 +1,62 @@
+.header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.auth-buttons button {
+  background-color: #ffffff;
+  color: #007bff;
+  border: 2px solid #007bff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-left: 10px;
+}
+
+.auth-buttons button:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+.auth-buttons button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.auth-buttons .login-button {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+.auth-buttons .login-button:hover {
+  background-color: #218838;
+}
+
+.auth-buttons .profile-button {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: white;
+}
+
+.auth-buttons .profile-button:hover {
+  background-color: #e0a800;
+}
+
+.auth-buttons .logout-button {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+.auth-buttons .logout-button:hover {
+  background-color: #c82333;
+}
