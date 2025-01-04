@@ -20,7 +20,7 @@ form {
 }
 
 input {
-  margin-bottom: 15px;
+  margin-bottom: 5px; /* Reduce margin-bottom to bring error message closer */
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid #ccc;
@@ -64,11 +64,9 @@ button:hover:not(:disabled) {
 
 .error-message {
   color: red;
-  margin-top: 10px;
-  text-align: center;
-  word-wrap: break-word; /* Ensure long words break to the next line */
-  white-space: pre-wrap; /* Preserve whitespace and wrap text */
-  max-width: 16rem;
+  font-size: 0.875rem; /* Make the text smaller */
+  margin-top: 2px; /* Reduce margin-top to bring error message closer */
+  text-align: left; /* Align text to the left */
 }
 
 @media (max-width: 600px) {

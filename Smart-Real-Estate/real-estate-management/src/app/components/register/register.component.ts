@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  passwordMismatch: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -27,7 +28,20 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/)]],
+      confirmPassword: ['', Validators.required]
+    }, { validator: this.checkPasswords });
+  }
+
+  checkPasswords(group: FormGroup) {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { notSame: true };
+  }
 
   register(): void {
     if (this.registerForm.valid) {
