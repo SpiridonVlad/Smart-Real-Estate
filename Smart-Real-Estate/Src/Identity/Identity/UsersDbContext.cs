@@ -36,9 +36,6 @@ namespace Identity
                     .HasDefaultValue(0m)
                     .IsRequired();
 
-                entity.Property(u => u.Type)
-                    .HasConversion<string>();
-
                 entity.Property(u => u.PropertyHistory)
                     .HasConversion(
                         v => string.Join(",", v ?? new List<Guid>()),
@@ -54,9 +51,6 @@ namespace Identity
                         v => string.Join(",", v ?? new List<Guid>()),
                         v => v.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(Guid.Parse).ToList());
 
-                entity.Property(u => u.Status)
-                    .HasConversion<string>()
-                    .IsRequired();
 
             });
 

@@ -94,5 +94,13 @@ namespace Real_Estate_Management_System.Controllers
             await mediator.Send(command);
             return NoContent();
         }
+
+        [HttpPatch("Apply")]
+        public async Task<IActionResult> AddUserToWaintingList([FromBody] AddUserToWaitingListCommand command)
+        {
+            await mediator.Send(command);
+            return NoContent();
+        }
+
     }
 }

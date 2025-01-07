@@ -101,5 +101,7 @@ namespace Real_Estate_Management_System.Controllers
             await mediator.Send(command);
             return NoContent();
         }
+
     }
+
 }
