@@ -107,4 +107,8 @@ export class UserListComponent implements OnInit {
       }
     );
   }
+
+  getStars(rating: number): number[] {
+    return Array(rating).fill(0);
+  }
 }

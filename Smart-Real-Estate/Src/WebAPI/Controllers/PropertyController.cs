@@ -8,6 +8,7 @@ using Application.Use_Cases.Property.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Application.Filters;
 using Domain.Types;
+using Application.Use_Cases.Property.Queries;
 
 namespace Real_Estate_Management_System.Controllers
 {
@@ -17,6 +18,7 @@ namespace Real_Estate_Management_System.Controllers
     {
         private readonly IMediator mediator = mediator;
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Result<Guid>>> CreateProperty([FromBody] CreatePropertyCommand command)
         {
@@ -56,6 +58,19 @@ namespace Real_Estate_Management_System.Controllers
             return Ok(result);
         }
 
+        [AuthorizeUser]
+        [HttpGet("User/{userId:guid}")]
+        public async Task<ActionResult<IEnumerable<PropertyDto>>> GetPropertiesByUserId(Guid userId)
+        {
+            var query = new GetAllPropertiesForUserQuery { UserId = userId };
+            var result = await mediator.Send(query);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result);
+        }
+
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<PropertyDto>> GetPropertyById(Guid id)
         {
@@ -86,5 +101,7 @@ namespace Real_Estate_Management_System.Controllers
             await mediator.Send(command);
             return NoContent();
         }
+
     }
+
 }

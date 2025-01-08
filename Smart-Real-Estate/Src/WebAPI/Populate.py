@@ -68,7 +68,7 @@ def generate_users(num_users=50):
             'verified': verified,
             'password': hashed_password,
             'type': user_type,
-            'property_history': property_history
+            'property_history': property_history,
         })
 
     return users
@@ -76,6 +76,7 @@ def generate_users(num_users=50):
 def create_sqlite_users_table(db_path):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
+
 
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Users (
@@ -85,7 +86,8 @@ def create_sqlite_users_table(db_path):
         Password TEXT NOT NULL,
         Verified BOOLEAN NOT NULL,
         Rating INTEGER,
-        Type TEXT NOT NULL
+        Type TEXT NOT NULL,
+        PropertyHistory TEXT
     )
     ''')
 
@@ -95,11 +97,14 @@ def populate_sqlite_users(db_path):
     conn, cursor = create_sqlite_users_table(db_path)
 
     users = generate_users()
-
+    chatid = str(uuid.uuid4())
+    
+    property_waiting_list = str(uuid.uuid4())
+    
     for user in users:
         cursor.execute('''
-        INSERT INTO Users (Id, Username, Email, Password, Verified, Rating, Type, PropertyHistory)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO Users (Id, Username, Email, Password, Verified, Rating,Status,Type, PropertyHistory,ChatId,PropertyWaitingList)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?,?)
         ''', (
             user['id'],
             user['username'],
@@ -107,8 +112,11 @@ def populate_sqlite_users(db_path):
             user['password'].decode('utf-8'),
             user['verified'],
             random.randint(0, 5),
+            random.randint(0, 1),
             user['type'],
-            user['property_history']
+            user['property_history'],
+            chatid,
+            property_waiting_list
         ))
 
     conn.commit()
@@ -193,6 +201,11 @@ def generate_listings(users, properties, num_listings=50):
 def populate_postgres_database(connection_string, users):
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor()
+
+    cursor.execute('DROP TABLE IF EXISTS Users')
+    cursor.execute('DROP TABLE IF EXISTS Addresses CASCADE')
+    cursor.execute('DROP TABLE IF EXISTS Properties CASCADE')
+    cursor.execute('DROP TABLE IF EXISTS Listings CASCADE')
     
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Addresses (

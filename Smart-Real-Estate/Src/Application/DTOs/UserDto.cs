@@ -10,8 +10,11 @@ namespace Application.DTOs
         public required string Email { get; set; }
         public bool Verified { get; set; }
         public decimal Rating { get; set; }
+        public UserStatus Status { get; set; }
         public UserType Type { get; set; }
         public List<Guid>? PropertyHistory { get; set; }
+        public List<Guid>? PropertyWaitingList { get; set; } = [];
+        public List<Guid>? ChatId { get; set; } = [];
 
     }
 }

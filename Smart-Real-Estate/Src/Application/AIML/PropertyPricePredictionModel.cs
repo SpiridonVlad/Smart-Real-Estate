@@ -2,6 +2,7 @@
 using Microsoft.ML;
 using Microsoft.ML.Data;
 using Microsoft.ML.Trainers.FastTree;
+using Org.BouncyCastle.Ocsp;
 using System.Collections.Generic;
 
 namespace Application.AIML
@@ -19,6 +20,10 @@ namespace Application.AIML
         public void Train(List<PropertyData> trainingData, int numberOfTrees = 100)
         {
             var dataView = mlContext.Data.LoadFromEnumerable(trainingData);
+            // Split the data into training and test sets
+            var split = mlContext.Data.TrainTestSplit(dataView, testFraction: 0.2);
+            var trainData = split.TrainSet;
+            var testData = split.TestSet;
 
             var pipeline = mlContext.Transforms.CopyColumns("Label", nameof(PropertyData.Price))
                 .Append(mlContext.Transforms.Conversion.ConvertType("Label", outputKind: DataKind.Single))
@@ -36,6 +41,12 @@ namespace Application.AIML
                 }));
 
             model = pipeline.Fit(dataView);
+            // Evaluate the model on the test set
+            var predictions = model.Transform(testData);
+            var metrics = mlContext.Regression.Evaluate(predictions, "Label", "Score");
+            // Output the evaluation metrics
+            Console.WriteLine($"R^2: {metrics.RSquared:0.##}");
+            Console.WriteLine($"RMS: {metrics.RootMeanSquaredError:0.##}");
         }
         public float Predict(PropertyData propertyData)
         {

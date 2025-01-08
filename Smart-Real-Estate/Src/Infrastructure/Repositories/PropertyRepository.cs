@@ -93,7 +93,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<Result<IEnumerable<Property>>> GetAllForUser(Guid userId)
+        public async Task<Result<IEnumerable<Property>>> GetAllForUserAsync(Guid userId)
         {
             try
             {

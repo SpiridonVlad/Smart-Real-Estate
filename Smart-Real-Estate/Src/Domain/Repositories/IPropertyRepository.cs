@@ -8,7 +8,7 @@ namespace Domain.Repositories
     {
         Task<Result<Property>> GetByIdAsync(Guid id);
         Task<Result<IEnumerable<Property>>> GetPaginatedAsync(int page,int pageSize, Expression<Func<Property, bool>>? filter = null);
-        Task<Result<IEnumerable<Property>>> GetAllForUser(Guid userId);
+        Task<Result<IEnumerable<Property>>> GetAllForUserAsync(Guid userId);
         Task<Result<object>> DeleteUsersPropertys(Guid userId);
         Task<Result<Guid>> AddAsync(Property property);
         Task<Result<object>> UpdateAsync(Property property);

@@ -1,37 +1,34 @@
 <div class="user-list">
   <h1>User List</h1>
-  
 
-  
   <div class="pagination-controls">
-    <label for="page">Page:</label>
-    <select id="page" [(ngModel)]="page" (change)="loadUsers()">
-      <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
-    </select>
+    <div>
+      <label for="page">Page:</label>
+      <select id="page" [(ngModel)]="page" (change)="loadUsers()">
+        <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
+      </select>
+    </div>
 
-    <label for="pageSize">Page Size:</label>
-    <select id="pageSize" [(ngModel)]="pageSize" (change)="loadUsers()">
-      <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
-    </select>
+    <div>
+      <label for="pageSize">Page Size:</label>
+      <select id="pageSize" [(ngModel)]="pageSize" (change)="loadUsers()">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+
+    <button class="filters-button" (click)="toggleFilterPopup()">Filters</button>
   </div>
 
-  <button (click)="toggleFilterPopup()">Filters</button>
-  
   <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
   <div *ngIf="showFilterPopup" class="filter-popup">
     <h2>Filters</h2>
+    
     <label for="minRating">Min Rating:</label>
     <input id="minRating" type="number" [(ngModel)]="minRating" />
     
     <label for="maxRating">Max Rating:</label>
     <input id="maxRating" type="number" [(ngModel)]="maxRating" />
     
-    <label for="verified">Verified:</label>
-    <select id="verified" [(ngModel)]="verified">
-      <option [value]="true">Yes</option>
-      <option [value]="false">No</option>
-    </select>
-
     <label for="type">Type:</label>
     <select id="type" [(ngModel)]="type">
       <option [value]="0">Individual</option>
@@ -42,21 +39,29 @@
     <label for="username">Username:</label>
     <input id="username" type="text" [(ngModel)]="username" />
     
-    <button (click)="applyFilters()">Apply Filters</button>
-    <button (click)="toggleFilterPopup()">Close</button>
+    <div class="button-group">
+      <button (click)="applyFilters()">Apply Filters</button>
+      <button (click)="toggleFilterPopup()">Close</button>
+    </div>
   </div>
     
-    <div class="user-buttons">
-      <div *ngFor="let user of users" class="user-button" (click)="navigateToUpdate(user.id)">
-        <p><strong>Username:</strong> {{ user.username }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Verified:</strong> {{ user.verified }}</p>
-        <p><strong>Rating:</strong> {{ user.rating }}</p>
-        <p><strong>Type:</strong> {{  getUserType(user.type) }}</p>
-      </div>
-    </div>
-    <div class="pagination-controls-bottom">
-      <button *ngIf="page > 1" (click)="previousPage()">Previous Page</button>
-      <button (click)="nextPage()">Next Page</button>
+  <div class="user-buttons">
+    <div *ngFor="let user of users" class="user-button" (click)="navigateToUpdate(user.id)">
+      <p class="username">
+        <strong>Username:</strong> {{ user.username }}
+        <span *ngIf="user.verified" class="verified">✔</span>
+      </p>
+      <p class="email"><strong>Email:</strong> {{ user.email }}</p>
+      <p class="rating">
+        <strong>Rating:</strong>
+        <span *ngFor="let star of getStars(user.rating)" class="star">★</span>
+      </p>
+      <p><strong>Type:</strong> {{ getUserType(user.type) }}</p>
     </div>
   </div>
+  
+  <div class="pagination-controls-bottom">
+    <button [disabled]="page <= 1" (click)="previousPage()">Previous Page</button>
+    <button [disabled]="page >= pages.length" (click)="nextPage()">Next Page</button>
+  </div>
+</div>

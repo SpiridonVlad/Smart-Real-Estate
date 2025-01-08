@@ -11,6 +11,7 @@ namespace Infrastructure.Persistence
         public required DbSet<Property> Properties { get; set; }
         public required DbSet<Listing> Listings { get; set; }
         public required DbSet<Address> Addresses { get; set; }
+        public required DbSet<Message> Message { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,7 +59,8 @@ namespace Infrastructure.Persistence
                     .HasColumnType("uuid")
                     .IsRequired();
 
-                entity.Property(e => e.ImageId)
+                entity.Property(e => e.ImageIds)
+                    .HasColumnType("text[]")
                     .IsRequired();
 
                 entity.Property(e => e.Type)
@@ -69,15 +71,17 @@ namespace Infrastructure.Persistence
                     .HasColumnName("features")
                     .HasColumnType("jsonb") 
                     .HasConversion(
-                        v => JsonConvert.SerializeObject(v), // Convert to JSON for storage
-                        v => JsonConvert.DeserializeObject<Dictionary<PropertyFeatureType, int>>(v) // Deserialize back
+                        v => JsonConvert.SerializeObject(v),
+                        v => JsonConvert.DeserializeObject<Dictionary<PropertyFeatureType, int>>(v)
                     )
                     .Metadata.SetValueComparer(new ValueComparer<Dictionary<PropertyFeatureType, int>>(
-                        (c1, c2) => c1.SequenceEqual(c2), // Compare dictionaries for equality
-                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.Key.GetHashCode(), v.Value)), // Compute hash code
-                        c => c.ToDictionary(k => k.Key, v => v.Value) // Create a deep copy
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.Key.GetHashCode(), v.Value)),
+                        c => c.ToDictionary(k => k.Key, v => v.Value)
                     ));
 
+                entity.Property(e => e.Title)
+                    .IsRequired();
             });
 
             modelBuilder.Entity<Listing>(static entity =>
@@ -109,21 +113,50 @@ namespace Infrastructure.Persistence
                     .HasMaxLength(1000)
                     .IsRequired(false);
 
+
+                entity.Property(e => e.UserWaitingList)
+                    .HasColumnType("uuid[]")
+                    .IsRequired();
+
                 entity.Property(e => e.Features)
                         .HasColumnName("features")
                         .HasColumnType("jsonb") 
                         .HasConversion(
                             v => JsonConvert.SerializeObject(v), 
-                            v => JsonConvert.DeserializeObject<Dictionary<ListingAssetss, int>>(v) 
+                            v => JsonConvert.DeserializeObject<Dictionary<ListingType, int>>(v) 
                         )
-                        .Metadata.SetValueComparer(new ValueComparer<Dictionary<ListingAssetss, int>>(
+                        .Metadata.SetValueComparer(new ValueComparer<Dictionary<ListingType, int>>(
                             (c1, c2) => c1.SequenceEqual(c2),
                             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.Key.GetHashCode(), v.Value)), 
                             c => c.ToDictionary(k => k.Key, v => v.Value) 
                         ));
+
+                entity.Property(entity => entity.UserWaitingList)
+                    .HasColumnType("uuid[]");
             });
 
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.ToTable("messages");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id)
+                    .HasColumnType("uuid")
+                    .HasDefaultValueSql("uuid_generate_v4()")
+                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.SenderId)
+                    .HasColumnType("uuid")
+                    .IsRequired();
+                entity.Property(e => e.ReceiverId)
+                    .HasColumnType("uuid")
+                    .IsRequired();
+                entity.Property(e => e.ChatId)
+                    .HasMaxLength(1000)
+                    .IsRequired(true);
+                entity.Property(e => e.TimeStamp)
+                .IsRequired()
+                .HasDefaultValueSql("now()");
 
+            });
         }
     }
 }

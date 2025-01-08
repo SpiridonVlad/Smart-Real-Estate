@@ -24,7 +24,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
     declarations: [
-      PredictionDialog
     ],
   imports: [
     LoginComponent,
@@ -38,8 +37,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     FormsModule,
     HttpClientModule, // Import HttpClientModule here
     RouterModule.forRoot(appRoutes),
-    AppComponent, 
-    UserListComponent, 
+    AppComponent,
+    UserListComponent,
     UserCreateComponent,
     HomeComponent,
     RecordListComponent,
@@ -54,7 +53,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
 
   ],
-  
-  
+
+
 })
 export class AppModule { }
