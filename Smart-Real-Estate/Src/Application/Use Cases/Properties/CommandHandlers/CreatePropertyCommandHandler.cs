@@ -1,8 +1,10 @@
 ﻿using Application.Use_Cases.Commands;
+using Application.Utils;
 using AutoMapper;
 using Domain.Common;
 using Domain.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Use_Cases.Property.CommandHandlers
 {
@@ -11,20 +13,17 @@ namespace Application.Use_Cases.Property.CommandHandlers
         IPropertyRepository propertyRepository,
         IAddressRepository addressRepository,
         IMapper mapper,
-        IUserRepository userRepository) : IRequestHandler<CreatePropertyCommand, Result<Guid>>
+        IHttpContextAccessor httpContextAccessor,
+    IUserRepository userRepository) : IRequestHandler<CreatePropertyCommand, Result<Guid>>
     {
         private readonly IPropertyRepository propertyRepository = propertyRepository;
         private readonly IAddressRepository addressRepository = addressRepository;
+        private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
         private readonly IMapper mapper = mapper;
-        private readonly IUserRepository userRepository = userRepository;
 
         public async Task<Result<Guid>> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
-            var userExists = await userRepository.GetByIdAsync(request.UserId);
-            if (!userExists.IsSuccess)
-            {
-                return Result<Guid>.Failure("UserId does not exist.");
-            }
+            var userIdResult = JwtHelper.GetUserIdFromJwt(httpContextAccessor.HttpContext);
 
             var addressResult = await addressRepository.AddAsync(request.Address);
             if (!addressResult.IsSuccess)
