@@ -3,13 +3,15 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { Router } from '@angular/router';
 import { PropertyService } from '../../services/property.service';
 import { CommonModule } from '@angular/common';
-
+import { PricePredictionRequest } from '../../models/price-prediction.interface';
+import { Property } from '../../models/property.model';
+import { HttpClient,HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-property-create',
   templateUrl: './property-create.component.html',
   styleUrls: ['./property-create.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule]
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, HttpClientModule]
 })
 export class PropertyCreateComponent implements OnInit {
   propertyForm: FormGroup;
@@ -26,11 +28,16 @@ export class PropertyCreateComponent implements OnInit {
     'HeatingUnit', 'AirConditioning', 'Elevator', 'Furnished', 'Parking', 'Storage',
     'Basement', 'Attic', 'Alarm', 'Intercom', 'VideoSurveillance', 'FireAlarm'
   ];
+  predictionResult: number | null = null;
+  numericFeatures = ['Surface', 'Rooms', 'Floor', 'Year'];
+  booleanFeatures = this.featuresList.filter(f => !this.numericFeatures.includes(f));
+
 
   constructor(
     private fb: FormBuilder,
     private propertyService: PropertyService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     this.propertyForm = this.fb.group({
       addressId: ['', Validators.required],
@@ -45,12 +52,29 @@ export class PropertyCreateComponent implements OnInit {
       imageId: ['', Validators.required],
       userId: ['', Validators.required],
       type: ['', Validators.required],
-      features: this.fb.group(
-        this.featuresList.reduce((acc: { [key: string]: number }, feature: string) => {
-          acc[feature] = 0;
-          return acc;
-        }, {})
-      )
+      features: this.fb.group({
+        Surface: [0, [Validators.required, Validators.min(0)]],
+        Rooms: [0, [Validators.required, Validators.min(0)]],
+        Floor: [0, [Validators.required, Validators.min(0)]],
+        Year: [0, [Validators.required, Validators.min(1900)]],
+        Garden: [false],
+        Garage: [false],
+        Pool: [false],
+        Balcony: [false],
+        HeatingUnit: [false],
+        AirConditioning: [false],
+        Elevator: [false],
+        Furnished: [false],
+        Parking: [false],
+        Storage: [false],
+        Basement: [false],
+        Attic: [false],
+        Alarm: [false],
+        Intercom: [false],
+        VideoSurveillance: [false],
+        FireAlarm: [false]
+      }),
+      price: [0, Validators.required],
     });
   }
 
@@ -59,30 +83,98 @@ export class PropertyCreateComponent implements OnInit {
   onSubmit(): void {
     if (this.propertyForm.valid) {
       const formData = this.propertyForm.value;
-      formData.type = this.propertyTypes[formData.type]; // Convert type to its corresponding numeric value
-      formData.features = { features: this.convertFeaturesToNumbers(formData.features) }; // Convert features to 0 or 1
-      
-      console.log('Form Data to send:', formData); // Log the form data for debugging
-  
-      this.propertyService.createProperty(formData).subscribe(
-        response => {
-          console.log('Property created:', response);
-          this.router.navigate(['/properties']);
+      const property: Property = {
+        address: {
+          street: formData.address.street,
+          city: formData.address.city,
+          state: formData.address.state,
+          postalCode: formData.address.postalCode,
+          country: formData.address.country,
+          additionalInfo: formData.address.additionalInfo
         },
-        error => {
-          console.error('Error creating property:', error);
-          if (error.status === 400 && error.error && error.error.errors) {
-            console.error('Validation errors:', error.error.errors);
-          }
-        }
-      );
+        imageId: formData.imageId || '',
+        userId: '3fa85f64-5717-4562-b3fc-2c963f66afa6', // default or from auth service
+        type: formData.type,
+        features: this.convertFeaturesToNumbers(formData.features)
+      };
+
+      this.propertyService.createProperty(property).subscribe({
+        next: () => this.router.navigate(['/properties']),
+        error: (error) => console.error('Error creating property:', error)
+      });
     }
   }
 
-  private convertFeaturesToNumbers(features: { [key: string]: boolean }): { [key: string]: number } {
-    return Object.keys(features).reduce((acc: { [key: string]: number }, key: string) => {
-      acc[key] = features[key] ? 1 : 0;
-      return acc;
-    }, {});
+  private convertFeaturesToNumbers(features: { [key: string]: boolean | number }): {
+    Garden: number;
+    Garage: number;
+    Pool: number;
+    Balcony: number;
+    Rooms: number;
+    Surface: number;
+    Floor: number;
+    Year: number;
+    HeatingUnit: number;
+    AirConditioning: number;
+    Elevator: number;
+    Furnished: number;
+    Parking: number;
+    Storage: number;
+    Basement: number;
+    Attic: number;
+    Alarm: number;
+    Intercom: number;
+    VideoSurveillance: number;
+    FireAlarm: number;
+} {
+    return {
+        Surface: typeof features['Surface'] === 'number' ? features['Surface'] : 0,
+        Rooms: typeof features['Rooms'] === 'number' ? features['Rooms'] : 0,
+        Floor: typeof features['Floor'] === 'number' ? features['Floor'] : 0,
+        Year: typeof features['Year'] === 'number' ? features['Year'] : 0,
+        Garden: features['Garden'] ? 1 : 0,
+        Garage: features['Garage'] ? 1 : 0,
+        Pool: features['Pool'] ? 1 : 0,
+        Balcony: features['Balcony'] ? 1 : 0,
+        HeatingUnit: features['HeatingUnit'] ? 1 : 0,
+        AirConditioning: features['AirConditioning'] ? 1 : 0,
+        Elevator: features['Elevator'] ? 1 : 0,
+        Furnished: features['Furnished'] ? 1 : 0,
+        Parking: features['Parking'] ? 1 : 0,
+        Storage: features['Storage'] ? 1 : 0,
+        Basement: features['Basement'] ? 1 : 0,
+        Attic: features['Attic'] ? 1 : 0,
+        Alarm: features['Alarm'] ? 1 : 0,
+        Intercom: features['Intercom'] ? 1 : 0,
+        VideoSurveillance: features['VideoSurveillance'] ? 1 : 0,
+        FireAlarm: features['FireAlarm'] ? 1 : 0
+    };
+}
+
+  getPricePrediction(): void {
+
+      const formData = this.propertyForm.value;
+      console.log('Form data:', formData);
+      const predictionRequest: PricePredictionRequest = {
+        surface: formData.features.Surface || 0,
+        rooms: formData.features.Rooms || 0,
+        description: formData.address.additionalInfo || '',
+        price: 0,
+        address: `${formData.address.street}, ${formData.address.city}`,
+        year: formData.features.Year || 0,
+        parking: formData.features.Parking === 1,
+        floor: formData.features.Floor || 0
+      };
+
+      this.http.post<number>('https://localhost:7117/api/v1/PropertyPricePrediction/predict',
+        predictionRequest).subscribe(
+        result => {
+          this.predictionResult = result;
+        },
+        error => {
+          console.error('Error predicting price:', error);
+        }
+      );
+
   }
 }
