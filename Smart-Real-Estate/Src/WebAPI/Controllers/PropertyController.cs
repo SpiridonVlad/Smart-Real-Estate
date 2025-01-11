@@ -58,7 +58,6 @@ namespace Real_Estate_Management_System.Controllers
             return Ok(result);
         }
 
-        [AuthorizeUser]
         [HttpGet("User/{userId:guid}")]
         public async Task<ActionResult<IEnumerable<PropertyDto>>> GetPropertiesByUserId(Guid userId)
         {
