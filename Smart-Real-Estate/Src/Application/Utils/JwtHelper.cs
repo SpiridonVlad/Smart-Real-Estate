@@ -10,7 +10,6 @@ namespace Application.Utils
         {
             try
             {
-                // Obține token-ul din antetul Authorization
                 var authHeader = httpContext.Request.Headers["Authorization"].ToString();
 
                 if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
@@ -20,11 +19,9 @@ namespace Application.Utils
 
                 var token = authHeader.Substring("Bearer ".Length);
 
-                // Decodifică token-ul
                 var handler = new JwtSecurityTokenHandler();
                 var jwtToken = handler.ReadJwtToken(token);
 
-                // Extrage `userId` din claims
                 var userIdClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId");
 
                 if (userIdClaim == null)

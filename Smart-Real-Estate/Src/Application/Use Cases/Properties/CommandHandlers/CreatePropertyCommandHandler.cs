@@ -32,6 +32,7 @@ namespace Application.Use_Cases.Property.CommandHandlers
             }
 
             var property = mapper.Map<Domain.Entities.Property>(request);
+            property.UserId = userIdResult.Data;
             property.AddressId = addressResult.Data;
 
             var propertyResult = await propertyRepository.AddAsync(property);
