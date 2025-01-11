@@ -1,0 +1,77 @@
+.record-details {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    border: none;
+    border-radius: 0;
+    background-color: #f9f9f9;
+  }
+  
+  .record-details h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .record-details h3 {
+    text-align: center;
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card h3 {
+    margin-top: 0;
+  }
+  
+  .card p {
+    margin: 5px 0;
+  }
+  
+  .card ul {
+    padding-left: 20px;
+  }
+  
+  .card ul li {
+    margin-bottom: 5px;
+  }
+  
+  .record-details .not-found {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+  }
+  
+  .record-details .back-button {
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .record-details .back-button:hover {
+    background-color: #0056b3;
+  }

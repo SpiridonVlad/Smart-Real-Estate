@@ -1,7 +1,9 @@
 .header {
+  width: 100%;
   background-color: #007bff;
   color: white;
   padding: 10px 20px;
+  box-sizing: border-box;
 }
 
 .header-content {
@@ -42,21 +44,21 @@
 }
 
 .auth-buttons .profile-button {
-  background-color: #ffc107;
-  border-color: #ffc107;
+  background-color: #28a745;
+  border-color: #28a745;
   color: white;
 }
 
 .auth-buttons .profile-button:hover {
-  background-color: #e0a800;
+  background-color: #218838;
 }
 
 .auth-buttons .logout-button {
-  background-color: #dc3545;
-  border-color: #dc3545;
+  background-color: #28a745;
+  border-color: #28a745;
   color: white;
 }
 
 .auth-buttons .logout-button:hover {
-  background-color: #c82333;
+  background-color: #218838;
 }
