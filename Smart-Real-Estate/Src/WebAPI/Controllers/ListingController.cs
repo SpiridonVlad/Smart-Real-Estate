@@ -7,6 +7,7 @@ using Domain.Common;
 using Application.Use_Cases.Listings.Commands;
 using Application.Filters;
 using Domain.Types;
+using Application.Use_Cases.Listings.Queries;
 
 namespace Real_Estate_Management_System.Controllers
 {
@@ -55,6 +56,18 @@ namespace Real_Estate_Management_System.Controllers
                 Filter = filter
             };
 
+            var result = await mediator.Send(query);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("User/{userId:guid}")]
+        public async Task<ActionResult<IEnumerable<ListingDto>>> GetListingsByUserId(Guid userId)
+        {
+            var query = new GetAllListingsForUserQuery { UserId = userId };
             var result = await mediator.Send(query);
             if (!result.IsSuccess)
             {
