@@ -7,6 +7,7 @@ using Domain.Common;
 using Application.Use_Cases.Listings.Commands;
 using Application.Filters;
 using Domain.Types;
+using Application.Use_Cases.Listings.Queries;
 
 namespace Real_Estate_Management_System.Controllers
 {
@@ -38,7 +39,6 @@ namespace Real_Estate_Management_System.Controllers
             [FromQuery] string? descriptionContains = null,
             [FromQuery(Name = "features")] Dictionary<ListingType, int>? minFeatures = null)
         {
-            Console.WriteLine(minFeatures);
             var filter = new ListingFilter
             {
                 MinPrice = minPrice,
@@ -56,6 +56,18 @@ namespace Real_Estate_Management_System.Controllers
                 Filter = filter
             };
 
+            var result = await mediator.Send(query);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("User/{userId:guid}")]
+        public async Task<ActionResult<IEnumerable<ListingDto>>> GetListingsByUserId(Guid userId)
+        {
+            var query = new GetAllListingsForUserQuery { UserId = userId };
             var result = await mediator.Send(query);
             if (!result.IsSuccess)
             {
@@ -94,5 +106,13 @@ namespace Real_Estate_Management_System.Controllers
             await mediator.Send(command);
             return NoContent();
         }
+
+        [HttpPatch("Apply")]
+        public async Task<IActionResult> AddUserToWaintingList([FromBody] AddUserToWaitingListCommand command)
+        {
+            await mediator.Send(command);
+            return NoContent();
+        }
+
     }
 }

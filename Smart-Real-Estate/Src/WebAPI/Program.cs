@@ -6,6 +6,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Application.AIML;
+using Application.Messages;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,7 +77,12 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddSingleton<PropertyPricePredictionModel>();
+
 builder.Services.AddSingleton<PropertyDataParser>();
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -88,6 +94,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowSpecificOrigin");
 
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
@@ -95,5 +102,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chatHub");
 
 await app.RunAsync();

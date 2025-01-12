@@ -5,6 +5,7 @@ namespace Domain.Entities
     public class Property
     {
         public Guid Id { get; set; }
+        public required string Title { get; set; }
         public Guid AddressId { get; set; }
         public required Address Address { get; set; }
         public required List<string> ImageIds { get; set; } 

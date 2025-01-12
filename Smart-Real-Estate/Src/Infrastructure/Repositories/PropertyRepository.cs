@@ -98,6 +98,7 @@ namespace Infrastructure.Repositories
             try
             {
                 var properties = await context.Properties.Where(p => p.UserId == userId).ToListAsync();
+                Console.WriteLine(properties);
                 return Result<IEnumerable<Property>>.Success(properties);
             }
             catch (Exception ex)

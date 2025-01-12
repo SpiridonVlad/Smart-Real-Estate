@@ -24,7 +24,7 @@ export class ListingService {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());
-    
+
     const headers = this.getAuthHeaders();
     console.log('headers', headers);
     return this.http.get<{ data: Listing[] }>(`${this.apiUrl}/paginated`, { params, headers }).pipe(
@@ -39,13 +39,11 @@ export class ListingService {
     const headers = this.getAuthHeaders();
     const requestData = {
       propertyId: listingData.propertyId,
-      userId: listingData.userId,
       price: listingData.price,
       publicationDate: new Date().toISOString(),  // If you don't have the exact date, you can use the current date
       description: listingData.description,
-      features: {
-        features: listingData.features  // Pass the features object directly
-      }
+      features: listingData.features  // Pass the features object directly
+
     };
 
     return this.http.post<Listing>(this.apiUrl, requestData, { headers }).pipe(
@@ -81,6 +79,15 @@ export class ListingService {
     return this.http.delete(`${this.apiUrl}/${id}`, { headers }).pipe(
       catchError((error) => {
         console.error('Error deleting listing:', error);
+        return throwError(error);
+      })
+    );
+  }
+  public getListingsByUserId(userId: string): Observable<{ data: Listing[] }> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<{ data: Listing[] }>(`${this.apiUrl}/user/${userId}`, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error fetching listings by userId:', error);
         return throwError(error);
       })
     );

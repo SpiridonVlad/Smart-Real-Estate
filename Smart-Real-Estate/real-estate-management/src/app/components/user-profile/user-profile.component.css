@@ -1,78 +1,345 @@
+/* Profile Container */
 .profile-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .profile-details {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .profile-details p {
-    font-size: 16px;
-    color: #555;
-    margin: 0;
-  }
-  
-  .profile-details p strong {
-    color: #333;
-  }
-  
-  .profile-actions {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .update-button {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-  }
-  
-  .update-button:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
-  }
-  
-  .update-button:active {
-    background-color: #1d712f;
-    transform: translateY(0);
-  }
-  
-  ng-template p {
-    text-align: center;
-    font-style: italic;
-    color: #888;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .profile-container {
-      margin: 20px;
+  max-width: 1600px;
+  width: 95%;
+  height: auto;
+  margin: 20px auto 0;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: auto;
+}
+
+/* Profile Header */
+.profile-header {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+}
+
+.profile-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 30%;
+}
+
+.profile-left h1 {
+  font-size: 28px;
+  color: #333;
+  margin: 0;
+  text-align: left;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #e0e0e0;
+}
+
+.profile-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  width: 65%;
+}
+
+.profile-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+.profile-details p {
+  font-size: 16px;
+  color: #555;
+  margin: 0;
+}
+
+.profile-details p strong {
+  color: #333;
+}
+
+/* Profile Actions */
+.profile-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.update-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.update-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+.update-button:active {
+  background-color: #1d712f;
+  transform: translateY(0);
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: space-between; /* Evenly distribute buttons across the container */
+  margin-top: 20px;
+  padding: 10px 0;
+}
+
+.action-button {
+  background-color: #28a745; /* Match update button color */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+.action-button:active {
+  background-color: #1d712f;
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profile-container {
+      max-width: 100%;
+      margin: 10px auto;
       padding: 15px;
-    }
-  
-    .update-button {
-      width: 100%;
-    }
   }
-  
+
+  .profile-header {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+  }
+
+  .profile-left {
+      align-items: center;
+      width: 100%;
+  }
+
+  .profile-right {
+      align-items: center;
+      width: 100%;
+  }
+
+  .profile-details {
+      grid-template-columns: 1fr;
+      gap: 10px;
+  }
+
+  .action-buttons {
+      flex-direction: column;
+      gap: 10px; /* Stack buttons vertically with spacing */
+  }
+}
+/* Dynamic Content Section */
+.dynamic-content {
+  max-width: 1600px;
+  width: 95%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+.dynamic-content h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.dynamic-content p {
+  font-size: 16px;
+  color: #555;
+  margin: 0;
+}
+
+.green-check {
+  color: green;
+  font-weight: bold;
+}
+
+.red-x {
+  color: red;
+  font-weight: bold;
+}
+.property-card {
+  border: 1px solid #ddd; /* Light gray border around each property */
+  border-radius: 8px; /* Rounded corners */
+  padding: 16px; /* Add space inside the card */
+  margin-bottom: 16px; /* Space between each card */
+  background-color: #f9f9f9; /* Slightly off-white background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.property-divider {
+  border: none;
+  height: 1px;
+  background-color: #ccc; /* Divider color */
+  margin: 16px 0; /* Space above and below the divider */
+}
+
+.green-check {
+  color: green;
+  font-weight: bold;
+}
+
+.red-x {
+  color: red;
+  font-weight: bold;
+}
+.listings-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 16px; /* Space between boxes */
+  margin: 16px 0;
+}
+
+.listing-box {
+  width: 100%; /* Ensure the box spans the full container width */
+  box-sizing: border-box; /* Include padding and border in width calculation */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.listing-box h3 {
+  margin: 0 0 8px;
+}
+
+.listing-box p {
+  margin: 4px 0;
+}
+
+
+
+@media (max-width: 768px) {
+  .listing-box {
+    width: calc(50% - 16px); /* Two boxes per row */
+  }
+}
+
+@media (max-width: 480px) {
+  .listing-box {
+    width: 100%; /* One box per row */
+  }
+}
+
+.listing-actions {
+  margin-top: 16px; /* Space between listing content and buttons */
+  display: flex;
+  gap: 8px; /* Space between buttons */
+}
+
+.listing-actions button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.listing-actions button:hover {
+  opacity: 0.9; /* Slight hover effect */
+}
+
+.listing-actions button:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Add focus effect */
+}
+
+.listing-actions .delete-button {
+  background-color: #e74c3c; /* Red for delete button */
+  color: #fff;
+}
+
+.listing-actions .delete-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.listing-actions button:not(.delete-button) {
+  background-color: #3498db; /* Blue for update button */
+  color: #fff;
+}
+
+.listing-actions button:not(.delete-button):hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+.property-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px; /* Space between buttons */
+}
+
+.property-actions button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.property-actions button:hover {
+  opacity: 0.9; /* Slight hover effect */
+}
+
+.property-actions button:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Add focus effect */
+}
+
+.property-actions .delete-button {
+  background-color: #e74c3c; /* Red for delete button */
+  color: #fff;
+}
+
+.property-actions .delete-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.property-actions button:not(.delete-button) {
+  background-color: #3498db; /* Blue for update button */
+  color: #fff;
+}
+
+.property-actions button:not(.delete-button):hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}

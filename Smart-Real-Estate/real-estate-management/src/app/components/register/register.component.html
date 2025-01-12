@@ -26,6 +26,13 @@
         Passwords do not match.
       </div>
     </div>
+    <div>
+      <label for="confirmPassword">Confirm Password:</label>
+      <input id="confirmPassword" type="password" formControlName="confirmPassword" required />
+      <div *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched" class="error">
+        Passwords do not match!
+      </div>
+    </div>
     <button type="submit" [disabled]="registerForm.invalid">Register</button>
   </form>
 </div>

@@ -18,7 +18,6 @@ namespace Real_Estate_Management_System.Controllers
     {
         private readonly IMediator mediator = mediator;
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Result<Guid>>> CreateProperty([FromBody] CreatePropertyCommand command)
         {
@@ -58,7 +57,6 @@ namespace Real_Estate_Management_System.Controllers
             return Ok(result);
         }
 
-        [AuthorizeUser]
         [HttpGet("User/{userId:guid}")]
         public async Task<ActionResult<IEnumerable<PropertyDto>>> GetPropertiesByUserId(Guid userId)
         {
@@ -101,5 +99,7 @@ namespace Real_Estate_Management_System.Controllers
             await mediator.Send(command);
             return NoContent();
         }
+
     }
+
 }

@@ -2,8 +2,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ListingService } from '../../services/listing.service';
-import { ListingAsset } from '../../models/listing.model';
 import { CommonModule } from '@angular/common';
+import { Listing } from '../../models/listing.model';
+import { OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PropertyService } from '../../services/property.service';
+import { Property } from '../../models/property.model';
+import { HttpClient } from '@angular/common/http';
+import { PricePredictionRequest } from '../../models/price-prediction.interface';
 
 @Component({
   selector: 'app-listing-create',
@@ -12,61 +18,121 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, FormsModule]
 })
-export class ListingCreateComponent {
+export class ListingCreateComponent implements OnInit {
+  propertyId:string = '';
   listingForm: FormGroup;
-  listingAssets = Object.keys(ListingAsset).map(key => ListingAsset[key as keyof typeof ListingAsset]); // Enum pentru proprietăți
+  featuresList = [ 'ForSale', 'ForRent', 'ForLease'];
+  predictionResult: number | null = null;
 
   constructor(
     private fb: FormBuilder,
     private listingService: ListingService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private propertyService: PropertyService,
+    private http: HttpClient
   ) {
     this.listingForm = this.fb.group({
-      propertyId: ['', Validators.required],
-      userId: ['', Validators.required],
+      price: [0],
       description: [''],
-      price: [0, [Validators.required, Validators.min(0)]],
-      publicationDate: [new Date().toISOString(), Validators.required],
       features: this.fb.group({
-        features: this.fb.group({
-          IsSold: [0, Validators.required],
-          IsHighlighted: [0, Validators.required],
-          IsDeleted: [0, Validators.required],
-        })
+        IsSold: [0],
+        IsHighlighted: [0],
+        IsDeleted: [0],
+        ForSale: [0],
+        ForRent: [0],
+        ForLease: [0]
       })
     });
   }
+  ngOnInit(): void {
 
-  onSubmit(): void {
-    if (this.listingForm.valid) {
-      const listingData = {
-        ...this.listingForm.value,
-        features: this.listingForm.value.features.features
-      }
+    const propertyId = this.route.snapshot.paramMap.get('propertyId');
 
-      console.log('Listing data:', listingData);
-
-      this.listingService.createListing(listingData).subscribe(
-        () => {
-          this.router.navigate(['/listings']);
-        },
-        (error) => {
-          console.error('Error creating listing:', error);
-        }
-      );
+    if (!propertyId) {
+      console.error('No property ID provided');
+      this.router.navigate(['']);
+      return;
     }
-  }
-  
 
-  toggleAsset(asset: ListingAsset): void {
-    const currentValue = this.listingForm.get('features')?.value[asset];
-    const newValue = currentValue === 0 ? 1 : 0;
-
-    this.listingForm.patchValue({
-      features: {
-        ...this.listingForm.value.features,
-        [asset]: newValue
-      }
+    this.propertyId = propertyId;
+    this.propertyService.getPropertyById(this.propertyId).subscribe({
+      next: (response) => {
+        const property = response.data;
+        this.getPricePrediction(property);
+      },
+      error: (error) => console.error('Error fetching property:', error)
     });
   }
-}  
+  onSubmit(): void {
+    if (this.listingForm.valid) {
+      const formData = this.listingForm.value;
+      const listing: Listing = {
+        propertyId: this.propertyId,
+        price: formData.price,
+        publicationDate: new Date().toISOString(),
+        description: formData.description,
+        features: {
+          IsSold: 0,
+          IsHighlighted: 0,
+          IsDeleted:  0,
+          ForSale: formData.features.ForSale ? 1 : 0,
+          ForRent: formData.features.ForRent ? 1 : 0,
+          ForLease: formData.features.ForLease ? 1 : 0
+        }
+      };
+      console.log('Listing to submit:', listing); // Debug log
+
+      this.listingService.createListing(listing).subscribe({
+        next: () => this.router.navigate(['/records']),
+        error: (error) => console.error('Error creating listing:', error)
+      });
+    }
+  }
+
+  private convertFeaturesToNumbers(features: { [key: string]: boolean }): {
+    IsSold: number;
+    IsHighlighted: number;
+    IsDeleted: number;
+    ForSale: number;
+    ForRent: number;
+    ForLease: number;
+}{
+  return {
+      IsSold: features['IsSold'] ? 1 : 0,
+      IsHighlighted: features['IsHighlighted'] ? 1 : 0,
+      IsDeleted: features['IsDeleted'] ? 1 : 0,
+      ForSale: features['ForSale'] ? 1 : 0,
+      ForRent: features['ForRent'] ? 1 : 0,
+      ForLease: features['ForLease'] ? 1 : 0
+  };
+}
+private getPricePrediction(property: Property): void {
+  const predictionRequest: PricePredictionRequest = {
+    surface: property.features.Surface || 0,
+    rooms: property.features.Rooms || 0,
+    description: property.address.additionalInfo || '',
+    price: 0,
+    address: `${property.address.street}, ${property.address.city}`,
+    year: property.features.Year || 0,
+    parking: property.features.Parking === 1,
+    floor: property.features.Floor || 0
+  };
+
+  this.http.post<number>('https://localhost:7117/api/v1/PropertyPricePrediction/predict',
+    predictionRequest).subscribe({
+      next: (result) => {
+        this.predictionResult = result;
+        this.updatePrice(Math.round(result));
+      },
+      error: (error) => console.error('Error predicting price:', error)
+    });
+}
+private updatePrice(price: number): void {
+  this.listingForm.patchValue({
+    price: price
+  });
+}
+}
+
+

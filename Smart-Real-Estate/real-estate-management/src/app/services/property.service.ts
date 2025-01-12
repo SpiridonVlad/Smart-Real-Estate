@@ -34,7 +34,7 @@ export class PropertyService {
         console.error('Error status:', error.status);
         console.error('Error message:', error.message);
         console.error('Error details:', error.error);
-        return throwError(error);
+        return throwError(() => error);
       })
     );
   }
@@ -44,7 +44,7 @@ export class PropertyService {
     return this.http.get<{ data: Property}>(`${this.apiUrl}/${id}`, { headers }).pipe(
       catchError((error) => {
         console.error('Error fetching property by ID:', error);
-        return throwError(error);
+        return throwError(() => error);
       })
     );
   }
@@ -54,11 +54,14 @@ export class PropertyService {
     return this.http.post<Property>(this.apiUrl, property, { headers });
   }
   public updateProperty(property: Property): Observable<any> {
+    if (!property.id) {
+      return throwError(() => new Error('Property ID is required for update'));
+    }
     const headers = this.getAuthHeaders();
     return this.http.put<Property>(`${this.apiUrl}/${property.id}`, property, { headers }).pipe(
       catchError(error => {
         console.error('Error updating property:', error);
-        return throwError(error);
+        return throwError(() => error);
       })
     );
   }
@@ -68,7 +71,16 @@ export class PropertyService {
     return this.http.delete(`${this.apiUrl}/${id}`, { headers }).pipe(
       catchError((error) => {
         console.error('Error deleting property:', error);
-        return throwError(error);
+        return throwError(() => error);
+      })
+    );
+  }
+  public getPropertiesByUserId(userId: string): Observable<{ data: Property[] }> {
+    const headers = this.getAuthHeaders(); // Reuse the method to get authorization headers
+    return this.http.get<{ data: Property[] }>(`${this.apiUrl}/User/${userId}`, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error fetching properties by User ID:', error);
+        return throwError(() => error); // Updated syntax for throwError
       })
     );
   }

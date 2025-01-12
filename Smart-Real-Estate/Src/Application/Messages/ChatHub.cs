@@ -1,33 +1,47 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Domain.Entities;
+using Infrastructure.Persistence;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Messages
 {
 
-    public class ChatHub : Hub
+    public class ChatHub(ApplicationDbContext context) : Hub
     {
-        public async Task SendMessage(string senderId, string receiverId, string message)
-        {
-            await Clients.User(receiverId).SendAsync("ReceiveMessage", senderId, message);
-        }
+        private readonly ApplicationDbContext context = context;
 
-        public override async Task OnConnectedAsync()
+        public async Task SendMessage(Guid chatId, string message)
         {
-            var userId = Context.User?.Identity?.Name;
-            if (!string.IsNullOrEmpty(userId))
+            if (!Guid.TryParse(Context.UserIdentifier, out Guid senderId))
             {
-                await Groups.AddToGroupAsync(Context.ConnectionId, userId);
+                throw new Exception("Invalid user identifier");
             }
-            await base.OnConnectedAsync();
-        }
 
-        public override async Task OnDisconnectedAsync(Exception exception)
-        {
-            var userId = Context.User?.Identity?.Name;
-            if (!string.IsNullOrEmpty(userId))
+            var chat = await context.Chats
+                .Include(c => c.Messages)
+                .FirstOrDefaultAsync(c => c.ChatId == chatId)
+                ?? throw new Exception("Chat not found");
+
+            var receiverId = chat.Participant1Id == senderId
+                ? chat.Participant2Id
+                : chat.Participant1Id;
+
+            var newMessage = new Message
             {
-                await Groups.RemoveFromGroupAsync(Context.ConnectionId, userId);
-            }
-            await base.OnDisconnectedAsync(exception);
+                ChatId = chatId,
+                SenderId = senderId,  
+                ReceiverId = receiverId,
+                Content = message,
+                Timestamp = DateTime.UtcNow,
+                IsRead = false
+            };
+
+            chat.LastMessageAt = DateTime.UtcNow;
+            context.Messages.Add(newMessage);
+            await context.SaveChangesAsync();
+
+            // Convert receiverId to string for SignalR
+            await Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", chatId, senderId, message);
         }
     }
 

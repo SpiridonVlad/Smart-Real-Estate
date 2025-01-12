@@ -24,8 +24,9 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]]
-    });
+    },{ validator: this.passwordMatchValidator });
   }
 
   ngOnInit(): void {
@@ -43,8 +44,18 @@ export class RegisterComponent implements OnInit {
     return password === confirmPassword ? null : { notSame: true };
   }
 
+  passwordMatchValidator(form: FormGroup) {
+    const password = form.get('password')!.value;
+    const confirmPassword = form.get('confirmPassword')!.value;
+    return password === confirmPassword ? null : { mismatch: true };
+  }
+
   register(): void {
     if (this.registerForm.valid) {
+      if (this.registerForm.errors?.['mismatch']) {
+        alert('Passwords do not match!');
+        return;
+      }
       const { username, password, email } = this.registerForm.value;
       this.authService.register(username, password, email).subscribe(
         () => this.router.navigate(['/login']),

@@ -12,10 +12,6 @@ namespace Application.Use_Cases.Listings.Commands
                 .NotEmpty().WithMessage("PropertyId is required.")
                 .Must(id => Guid.TryParse(id.ToString(), out _)).WithMessage("PropertyId must be a valid GUID.");
 
-            RuleFor(x => x.UserId)
-                .NotEmpty().WithMessage("UserId is required.")
-                .Must(id => Guid.TryParse(id.ToString(), out _)).WithMessage("UserId must be a valid GUID.");
-
             RuleFor(x => x.Price)
                 .GreaterThan(0).WithMessage("Price must be greater than zero.");
 
