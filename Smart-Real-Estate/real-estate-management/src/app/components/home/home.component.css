@@ -1,100 +1,247 @@
-html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f8ff; /* Light blue background */
-}
-
+/* home.component.css */
 .home {
-  width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f0f8ff, #ffffff);
+  padding: 2rem;
   position: relative;
-  padding: 20px;
-  text-align: center;
-  background-color: #f0f8ff; /* Light blue background */
-  box-sizing: border-box;
-}
-
-.header {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 20px;
-}
-
-.login-button, .logout-button, .profile-button {
-  justify-content: end;
-  width: 10rem;
-  margin: 1rem;
 }
 
 h1 {
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: row; /* Ensure elements are in a row */
-  /* flex-wrap: nowrap; /* Prevent wrapping */
-  gap: 20px; /* Space between the boxes */
-}
-
-.button-box {
-  display: inline-block;
-  width: 400px;
-  padding: 20px;
-  margin: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+  color: #1a365d;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
 }
 
-.button-box h2 {
-  margin-top: 0;
-  color: #333;
+/* Users Button */
+.users-button-container {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 100;
 }
 
-.button-box p {
-  color: #666;
-}
-
-button {
-  width: 100%;
-  background-color: #28a745; /* Green button */
-  color: white;
-  border: none;
-  padding: 15px;
-  margin-top: 10px;
-  border-radius: 5px;
+.users-button {
+  background: #ffffff;
+  color: #1a365d;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  border: 2px solid #2563eb;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  transition: all 0.3s ease;
+}
+
+.users-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.users-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E") no-repeat center center;
+}
+
+/* Property Showcase */
+.property-showcase {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 600px;
+}
+
+.property-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+
+.image-section {
+  width: 60%;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(37, 99, 235, 0.1), rgba(99, 102, 241, 0.1));
+}
+
+.content-section {
+  width: 40%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.content-section h2 {
+  font-size: 2rem;
+  color: #1a365d;
+  margin-bottom: 1rem;
+}
+
+.location {
+  color: #64748b;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.price {
+  color: #2563eb;
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.features {
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.description {
+  color: #334155;
+  line-height: 1.6;
+}
+
+.view-details {
+  background: #2563eb;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-top: 2rem;
   transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #218838;
+.view-details:hover {
+  background: #1d4ed8;
 }
 
-@media (max-width: 600px) {
-  .home {
-    padding: 15px;
+/* Progress Indicators */
+.progress-indicators {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  transition: all 0.3s ease;
+}
+
+.indicator.active {
+  width: 24px;
+  background: #2563eb;
+  border-radius: 4px;
+}
+
+/* Prediction Button */
+.prediction-button-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+}
+
+.prediction-button {
+  background: #ffffff;
+  color: #1a365d;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  border: 2px solid #2563eb;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  transition: all 0.3s ease;
+}
+
+.prediction-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.robot-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='10' rx='2'/%3E%3Ccircle cx='12' cy='5' r='2'/%3E%3Cpath d='M12 7v4'/%3E%3Cline x1='8' y1='16' x2='8' y2='16'/%3E%3Cline x1='16' y1='16' x2='16' y2='16'/%3E%3C/svg%3E") no-repeat center center;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .property-card {
+    flex-direction: column;
   }
 
-  .button-box {
+  .image-section,
+  .content-section {
     width: 100%;
-    margin: 10px 0;
   }
 
-  button {
-    padding: 10px;
+  .image-section {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .property-showcase {
+    height: auto;
+  }
+
+  .content-section {
+    padding: 1.5rem;
+  }
+
+  .content-section h2 {
+    font-size: 1.5rem;
   }
 }

@@ -1,22 +1,54 @@
+<!-- home.component.html -->
 <app-header></app-header>
+
 <div class="home">
   <h1>Welcome to the Real Estate Management System</h1>
-  <div class="button-container">
-    <div class="button-box">
-      <h2>Users</h2>
-      <p>Manage all users in the system.</p>
-      <button (click)="navigateTo('users')">Go to Users</button>
-    </div>
-    <div class="button-box">
-      <h2>Listings</h2>
-      <p>View and manage property listings.</p>
-      <button (click)="navigateTo('records')">Go to Listings</button>
-    </div>
-    <div class="button-box">
-      <h2>Prediction</h2>
-      <p>Click the button to fetch the property price prediction.</p>
-      <button (click)="fetchPrediction()">Get Prediction</button>
+
+  <!-- Users Button -->
+  <div class="users-button-container">
+    <button (click)="navigateTo('users')" class="users-button">
+      <i class="users-icon"></i>
+      Manage Users
+    </button>
+  </div>
+
+  <!-- Property Showcase -->
+  <div class="property-showcase">
+    <div class="property-card">
+      <div class="image-section">
+        <div class="overlay"></div>
+        <img [src]="properties[currentIndex].imageId" alt="Property Image" />
+      </div>
+
+      <div class="content-section">
+        <h2>{{properties[currentIndex].title}}</h2>
+        <p class="location">{{properties[currentIndex].location}}</p>
+        <p class="price">{{properties[currentIndex].price}}</p>
+        <p class="features">{{properties[currentIndex].features}}</p>
+        <p class="description">{{properties[currentIndex].description}}</p>
+
+        <button class="view-details" (click)="navigateTo('records')">
+          View Details
+        </button>
+      </div>
+
+      <!-- Progress Indicators -->
+      <div class="progress-indicators">
+        <div 
+          *ngFor="let property of properties; let i = index" 
+          class="indicator" >
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- AI Prediction Button -->
+  <div class="prediction-button-container">
+    <button (click)="fetchPrediction()" class="prediction-button">
+      <i class="robot-icon"></i>
+      Get AI Prediction
+    </button>
+  </div>
 </div>
+
 <app-footer></app-footer>
