@@ -76,7 +76,10 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddSingleton<PropertyPricePredictionModel>();
+
 builder.Services.AddSingleton<PropertyDataParser>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -87,6 +90,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowSpecificOrigin");
+
 
 app.UseHttpsRedirection();
 

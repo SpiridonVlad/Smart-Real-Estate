@@ -38,7 +38,6 @@ namespace Real_Estate_Management_System.Controllers
             [FromQuery] string? descriptionContains = null,
             [FromQuery(Name = "features")] Dictionary<ListingType, int>? minFeatures = null)
         {
-            Console.WriteLine(minFeatures);
             var filter = new ListingFilter
             {
                 MinPrice = minPrice,

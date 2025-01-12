@@ -27,12 +27,6 @@ namespace Application.Use_Cases.Property.Commands
                 .NotEmpty().WithMessage("Country is required.")
                 .MaximumLength(100).WithMessage("Country cannot exceed 100 characters.");
 
-            RuleFor(x => x.ImageId)
-                .NotEmpty().WithMessage("ImageId is required.");
-
-            RuleFor(x => x.UserId)
-                .NotEmpty().WithMessage("UserId is required.");
-
             RuleFor(x => x.Type)
                 .IsInEnum().WithMessage("Invalid property type.");
         }
