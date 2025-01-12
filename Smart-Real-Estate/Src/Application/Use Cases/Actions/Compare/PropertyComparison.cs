@@ -5,7 +5,7 @@ namespace Domain.Comparison
     public class PropertyComparison
     {
         public double OverallSimilarityScore { get; set; }
-        public Dictionary<PropertyFeatureType, ComparisonDetail> FeatureComparisons { get; set; } = new();
+        public Dictionary<PropertyFeatureType, ComparisonDetail> FeatureComparisons { get; set; } = [];
         public AddressProximityAnalysis? AddressProximity { get; set; }
         public TypeCompatibilityScore? TypeCompatibility { get; set; }
         public string WinningProperty { get; set; } = string.Empty; // Identifies the better property

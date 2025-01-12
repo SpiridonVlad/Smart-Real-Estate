@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Messages;
 using Domain.Types;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -11,7 +12,8 @@ namespace Infrastructure.Persistence
         public required DbSet<Property> Properties { get; set; }
         public required DbSet<Listing> Listings { get; set; }
         public required DbSet<Address> Addresses { get; set; }
-        public required DbSet<Message> Message { get; set; }
+        public required DbSet<Message> Messages { get; set; }
+        public required DbSet<Chat> Chats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -135,28 +137,13 @@ namespace Infrastructure.Persistence
                     .HasColumnType("uuid[]");
             });
 
-            modelBuilder.Entity<Message>(entity =>
-            {
-                entity.ToTable("messages");
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id)
-                    .HasColumnType("uuid")
-                    .HasDefaultValueSql("uuid_generate_v4()")
-                    .ValueGeneratedOnAdd();
-                entity.Property(e => e.SenderId)
-                    .HasColumnType("uuid")
-                    .IsRequired();
-                entity.Property(e => e.ReceiverId)
-                    .HasColumnType("uuid")
-                    .IsRequired();
-                entity.Property(e => e.ChatId)
-                    .HasMaxLength(1000)
-                    .IsRequired(true);
-                entity.Property(e => e.TimeStamp)
-                .IsRequired()
-                .HasDefaultValueSql("now()");
+            modelBuilder.Entity<Chat>()
+            .HasKey(c => c.ChatId);
 
-            });
+            modelBuilder.Entity<Message>()
+                .HasOne<Chat>()
+                .WithMany(c => c.Messages)
+                .HasForeignKey(m => m.ChatId);
         }
     }
 }
