@@ -14,6 +14,7 @@ import { EmailVerificationComponent } from './components/email-verification/emai
 import { RegisterComponent } from './components/register/register.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
+import { RecordDetailsComponent } from './components/record-details/record-details.component';
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -22,15 +23,15 @@ export const appRoutes: Routes = [
   { path: 'users/create', component: UserCreateComponent},
   { path: 'users/update/:id', component: UserUpdateComponent },
   { path: 'listings', component: ListingListComponent },
-  { path: 'listings/create/:propertyId', component: ListingCreateComponent },
+  { path: 'listings/create', component: ListingCreateComponent },
   {path: 'properties',component:PropertyListComponent},
   {path: 'properties/create',component:PropertyCreateComponent},
   {path: 'properties/update/:id',component:PropertyUpdateComponent},
   { path: 'email-verification', component: EmailVerificationComponent },
   {path: 'user-profile',component:UserProfileComponent},
-  {path: 'user-profile/:id',component:UserProfileComponent},
   { path: 'records', component: RecordListComponent },
-
+  { path: 'records/:id', component: RecordDetailsComponent },
+  
   // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }
 ];

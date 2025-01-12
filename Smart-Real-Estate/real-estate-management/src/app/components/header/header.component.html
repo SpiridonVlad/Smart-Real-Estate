@@ -1,0 +1,14 @@
+<div class="header">
+  <div class="header-content">
+    <h1>Real Estate Management System</h1>
+    <div class="auth-buttons">
+      @if (!isLoggedIn) {
+        <button class="login-button" (click)="navigateTo('login')">Login</button>
+      }
+      @else {
+        <button class="profile-button" (click)="navigateTo('user-profile')">Profile</button>
+        <button class="logout-button" (click)="logout()">Logout</button>  
+      }
+    </div>
+  </div>
+</div>

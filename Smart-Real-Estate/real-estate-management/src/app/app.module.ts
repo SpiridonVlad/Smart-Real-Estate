@@ -14,7 +14,7 @@ import { appRoutes } from './app.routes';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthInterceptor } from './services/auth.interceptor';
-import { HomeComponent, PredictionDialog } from './components/home/home.component';
+import { HomeComponent} from './components/home/home.component';
 import { AuthGuard } from './services/auth.guard';
 import { RecordListComponent } from './components/record-list/record-list.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -22,6 +22,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { RecordDetailsComponent } from './components/record-details/record-details.component';
 @NgModule({
     declarations: [
     ],
@@ -47,6 +50,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
+    HeaderComponent,
+    FooterComponent,
+    RecordDetailsComponent
   ],
   providers: [
     AuthGuard,

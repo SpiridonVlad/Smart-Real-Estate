@@ -3,10 +3,12 @@ import { RecordService } from '../../services/record.service';
 import { Record } from '../../models/record.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from "../header/header.component";
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-record-list',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent],
   templateUrl: './record-list.component.html',
   styleUrls: ['./record-list.component.css'],
 })

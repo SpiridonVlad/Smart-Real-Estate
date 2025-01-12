@@ -1,0 +1,18 @@
+<app-header></app-header>
+<div class="record-details">
+    <h1>{{ record.listing.description }}</h1>
+    <h3>{{ record.address.street }}, {{ record.address.postalCode }}, {{ record.address.city }}, {{ record.address.state }}, {{ record.address.country }} <span *ngIf="record.address.additionalInfo">({{ record.address.additionalInfo }})</span></h3>
+  
+    <div class="card" *ngFor="let section of recordSections">
+      <h3>{{ section.title }}</h3>
+      <ng-container *ngIf="section.items">
+        <p *ngFor="let item of section.items">
+          <strong>{{ item.label }}:</strong> {{ item.value }}
+        </p>
+      </ng-container>
+    </div>
+  
+    <div *ngIf="!record" class="not-found">
+      <p>Record not found!</p>
+    </div>
+<app-footer></app-footer>

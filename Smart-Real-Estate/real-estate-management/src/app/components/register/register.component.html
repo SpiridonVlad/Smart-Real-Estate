@@ -8,10 +8,23 @@
     <div>
       <label for="email">Email:</label>
       <input id="email" formControlName="email" required />
+      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+        Invalid email format.
+      </div>
     </div>
     <div>
       <label for="password">Password:</label>
       <input id="password" type="password" formControlName="password" required />
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+        Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.
+      </div>
+    </div>
+    <div>
+      <label for="confirmPassword">Confirm Password:</label>
+      <input id="confirmPassword" type="password" formControlName="confirmPassword" required />
+      <div *ngIf="passwordMismatch" class="error-message">
+        Passwords do not match.
+      </div>
     </div>
     <div>
       <label for="confirmPassword">Confirm Password:</label>
