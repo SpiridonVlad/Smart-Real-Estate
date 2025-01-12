@@ -27,20 +27,19 @@
       <tbody>
         <tr *ngFor="let listing of listings">
           <td>{{ listing.propertyId }}</td>
-          <td>{{ listing.userId }}</td>
           <td>{{ listing.price }}</td>
           <td>{{ listing.publicationDate | date }}</td>
           <td>{{ listing.description }}</td>
           <td>
             <ul>
-              <li>{{ 'IsSold' }}: {{ listing.features.features.IsSold ? 'Yes' : 'No' }}</li>
-              <li>{{ 'IsHighlighted' }}: {{ listing.features.features.IsHighlighted ? 'Yes' : 'No' }}</li>
-              <li>{{ 'IsDeleted' }}: {{ listing.features.features.IsDeleted ? 'Yes' : 'No' }}</li>
+              <li>{{ 'IsSold' }}: {{ listing.features.IsSold ? 'Yes' : 'No' }}</li>
+              <li>{{ 'IsHighlighted' }}: {{ listing.features.IsHighlighted ? 'Yes' : 'No' }}</li>
+              <li>{{ 'IsDeleted' }}: {{ listing.features.IsDeleted ? 'Yes' : 'No' }}</li>
             </ul>
           </td>
           <td>
-            <button (click)="navigateToUpdate(listing.id)">Update</button>
-            <button (click)="deleteListing(listing.id)">Delete</button>
+            <button (click)="navigateToUpdate(listing.propertyId)">Update</button>
+            <button (click)="deleteListing(listing.propertyId)">Delete</button>
           </td>
         </tr>
       </tbody>

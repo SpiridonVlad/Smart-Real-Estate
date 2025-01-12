@@ -83,4 +83,13 @@ export class ListingService {
       })
     );
   }
+  public getListingsByUserId(userId: string): Observable<{ data: Listing[] }> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<{ data: Listing[] }>(`${this.apiUrl}/user/${userId}`, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error fetching listings by userId:', error);
+        return throwError(error);
+      })
+    );
+  }
 }

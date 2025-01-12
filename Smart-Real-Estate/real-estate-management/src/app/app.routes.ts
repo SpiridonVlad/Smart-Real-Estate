@@ -28,6 +28,7 @@ export const appRoutes: Routes = [
   {path: 'properties/update/:id',component:PropertyUpdateComponent},
   { path: 'email-verification', component: EmailVerificationComponent },
   {path: 'user-profile',component:UserProfileComponent},
+  {path: 'user-profile/:id',component:UserProfileComponent},
   { path: 'records', component: RecordListComponent },
 
   // { path: 'listings/update/:id', component: UpdateListingComponent }

@@ -46,7 +46,7 @@
   </div>
     
   <div class="user-buttons">
-    <div *ngFor="let user of users" class="user-button" (click)="navigateToUpdate(user.id)">
+    <div *ngFor="let user of users" class="user-button" (click)="navigateToProfile(user.id)">
       <p class="username">
         <strong>Username:</strong> {{ user.username }}
         <span *ngIf="user.verified" class="verified">✔</span>
