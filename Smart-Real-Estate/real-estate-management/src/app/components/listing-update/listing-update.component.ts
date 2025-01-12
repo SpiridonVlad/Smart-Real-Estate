@@ -1,114 +1,95 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ListingService } from '../../services/listing.service';
-import { ListingAsset } from '../../models/listing.model'; // Enum pentru asseturi
+import { Listing } from '../../models/listing.model';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { log } from 'console';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-listing-update',
   templateUrl: './listing-update.component.html',
   styleUrls: ['./listing-update.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [ReactiveFormsModule, CommonModule, FormsModule]
 })
 export class ListingUpdateComponent implements OnInit {
   listingForm: FormGroup;
-  listingAssets = Object.keys(ListingAsset).map(key => ListingAsset[key as keyof typeof ListingAsset]);
   listingId!: string;
+  featuresList = ['IsSold', 'IsHighlighted', 'IsDeleted', 'ForSale', 'ForRent', 'ForLease'];
 
   constructor(
     private fb: FormBuilder,
     private listingService: ListingService,
-    private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.listingForm = this.fb.group({
-      propertyId: [{ value: '', disabled: true }, Validators.required],
-      userId: [{ value: '', disabled: true }, Validators.required],
-      description: ['', Validators.required],
-      price: [0, [Validators.required, Validators.min(0)]],
-      publicationDate: ['', Validators.required],
+      propertyId: [''],
+      price: [0],
+      publicationDate: [''],
+      description: [''],
       features: this.fb.group({
-        IsSold: [0, Validators.required],
-        IsHighlighted: [0, Validators.required],
-        IsDeleted: [0, Validators.required],
+        IsSold: [false],
+        IsHighlighted: [false],
+        IsDeleted: [false],
+        ForSale: [false],
+        ForRent: [false],
+        ForLease: [false]
       })
     });
   }
 
   ngOnInit(): void {
-    // Se obține ID-ul din URL
     this.listingId = this.route.snapshot.paramMap.get('id')!;
     this.loadListing();
   }
 
   loadListing(): void {
-    // Se preiau datele listing-ului folosind ID-ul
     this.listingService.getListingById(this.listingId).subscribe(
       (response) => {
         const listing = response.data;
         this.listingForm.patchValue({
           propertyId: listing.propertyId,
-          userId: listing.userId,
-          description: listing.description || '',
-          price: listing.price || 0,
-          publicationDate: listing.publicationDate || '',
+          price: listing.price,
+          publicationDate: listing.publicationDate,
+          description: listing.description,
           features: {
-            IsSold: listing.features.features.IsSold || 0,
-            IsHighlighted: listing.features.features.IsHighlighted || 0,
-            IsDeleted: listing.features.features.IsDeleted || 0
+            IsSold: listing.features.IsSold === 1,
+            IsHighlighted: listing.features.IsHighlighted === 1,
+            IsDeleted: listing.features.IsDeleted === 1,
+            ForSale: listing.features.ForSale === 1,
+            ForRent: listing.features.ForRent === 1,
+            ForLease: listing.features.ForLease === 1
           }
         });
-      },
-      (error) => {
-        console.error('Error loading listing:', error);
       }
     );
   }
 
   onSubmit(): void {
     if (this.listingForm.valid) {
-      const updatedListing = {
-        id: this.listingId,
-        propertyId: this.listingForm.get('propertyId')?.value,
-        userId: this.listingForm.get('userId')?.value,
-        description: this.listingForm.get('description')?.value,
-        price: this.listingForm.get('price')?.value,
-        publicationDate: this.listingForm.get('publicationDate')?.value,
-        features: {
-          features: {
-            IsSold: this.listingForm.get('features.IsSold')?.value,
-            IsHighlighted: this.listingForm.get('features.IsHighlighted')?.value,
-            IsDeleted: this.listingForm.get('features.IsDeleted')?.value
-          }
-        }
-      }
-      
-      console.log('Updated listing:', updatedListing);
+      const formData = this.listingForm.value;
+      const listing: Listing = {
+        ...formData,
+        features: this.convertFeaturesToNumbers(formData.features)
+      };
 
-      this.listingService.updateListing(this.listingId, updatedListing).subscribe(
-        () => {
-          this.router.navigate(['/listings']);
-        },
-        (error) => {
-          console.error('Error updating listing:', error);
-        }
-      );
+      this.listingService.updateListing(this.listingId, listing).subscribe({
+        next: () => this.router.navigate(['/listings']),
+        error: (error) => console.error('Error updating listing:', error)
+      });
     }
   }
 
-  toggleAsset(asset: ListingAsset): void {
-    const currentValue = this.listingForm.get('features')?.value[asset];
-    const newValue = currentValue === 0 ? 1 : 0;
-
-    this.listingForm.patchValue({
-      features: {
-        ...this.listingForm.value.features,
-        [asset]: newValue
-      }
-    });
+  private convertFeaturesToNumbers(features: { [key: string]: boolean }): { [key: string]: number } {
+    return {
+      IsSold: features['IsSold'] ? 1 : 0,
+      IsHighlighted: features['IsHighlighted'] ? 1 : 0,
+      IsDeleted: features['IsDeleted'] ? 1 : 0,
+      ForSale: features['ForSale'] ? 1 : 0,
+      ForRent: features['ForRent'] ? 1 : 0,
+      ForLease: features['ForLease'] ? 1 : 0
+    };
   }
 }

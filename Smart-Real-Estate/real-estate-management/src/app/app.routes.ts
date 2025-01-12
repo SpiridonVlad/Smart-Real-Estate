@@ -22,7 +22,7 @@ export const appRoutes: Routes = [
   { path: 'users/create', component: UserCreateComponent},
   { path: 'users/update/:id', component: UserUpdateComponent },
   { path: 'listings', component: ListingListComponent },
-  { path: 'listings/create', component: ListingCreateComponent },
+  { path: 'listings/create/:propertyId', component: ListingCreateComponent },
   {path: 'properties',component:PropertyListComponent},
   {path: 'properties/create',component:PropertyCreateComponent},
   {path: 'properties/update/:id',component:PropertyUpdateComponent},
@@ -30,7 +30,7 @@ export const appRoutes: Routes = [
   {path: 'user-profile',component:UserProfileComponent},
   {path: 'user-profile/:id',component:UserProfileComponent},
   { path: 'records', component: RecordListComponent },
-  
+
   // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }
 ];
