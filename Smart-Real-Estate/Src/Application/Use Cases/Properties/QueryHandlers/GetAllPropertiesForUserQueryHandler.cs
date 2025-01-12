@@ -2,7 +2,6 @@
 using Application.Use_Cases.Property.Queries;
 using AutoMapper;
 using Domain.Common;
-using Domain.Entities;
 using Domain.Repositories;
 using MediatR;
 
