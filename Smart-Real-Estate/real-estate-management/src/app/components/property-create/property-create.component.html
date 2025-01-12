@@ -1,67 +1,83 @@
 <div class="property-create">
   <h1>Create New Property</h1>
   <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+    <!-- Address Section -->
     <div formGroupName="address">
-      <label for="street">Street:</label>
-      <input id="street" formControlName="street" required />
-
-      <label for="city">City:</label>
-      <input id="city" formControlName="city" required />
-
-      <label for="state">State:</label>
-      <input id="state" formControlName="state" required />
-
-      <label for="postalCode">Postal Code:</label>
-      <input id="postalCode" formControlName="postalCode" required />
-
-      <label for="country">Country:</label>
-      <input id="country" formControlName="country" required />
-
-      <label for="additionalInfo">Additional Info:</label>
-      <input id="additionalInfo" formControlName="additionalInfo" />
-    </div>
-
-    <div>
-      <label for="imageId">Image ID:</label>
-      <input id="imageId" formControlName="imageId" required />
-    </div>
-
-    <div>
-      <label for="userId">User ID:</label>
-      <input id="userId" formControlName="userId" required />
-    </div>
-
-    <div>
-      <label for="type">Property Type:</label>
-      <select id="type" formControlName="type">
-        <option *ngFor="let type of propertyTypes | keyvalue" [value]="type.key">{{ type.key }}</option>
-      </select>
-    </div>
-    <div formGroupName="features">
-      <label>Features:</label>
-
-      <!-- Numeric inputs -->
-      <div *ngFor="let feature of numericFeatures">
-        <label [for]="feature">{{feature}}:</label>
-        <input [id]="feature"
-               type="number"
-               [formControlName]="feature"
-               min="0" />
+      <h3>Address</h3>
+      <div class="form-group">
+        <label for="street">Street:</label>
+        <input id="street" formControlName="street" required />
       </div>
 
-      <!-- Boolean checkboxes -->
-      <div *ngFor="let feature of booleanFeatures">
-        <input type="checkbox"
-               [id]="feature"
-               [formControlName]="feature" />
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input id="city" formControlName="city" required />
+      </div>
+
+      <div class="form-group">
+        <label for="state">State:</label>
+        <input id="state" formControlName="state" required />
+      </div>
+
+      <div class="form-group">
+        <label for="postalCode">Postal Code:</label>
+        <input id="postalCode" formControlName="postalCode" required />
+      </div>
+
+      <div class="form-group">
+        <label for="country">Country:</label>
+        <input id="country" formControlName="country" required />
+      </div>
+
+      <div class="form-group">
+        <label for="additionalInfo">Additional Info:</label>
+        <input id="additionalInfo" formControlName="additionalInfo" />
+      </div>
+    </div>
+
+    <!-- Property Details -->
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input id="title" formControlName="title" required />
+    </div>
+
+    <div class="form-group">
+      <label for="imageIds">Image IDs:</label>
+      <input id="imageIds" formControlName="imageIds" />
+    </div>
+
+    <div class="form-group">
+      <label for="type">Property Type:</label>
+      <select id="type" formControlName="type">
+        <option *ngFor="let type of propertyTypes | keyvalue" [value]="type.value">
+          {{type.key}}
+        </option>
+      </select>
+    </div>
+
+    <!-- Features Section -->
+    <div formGroupName="features">
+      <h3>Features</h3>
+      <!-- Numeric Features -->
+      <div class="form-group" *ngFor="let feature of numericFeatures">
+        <label [for]="feature">{{feature}}:</label>
+        <input [id]="feature" type="number" [formControlName]="feature" min="0" />
+      </div>
+
+      <!-- Boolean Features -->
+      <div class="feature-group" *ngFor="let feature of booleanFeatures">
+        <input type="checkbox" [id]="feature" [formControlName]="feature" />
         <label [for]="feature">{{feature}}</label>
       </div>
     </div>
+
+    <!-- Buttons -->
     <div class="button-group">
-      <button type="button" (click)="getPricePrediction()">Get Price Prediction</button>
       <button type="submit" [disabled]="propertyForm.invalid">Create Property</button>
+      <button type="button" (click)="getPricePrediction()">Get Price Prediction</button>
     </div>
 
+    <!-- Prediction Result -->
     <div *ngIf="predictionResult !== null" class="prediction-result">
       <h3>Predicted Price: {{ predictionResult | currency:'EUR':'symbol' }}</h3>
     </div>

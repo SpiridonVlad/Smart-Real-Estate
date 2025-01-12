@@ -8,8 +8,8 @@ export interface Property {
     country: string;
     additionalInfo: string;
   };
-  imageId: string;
-  userId: string;
+  title: string;
+  imageIds: string[];
   type: number;
   features: {
     Garden: number;

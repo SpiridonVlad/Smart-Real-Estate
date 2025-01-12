@@ -1,25 +1,33 @@
 <div class="listing-update">
   <h1>Update Listing</h1>
   <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
-    <label for="propertyId">Property ID</label>
-    <input id="propertyId" formControlName="propertyId" required readonly />
+    <div class="form-group">
+      <label for="propertyId">Property ID:</label>
+      <input id="propertyId" formControlName="propertyId" required readonly />
+    </div>
 
-    <label for="userId">User ID</label>
-    <input id="userId" formControlName="userId" required readonly />
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" id="price" formControlName="price" required />
+    </div>
 
-    <label for="price">Price</label>
-    <input type="number" id="price" formControlName="price" required />
+    <div class="form-group">
+      <label for="publicationDate">Publication Date:</label>
+      <input id="publicationDate" type="datetime-local" formControlName="publicationDate" required />
+    </div>
 
-    <label for="description">Description</label>
-    <textarea id="description" formControlName="description"></textarea>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" formControlName="description"></textarea>
+    </div>
 
-    <fieldset>
-      <legend>Features</legend>
-      <div *ngFor="let asset of listingAssets">
-        <label>{{ asset }}</label>
-        <input type="checkbox" (change)="toggleAsset(asset)" [checked]="listingForm.get('features')?.value[asset] === 1" />
+    <div formGroupName="features">
+      <h3>Features</h3>
+      <div class="feature-group" *ngFor="let feature of featuresList">
+        <input type="checkbox" [id]="feature" [formControlName]="feature" />
+        <label [for]="feature">{{feature}}</label>
       </div>
-    </fieldset>
+    </div>
 
     <button type="submit" [disabled]="listingForm.invalid">Update Listing</button>
   </form>

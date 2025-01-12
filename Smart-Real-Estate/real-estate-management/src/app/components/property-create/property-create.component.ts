@@ -15,14 +15,6 @@ import { HttpClient,HttpClientModule } from '@angular/common/http';
 })
 export class PropertyCreateComponent implements OnInit {
   propertyForm: FormGroup;
-  propertyTypes: { [key: string]: number } = {
-    'Apartment': 0,
-    'Office': 1,
-    'Studio': 2,
-    'CommercialSpace': 3,
-    'House': 4,
-    'Garage': 5
-  };
   featuresList: string[] = [
     'Garden', 'Garage', 'Pool', 'Balcony', 'Rooms', 'Surface', 'Floor', 'Year',
     'HeatingUnit', 'AirConditioning', 'Elevator', 'Furnished', 'Parking', 'Storage',
@@ -31,8 +23,14 @@ export class PropertyCreateComponent implements OnInit {
   predictionResult: number | null = null;
   numericFeatures = ['Surface', 'Rooms', 'Floor', 'Year'];
   booleanFeatures = this.featuresList.filter(f => !this.numericFeatures.includes(f));
-
-
+  propertyTypes: { [key: string]: number } = {
+    'Apartment': 0,
+    'Office': 1,
+    'Studio': 2,
+    'CommercialSpace': 3,
+    'House': 4,
+    'Garage': 5
+  };
   constructor(
     private fb: FormBuilder,
     private propertyService: PropertyService,
@@ -40,7 +38,6 @@ export class PropertyCreateComponent implements OnInit {
     private http: HttpClient
   ) {
     this.propertyForm = this.fb.group({
-      addressId: ['', Validators.required],
       address: this.fb.group({
         street: ['', Validators.required],
         city: ['', Validators.required],
@@ -49,9 +46,9 @@ export class PropertyCreateComponent implements OnInit {
         country: ['', Validators.required],
         additionalInfo: ['']
       }),
-      imageId: ['', Validators.required],
-      userId: ['', Validators.required],
-      type: ['', Validators.required],
+      title: ['', Validators.required],
+      imageIds: [[]],
+      type: [0, Validators.required],
       features: this.fb.group({
         Surface: [0, [Validators.required, Validators.min(0)]],
         Rooms: [0, [Validators.required, Validators.min(0)]],
@@ -92,14 +89,14 @@ export class PropertyCreateComponent implements OnInit {
           country: formData.address.country,
           additionalInfo: formData.address.additionalInfo
         },
-        imageId: formData.imageId || '',
-        userId: '3fa85f64-5717-4562-b3fc-2c963f66afa6', // default or from auth service
+        title: formData.title,
+        imageIds: Array.isArray(formData.imageIds) ? formData.imageIds : [formData.imageIds],
         type: formData.type,
         features: this.convertFeaturesToNumbers(formData.features)
       };
 
       this.propertyService.createProperty(property).subscribe({
-        next: () => this.router.navigate(['/properties']),
+        //next: () => this.router.navigate(['/properties']),
         error: (error) => console.error('Error creating property:', error)
       });
     }
