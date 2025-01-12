@@ -77,9 +77,9 @@ describe('PropertyCreateComponent', () => {
         Pool: false,  // false => 0
       },
     });
-  
+
     component.onSubmit();
-  
+
     expect(propertyServiceMock.createProperty).toHaveBeenCalledWith({
       addressId: '1',
       address: {
@@ -98,10 +98,10 @@ describe('PropertyCreateComponent', () => {
         Pool: 0,   // 0 pentru false
       },
     });
-  
+
     expect(routerMock.navigate).toHaveBeenCalledWith(['/properties']);
   });
-  
+
 
   it('should not submit the form if invalid', () => {
     component.propertyForm.patchValue({
@@ -154,8 +154,53 @@ describe('PropertyCreateComponent', () => {
   });
 
   it('should correctly convert features to numbers', () => {
-    const features = { Garden: true, Pool: false, Balcony: true };
+    const features = {
+      Garden: true,
+      Garage: false,
+      Pool: false,
+      Balcony: true,
+      Rooms: false,
+      Surface: false,
+      Floor: false,
+      Year: false,
+      HeatingUnit: true,
+      AirConditioning: false,
+      Elevator: false,
+      Furnished: true,
+      Parking: false,
+      Storage: true,
+      Basement: false,
+      Attic: false,
+      Alarm: true,
+      Intercom: false,
+      VideoSurveillance: true,
+      FireAlarm: false
+    };
+
+    const expected = {
+      Garden: 1,
+      Garage: 0,
+      Pool: 0,
+      Balcony: 1,
+      Rooms: 0,
+      Surface: 0,
+      Floor: 0,
+      Year: 0,
+      HeatingUnit: 1,
+      AirConditioning: 0,
+      Elevator: 0,
+      Furnished: 1,
+      Parking: 0,
+      Storage: 1,
+      Basement: 0,
+      Attic: 0,
+      Alarm: 1,
+      Intercom: 0,
+      VideoSurveillance: 1,
+      FireAlarm: 0
+    };
+
     const converted = component['convertFeaturesToNumbers'](features);
-    expect(converted).toEqual({ Garden: 1, Pool: 0, Balcony: 1 });
+    expect(converted).toEqual(expected);
   });
 });

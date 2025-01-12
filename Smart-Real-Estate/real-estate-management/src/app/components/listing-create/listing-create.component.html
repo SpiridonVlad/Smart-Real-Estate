@@ -1,18 +1,27 @@
 <div class="listing-create">
   <h1>Create New Listing</h1>
   <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
-    <label for="propertyId">Property ID</label>
-    <input id="propertyId" formControlName="propertyId" required />
-    
-    <label for="userId">User ID</label>
-    <input id="userId" formControlName="userId" required />
-    
-    <label for="price">Price</label>
-    <input type="number" id="price" formControlName="price" required />
-    
-    <label for="description">Description</label>
-    <textarea id="description" formControlName="description"></textarea>
-    
+
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input id="price" type="number" formControlName="price" required />
+    </div>
+
+
+
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" formControlName="description"></textarea>
+    </div>
+
+    <div formGroupName="features">
+      <h3>Features</h3>
+      <div class="feature-group" *ngFor="let feature of featuresList">
+        <input type="checkbox" [id]="feature" [formControlName]="feature" />
+        <label [for]="feature">{{feature}}</label>
+      </div>
+    </div>
+
     <button type="submit" [disabled]="listingForm.invalid">Create Listing</button>
   </form>
 </div>

@@ -54,11 +54,14 @@ export class PropertyService {
     return this.http.post<Property>(this.apiUrl, property, { headers });
   }
   public updateProperty(property: Property): Observable<any> {
+    if (!property.id) {
+      return throwError(() => new Error('Property ID is required for update'));
+    }
     const headers = this.getAuthHeaders();
     return this.http.put<Property>(`${this.apiUrl}/${property.id}`, property, { headers }).pipe(
       catchError(error => {
         console.error('Error updating property:', error);
-        return throwError(error);
+        return throwError(() => error);
       })
     );
   }
