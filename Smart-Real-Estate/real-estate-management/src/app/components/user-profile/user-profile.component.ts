@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Property } from '../../models/property.model'; 
 import { PropertyService } from '../../services/property.service'; 
+import { Listing } from '../../models/listing.model';
+import { ListingService } from '../../services/listing.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,20 +20,27 @@ export class UserProfileComponent implements OnInit {
   userDetails: User | null = null;
   currentSection: string = 'messages';
   properties: Property[] = [];
-
+  listings: Listing[] = [];
+  isProfileActionsVisible: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute, // ActivatedRoute to get route params
     private propertyService: PropertyService,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private listingService: ListingService
   ) {}
 
   ngOnInit(): void {
     const userIdFromRoute = this.route.snapshot.paramMap.get('id'); // Get the 'id' from the route
-    const userId = userIdFromRoute ?? this.authService.getUserId();
+    const jwtUserId = this.authService.getUserId();
+    const userId = userIdFromRoute ?? jwtUserId;
+    if (!userIdFromRoute || userIdFromRoute === jwtUserId) {
+      this.isProfileActionsVisible = true; // Show profile actions if the ids match
+    }
     if (userId) {
       this.loadProperties(userId); // Use the route's userId
+      this.loadListingsByUserId(userId);
       this.userService.getUserById(userId).subscribe(
         (response) => {
           this.userDetails = response.data;
@@ -64,6 +73,17 @@ export class UserProfileComponent implements OnInit {
       },
     });
   }
+  loadListingsByUserId(userId: string): void {
+    this.listingService.getListingsByUserId(userId).subscribe(
+      (response) => {
+        this.listings = response.data;
+        console.log('Fetched listings:', this.listings);
+      },
+      (error) => {
+        console.error('Error fetching listings:', error);
+      }
+    );
+  }
 
   onUpdateUser(): void {
     if (!this.userDetails) return;
@@ -85,11 +105,11 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  navigateTo(basePath: string, userId: string | undefined): void {
+  navigateTo(basePath: string, userId?: string | undefined): void {
     if (userId) {
       this.router.navigate([basePath, userId]);
     } else {
-      console.error('User ID is undefined!');
+      this.router.navigate([basePath]);
     }
   }
 
@@ -129,5 +149,56 @@ export class UserProfileComponent implements OnInit {
 
   getFeatureList(features: { [key: string]: number }): { key: string; value: number }[] {
     return Object.entries(features).map(([key, value]) => ({ key, value }));
+  }
+  updateListing(listing: Listing): void {
+    if (listing.propertyId) {
+      this.router.navigate([`/listings/update/${listing.propertyId}`]);
+    } else {
+      console.error('Property ID is missing or invalid.');
+    }
+  }
+  
+  deleteListing(listingId: string): void {
+    if (confirm('Are you sure you want to delete this listing?')) {
+      this.listingService.deleteListing(listingId).subscribe(
+        () => {
+          console.log('Listing deleted successfully');
+          this.listings = this.listings.filter((listing) => listing.id !== listingId);
+        },
+        (error) => {
+          console.error('Error deleting listing:', error);
+        }
+      );
+    }
+  }
+
+  updateProperty(property: Property): void {
+    if (property.id) {
+      this.router.navigate([`/properties/update/${property.id}`]);
+    } else {
+      console.error('Property ID is missing or invalid.');
+    }
+  }
+  
+  deleteProperty(propertyId: string): void {
+    if (confirm('Are you sure you want to delete this listing?')) {
+      this.propertyService.deleteProperty(propertyId).subscribe(
+        () => {
+          console.log('Property deleted successfully');
+          this.properties = this.properties.filter((property) => property.id !== propertyId);
+        },
+        (error) => {
+          console.error('Error deleting listing:', error);
+        }
+      );
+    }
+  }
+  
+  makeListing(property: any): void {
+    if(property.id){
+      this.router.navigate([`/listings/create/${property.id}`]);
+    }else{
+      console.error('Property ID is missing or invalid.');
+    }
   }
 }

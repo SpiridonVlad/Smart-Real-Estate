@@ -74,7 +74,7 @@
 /* Profile Actions */
 .profile-actions {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
@@ -220,4 +220,126 @@
 .red-x {
   color: red;
   font-weight: bold;
+}
+.listings-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 16px; /* Space between boxes */
+  margin: 16px 0;
+}
+
+.listing-box {
+  width: 100%; /* Ensure the box spans the full container width */
+  box-sizing: border-box; /* Include padding and border in width calculation */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.listing-box h3 {
+  margin: 0 0 8px;
+}
+
+.listing-box p {
+  margin: 4px 0;
+}
+
+
+
+@media (max-width: 768px) {
+  .listing-box {
+    width: calc(50% - 16px); /* Two boxes per row */
+  }
+}
+
+@media (max-width: 480px) {
+  .listing-box {
+    width: 100%; /* One box per row */
+  }
+}
+
+.listing-actions {
+  margin-top: 16px; /* Space between listing content and buttons */
+  display: flex;
+  gap: 8px; /* Space between buttons */
+}
+
+.listing-actions button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.listing-actions button:hover {
+  opacity: 0.9; /* Slight hover effect */
+}
+
+.listing-actions button:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Add focus effect */
+}
+
+.listing-actions .delete-button {
+  background-color: #e74c3c; /* Red for delete button */
+  color: #fff;
+}
+
+.listing-actions .delete-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.listing-actions button:not(.delete-button) {
+  background-color: #3498db; /* Blue for update button */
+  color: #fff;
+}
+
+.listing-actions button:not(.delete-button):hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+.property-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px; /* Space between buttons */
+}
+
+.property-actions button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.property-actions button:hover {
+  opacity: 0.9; /* Slight hover effect */
+}
+
+.property-actions button:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Add focus effect */
+}
+
+.property-actions .delete-button {
+  background-color: #e74c3c; /* Red for delete button */
+  color: #fff;
+}
+
+.property-actions .delete-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.property-actions button:not(.delete-button) {
+  background-color: #3498db; /* Blue for update button */
+  color: #fff;
+}
+
+.property-actions button:not(.delete-button):hover {
+  background-color: #2980b9; /* Darker blue on hover */
 }

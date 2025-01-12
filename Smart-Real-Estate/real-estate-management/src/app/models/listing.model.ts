@@ -1,4 +1,5 @@
 export interface Listing {
+  id?: string;
   propertyId: string;
   price: number;
   publicationDate: string;
