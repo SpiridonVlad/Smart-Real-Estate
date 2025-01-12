@@ -24,7 +24,7 @@ export class ListingService {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('pageSize', pageSize.toString());
-    
+
     const headers = this.getAuthHeaders();
     console.log('headers', headers);
     return this.http.get<{ data: Listing[] }>(`${this.apiUrl}/paginated`, { params, headers }).pipe(
@@ -39,13 +39,11 @@ export class ListingService {
     const headers = this.getAuthHeaders();
     const requestData = {
       propertyId: listingData.propertyId,
-      userId: listingData.userId,
       price: listingData.price,
       publicationDate: new Date().toISOString(),  // If you don't have the exact date, you can use the current date
       description: listingData.description,
-      features: {
-        features: listingData.features  // Pass the features object directly
-      }
+      features: listingData.features  // Pass the features object directly
+
     };
 
     return this.http.post<Listing>(this.apiUrl, requestData, { headers }).pipe(
