@@ -1,13 +1,10 @@
-<div class="listing-create">
+<div class="listing-create home">
   <h1>Create New Listing</h1>
-  <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
-
+  <form [formGroup]="listingForm" (ngSubmit)="onSubmit()" class="property-article">
     <div class="form-group">
       <label for="price">Price:</label>
       <input id="price" type="number" formControlName="price" required />
     </div>
-
-
 
     <div class="form-group">
       <label for="description">Description:</label>
@@ -18,10 +15,12 @@
       <h3>Features</h3>
       <div class="feature-group" *ngFor="let feature of featuresList">
         <input type="checkbox" [id]="feature" [formControlName]="feature" />
-        <label [for]="feature">{{feature}}</label>
+        <label [for]="feature">{{ feature }}</label>
       </div>
     </div>
 
-    <button type="submit" [disabled]="listingForm.invalid">Create Listing</button>
+    <button type="submit" [disabled]="listingForm.invalid" class="view-details">
+      Create Listing
+    </button>
   </form>
 </div>

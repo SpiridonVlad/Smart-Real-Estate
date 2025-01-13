@@ -182,3 +182,68 @@ button:hover:enabled {
   justify-content: space-between;
   gap: 10px;
 }
+.pagination-controls select {
+  width: 100px; /* Ensure enough width for numbers */
+  padding: 8px;
+  font-size: 14px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.pagination-controls select:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0, 91, 187, 0.5);
+}
+
+.pagination-controls select:hover {
+  background-color: #f0f8ff; /* Light blue background on hover */
+}
+
+.pagination-controls option {
+  padding: 10px;
+  font-size: 14px;
+  background-color: #ffffff;
+  color: #333;
+}
+
+.pagination-controls option:hover {
+  background-color: #e6f7ff; /* Slightly lighter background for options */
+}
+
+.message-button {
+  background-color: #17a2b8; /* Light blue */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 10px;
+  align-self: flex-end; /* Align to the bottom-right of the card */
+}
+
+.message-button:hover {
+  background-color: #138496; /* Darker blue */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.message-button:active {
+  background-color: #117a8b; /* Even darker blue */
+}
+
+.user-button {
+  position: relative; /* Ensure message button aligns correctly */
+  padding-bottom: 40px; /* Make room for the button */
+}
+
+.user-button .message-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}

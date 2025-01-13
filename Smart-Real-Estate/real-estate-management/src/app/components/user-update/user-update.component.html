@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="user-update">
   <h1>Update User Profile</h1>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
@@ -36,3 +37,4 @@
     <button type="submit" [disabled]="userForm.invalid">Update Profile</button>
   </form>
 </div>
+<app-footer></app-footer>

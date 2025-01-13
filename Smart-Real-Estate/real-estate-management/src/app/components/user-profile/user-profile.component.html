@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="profile-container" *ngIf="userDetails; else loading">
   <div class="profile-header">
     <div class="profile-left">
@@ -11,7 +12,7 @@
         <p><strong>Rating:</strong> {{ userDetails.rating }}</p>
         <p><strong>Type:</strong> {{ getUserType(userDetails.type) }}</p>
       </div>
-      <div class="profile-actions">
+      <div class="profile-actions" *ngIf="isCurrentUser">
         <button class="primary-button" (click)="navigateTo('/users/update', userDetails.id)">Update Profile</button>
         <button class="primary-button" (click)="navigateTo('properties/create')">Create Property</button>
       </div>
@@ -19,7 +20,7 @@
   </div>
 
   <div class="navigation-buttons">
-    <button class="nav-button" (click)="changeSection('messages')">Messages</button>
+    <button class="nav-button" (click)="changeSection('messages')" *ngIf="isCurrentUser">Messages</button>
     <button class="nav-button" (click)="changeSection('properties')">Properties</button>
     <button class="nav-button" (click)="changeSection('listings')">Listings</button>
   </div>
@@ -68,3 +69,5 @@
 <ng-template #loading>
   <p>Loading user details...</p>
 </ng-template>
+<app-footer></app-footer>
+

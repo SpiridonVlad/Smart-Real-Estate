@@ -31,6 +31,7 @@ export const appRoutes: Routes = [
   {path: 'user-profile',component:UserProfileComponent},
   { path: 'records', component: RecordListComponent },
   {path: 'users/profile', component: UserProfileComponent},
+  {path: 'users/profile/:id', component: UserProfileComponent},
 
   // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }
