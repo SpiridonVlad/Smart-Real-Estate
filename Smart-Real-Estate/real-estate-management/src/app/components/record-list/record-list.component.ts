@@ -220,10 +220,6 @@ export class RecordListComponent implements OnInit {
     }
   }
 
-  iscompareDisabled(propertyId: string): boolean {
-    return this.compareList.length >= 2 || this.compareList.includes(propertyId);
-  }
-
   isInCompareList(propertyId: string): boolean {
     return this.compareList.includes(propertyId);
   }
@@ -236,4 +232,10 @@ export class RecordListComponent implements OnInit {
       console.log('Please select exactly 2 properties to compare.');
     }
   }
+
+  blockButtonIfNotInCompareList(id: string): boolean {
+    return !this.compareList.includes(id) && this.compareList.length === 2;
+  }
+
+
 }

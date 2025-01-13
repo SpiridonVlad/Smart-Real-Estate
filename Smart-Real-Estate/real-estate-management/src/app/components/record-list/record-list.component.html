@@ -78,7 +78,7 @@
         </ul>
         <button 
           (click)="addToCompare(record.property.id)" 
-          [disabled]="iscompareDisabled(record.property.id)"
+          [disabled]="blockButtonIfNotInCompareList(record.property.id)"
           [ngClass]="{'compare-active': isInCompareList(record.property.id)}">
           {{ isInCompareList(record.property.id) ? 'Remove from Compare' : 'Add to Compare' }}
         </button>
