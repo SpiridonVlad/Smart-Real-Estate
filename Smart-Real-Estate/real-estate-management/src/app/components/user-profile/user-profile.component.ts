@@ -5,18 +5,28 @@ import { User } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Property } from '../../models/property.model'; 
-import { PropertyService } from '../../services/property.service'; 
+import { Property } from '../../models/property.model';
+import { PropertyService } from '../../services/property.service';
 import { Listing } from '../../models/listing.model';
 import { ListingService } from '../../services/listing.service';
-
+import { HeaderComponent } from "../header/header.component";
+import { FooterComponent } from "../footer/footer.component";
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
-  imports: [CommonModule, FormsModule]
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    HeaderComponent,
+    RouterModule,
+    FooterComponent
+  ]
 })
 export class UserProfileComponent implements OnInit {
+  isCurrentUser: boolean = false;
   userDetails: User | null = null;
   currentSection: string = 'messages';
   properties: Property[] = [];
@@ -28,13 +38,14 @@ export class UserProfileComponent implements OnInit {
     private propertyService: PropertyService,
     private userService: UserService,
     private authService: AuthService,
-    private listingService: ListingService
+    private listingService: ListingService,
   ) {}
 
   ngOnInit(): void {
     const userIdFromRoute = this.route.snapshot.paramMap.get('id'); // Get the 'id' from the route
     const jwtUserId = this.authService.getUserId();
     const userId = userIdFromRoute ?? jwtUserId;
+    this.isCurrentUser = !userIdFromRoute || userIdFromRoute === jwtUserId;
     if (!userIdFromRoute || userIdFromRoute === jwtUserId) {
       this.isProfileActionsVisible = true; // Show profile actions if the ids match
     }
@@ -150,6 +161,7 @@ export class UserProfileComponent implements OnInit {
   getFeatureList(features: { [key: string]: number }): { key: string; value: number }[] {
     return Object.entries(features).map(([key, value]) => ({ key, value }));
   }
+
   updateListing(listing: Listing): void {
     if (listing.propertyId) {
       this.router.navigate([`/listings/update/${listing.propertyId}`]);
@@ -157,7 +169,7 @@ export class UserProfileComponent implements OnInit {
       console.error('Property ID is missing or invalid.');
     }
   }
-  
+
   deleteListing(listingId: string): void {
     if (confirm('Are you sure you want to delete this listing?')) {
       this.listingService.deleteListing(listingId).subscribe(
@@ -179,7 +191,11 @@ export class UserProfileComponent implements OnInit {
       console.error('Property ID is missing or invalid.');
     }
   }
-  
+
+  getStars(rating: number): Array<number> {
+    return Array(Math.round(rating)).fill(1);
+  }
+
   deleteProperty(propertyId: string): void {
     if (confirm('Are you sure you want to delete this listing?')) {
       this.propertyService.deleteProperty(propertyId).subscribe(
@@ -193,7 +209,7 @@ export class UserProfileComponent implements OnInit {
       );
     }
   }
-  
+
   makeListing(property: any): void {
     if(property.id){
       this.router.navigate([`/listings/create/${property.id}`]);

@@ -1,51 +1,94 @@
 .listing-update {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f0f8ff; /* Light blue background */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 2rem;
+  background: linear-gradient(to bottom, #f0f8ff, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #1a365d;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Three columns */
+  gap: 1.5rem; /* Space between columns and rows */
+}
+
+form > div {
+  display: flex;
+  flex-direction: column;
 }
 
 label {
-  display: block;
-  margin-bottom: 5px;
-  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #1a365d;
+  font-weight: 500;
 }
 
 input, textarea, button {
   width: 100%;
-  margin-bottom: 15px;
-  padding: 10px;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+}
+
+textarea {
+  min-height: 120px;
+  grid-column: span 2; /* Spans first two columns */
 }
 
 button {
-  background-color: #28a745; /* Green button */
+  background-color: #2563eb;
   color: white;
+  font-size: 1rem;
+  font-weight: 500;
   border: none;
+  border-radius: 8px;
+  padding: 0.75rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  grid-column: span 3; /* Spans all three columns */
 }
 
 button:disabled {
-  background-color: #cccccc;
+  background-color: #cbd5e1;
   cursor: not-allowed;
 }
 
 button:hover:not(:disabled) {
-  background-color: #218838;
+  background-color: #1d4ed8;
+  transform: translateY(-2px);
 }
 
-@media (max-width: 600px) {
-  .listing-update {
-    padding: 15px;
+.features {
+  grid-column: 3; /* Place features in the third column */
+}
+
+.feature-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.feature-group input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  form {
+    grid-template-columns: 1fr; /* Switch to single column on smaller screens */
   }
 
-  input, textarea, button {
-    padding: 8px;
+  textarea, button {
+    grid-column: span 1;
   }
 }

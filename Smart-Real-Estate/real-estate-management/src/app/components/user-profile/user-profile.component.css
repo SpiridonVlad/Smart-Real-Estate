@@ -1,345 +1,248 @@
-/* Profile Container */
+/* Profile Page Styling */
 .profile-container {
-  max-width: 1600px;
-  width: 95%;
-  height: auto;
-  margin: 20px auto 0;
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
   padding: 20px;
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
+  background: #f9fafb;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow-x: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
 }
 
 /* Profile Header */
 .profile-header {
   display: flex;
-  flex-direction: row;
   gap: 20px;
-  width: 100%;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+}
+
+.profile-header:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .profile-left {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
-  width: 30%;
-}
-
-.profile-left h1 {
-  font-size: 28px;
-  color: #333;
-  margin: 0;
-  text-align: left;
 }
 
 .profile-image {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  border: 2px solid #e0e0e0;
+  border: 3px solid #3b82f6;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.profile-left h1 {
+  font-size: 1.25rem;
+  color: #1f2937;
+  text-align: center;
 }
 
 .profile-right {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-  width: 65%;
+  justify-content: space-between;
 }
 
 .profile-details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.875rem;
+  color: #6b7280;
 }
 
 .profile-details p {
-  font-size: 16px;
-  color: #555;
+  flex: 1 1 45%;
   margin: 0;
 }
 
-.profile-details p strong {
-  color: #333;
-}
-
-/* Profile Actions */
 .profile-actions {
+  padding-top: 45px;
+  border-top: 1px ;
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
+  gap: 10px;
 
-.update-button {
-  background-color: #28a745;
-  color: #fff;
+}
+/* Base Button Styles */
+button {
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.update-button:hover {
-  background-color: #218838;
-  transform: translateY(-2px);
+/* Primary Button (Make Listing) */
+.btn-primary {
+  background-color: #2563eb;
+  color: white;
 }
 
-.update-button:active {
-  background-color: #1d712f;
-  transform: translateY(0);
+.btn-primary:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
 }
 
-/* Action Buttons */
-.action-buttons {
-  display: flex;
-  justify-content: space-between; /* Evenly distribute buttons across the container */
-  margin-top: 20px;
-  padding: 10px 0;
+.btn-primary:active {
+  background-color: #1e40af;
 }
 
-.action-button {
-  background-color: #28a745; /* Match update button color */
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+/* Secondary Button (Update) */
+.btn-secondary {
+  background-color: #6b7280;
+  color: white;
 }
 
-.action-button:hover {
-  background-color: #218838;
-  transform: translateY(-2px);
+.btn-secondary:hover {
+  background-color: #4b5563;
+  box-shadow: 0 4px 10px rgba(107, 114, 128, 0.2);
 }
 
-.action-button:active {
-  background-color: #1d712f;
-  transform: translateY(0);
+.btn-secondary:active {
+  background-color: #374151;
 }
 
-/* Responsive adjustments */
+/* Danger Button (Delete) */
+.btn-danger {
+  background-color: #dc2626;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.2);
+}
+
+.btn-danger:active {
+  background-color: #991b1b;
+}
+
+/* Disabled Button Styles */
+button:disabled {
+  background-color: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Responsive Design for Buttons */
+button {
+  min-width: 120px;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
-  .profile-container {
-      max-width: 100%;
-      margin: 10px auto;
-      padding: 15px;
-  }
-
-  .profile-header {
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-  }
-
-  .profile-left {
-      align-items: center;
-      width: 100%;
-  }
-
-  .profile-right {
-      align-items: center;
-      width: 100%;
-  }
-
-  .profile-details {
-      grid-template-columns: 1fr;
-      gap: 10px;
-  }
-
-  .action-buttons {
-      flex-direction: column;
-      gap: 10px; /* Stack buttons vertically with spacing */
+  button {
+    width: 100%; /* Full-width buttons on smaller screens */
   }
 }
-/* Dynamic Content Section */
+
+/* Action Buttons Container */
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+
+
+/* Buttons */
+.primary-button {
+  background: #3b82f6;
+  color: white;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.primary-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button {
+  padding: 10px;
+  background: white;
+  color: #3b82f6;
+  border: 2px solid #3b82f6;
+  border-radius: 50px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-button:hover {
+  background: #3b82f6;
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Dynamic Content */
 .dynamic-content {
-  max-width: 1600px;
-  width: 95%;
-  margin: 20px auto;
+  margin-top: 20px;
+  background: white;
   padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .dynamic-content h2 {
-  font-size: 24px;
-  color: #333;
+  font-size: 1.25rem;
+  color: #1f2937;
   margin-bottom: 10px;
 }
 
 .dynamic-content p {
-  font-size: 16px;
-  color: #555;
-  margin: 0;
+  color: #6b7280;
+  line-height: 1.5;
 }
 
-.green-check {
-  color: green;
-  font-weight: bold;
-}
-
-.red-x {
-  color: red;
-  font-weight: bold;
-}
-.property-card {
-  border: 1px solid #ddd; /* Light gray border around each property */
-  border-radius: 8px; /* Rounded corners */
-  padding: 16px; /* Add space inside the card */
-  margin-bottom: 16px; /* Space between each card */
-  background-color: #f9f9f9; /* Slightly off-white background */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-.property-divider {
-  border: none;
-  height: 1px;
-  background-color: #ccc; /* Divider color */
-  margin: 16px 0; /* Space above and below the divider */
-}
-
-.green-check {
-  color: green;
-  font-weight: bold;
-}
-
-.red-x {
-  color: red;
-  font-weight: bold;
-}
-.listings-container {
+/* Navigation Buttons */
+.navigation-buttons {
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  gap: 16px; /* Space between boxes */
-  margin: 16px 0;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
 }
 
-.listing-box {
-  width: 100%; /* Ensure the box spans the full container width */
-  box-sizing: border-box; /* Include padding and border in width calculation */
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
+.navigation-buttons .nav-button {
+  padding: 10px 20px;
 }
 
-.listing-box h3 {
-  margin: 0 0 8px;
-}
-
-.listing-box p {
-  margin: 4px 0;
-}
-
-
-
+/* Responsive Design */
 @media (max-width: 768px) {
-  .listing-box {
-    width: calc(50% - 16px); /* Two boxes per row */
+  .profile-header {
+    flex-direction: column;
+    gap: 10px;
   }
-}
 
-@media (max-width: 480px) {
-  .listing-box {
-    width: 100%; /* One box per row */
+  .profile-details p {
+    flex: 1 1 100%;
   }
-}
 
-.listing-actions {
-  margin-top: 16px; /* Space between listing content and buttons */
-  display: flex;
-  gap: 8px; /* Space between buttons */
-}
-
-.listing-actions button {
-  padding: 8px 16px;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.listing-actions button:hover {
-  opacity: 0.9; /* Slight hover effect */
-}
-
-.listing-actions button:focus {
-  outline: none;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Add focus effect */
-}
-
-.listing-actions .delete-button {
-  background-color: #e74c3c; /* Red for delete button */
-  color: #fff;
-}
-
-.listing-actions .delete-button:hover {
-  background-color: #c0392b; /* Darker red on hover */
-}
-
-.listing-actions button:not(.delete-button) {
-  background-color: #3498db; /* Blue for update button */
-  color: #fff;
-}
-
-.listing-actions button:not(.delete-button):hover {
-  background-color: #2980b9; /* Darker blue on hover */
-}
-
-.property-actions {
-  margin-top: 16px;
-  display: flex;
-  gap: 8px; /* Space between buttons */
-}
-
-.property-actions button {
-  padding: 8px 16px;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.property-actions button:hover {
-  opacity: 0.9; /* Slight hover effect */
-}
-
-.property-actions button:focus {
-  outline: none;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Add focus effect */
-}
-
-.property-actions .delete-button {
-  background-color: #e74c3c; /* Red for delete button */
-  color: #fff;
-}
-
-.property-actions .delete-button:hover {
-  background-color: #c0392b; /* Darker red on hover */
-}
-
-.property-actions button:not(.delete-button) {
-  background-color: #3498db; /* Blue for update button */
-  color: #fff;
-}
-
-.property-actions button:not(.delete-button):hover {
-  background-color: #2980b9; /* Darker blue on hover */
+  .navigation-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

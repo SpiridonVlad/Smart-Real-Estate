@@ -47,11 +47,10 @@ export class ListingCreateComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    const propertyId = this.route.snapshot.paramMap.get('propertyId');
-
+    const propertyId = this.route.snapshot.paramMap.get('id');
+    console.log('Property ID:', propertyId); // Debug log
     if (!propertyId) {
       console.error('No property ID provided');
-      this.router.navigate(['']);
       return;
     }
 

@@ -24,6 +24,7 @@ export const appRoutes: Routes = [
   { path: 'users/update/:id', component: UserUpdateComponent },
   { path: 'listings', component: ListingListComponent },
   { path: 'listings/create', component: ListingCreateComponent },
+  { path: 'listings/create/:id', component: ListingCreateComponent },
   {path: 'properties',component:PropertyListComponent},
   {path: 'properties/create',component:PropertyCreateComponent},
   {path: 'properties/update/:id',component:PropertyUpdateComponent},
@@ -32,6 +33,7 @@ export const appRoutes: Routes = [
   { path: 'records', component: RecordListComponent },
   { path: 'records/:id', component: RecordDetailsComponent },
   {path: 'users/profile', component: UserProfileComponent},
+  {path: 'users/profile/:id', component: UserProfileComponent},
 
   // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }

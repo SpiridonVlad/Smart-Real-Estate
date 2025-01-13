@@ -5,13 +5,14 @@ import { ListingService } from '../../services/listing.service';
 import { Listing } from '../../models/listing.model';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { HeaderComponent } from "../header/header.component";
+import { FooterComponent } from '../footer/footer.component';
 @Component({
   selector: 'app-listing-update',
   templateUrl: './listing-update.component.html',
   styleUrls: ['./listing-update.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule]
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, HeaderComponent, FooterComponent]
 })
 export class ListingUpdateComponent implements OnInit {
   listingForm: FormGroup;

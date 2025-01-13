@@ -5,13 +5,14 @@ import { UserService } from '../../services/user.service';
 import { User, UserType } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { FooterComponent } from "../footer/footer.component";
+import { HeaderComponent } from '../header/header.component';
 @Component({
   selector: 'app-user-update',
   templateUrl: './user-update.component.html',
   styleUrls: ['./user-update.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule]
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, FooterComponent, HeaderComponent]
 })
 export class UserUpdateComponent implements OnInit {
   userForm: FormGroup;
@@ -97,5 +98,5 @@ export class UserUpdateComponent implements OnInit {
         return 0; // Default to Individual if type is not recognized
     }
   }
-  
+
 }
