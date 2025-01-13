@@ -23,6 +23,7 @@ export const appRoutes: Routes = [
   { path: 'users/update/:id', component: UserUpdateComponent },
   { path: 'listings', component: ListingListComponent },
   { path: 'listings/create', component: ListingCreateComponent },
+  { path: 'listings/create/:id', component: ListingCreateComponent },
   {path: 'properties',component:PropertyListComponent},
   {path: 'properties/create',component:PropertyCreateComponent},
   {path: 'properties/update/:id',component:PropertyUpdateComponent},

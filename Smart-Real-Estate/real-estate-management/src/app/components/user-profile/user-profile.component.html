@@ -1,8 +1,8 @@
 <div class="profile-container" *ngIf="userDetails; else loading">
   <div class="profile-header">
     <div class="profile-left">
-      <h1>{{ userDetails.username }}</h1>
       <img src="https://compote.slate.com/images/b4acd613-b4b0-42bd-bdfe-89fc55985608.jpeg?crop=4778%2C3185%2Cx258%2Cy703&width=1280" alt="Profile Image" class="profile-image" />
+      <h1>{{ userDetails.username }}</h1>
     </div>
     <div class="profile-right">
       <div class="profile-details">
@@ -12,93 +12,58 @@
         <p><strong>Rating:</strong> {{ userDetails.rating }}</p>
         <p><strong>Type:</strong> {{ getUserType(userDetails.type) }}</p>
       </div>
-    </div>
-  </div>
-
-  <div class="profile-actions" *ngIf="isProfileActionsVisible">
-    <button class="update-button" (click)="navigateTo('/users/update', userDetails.id)">Update Profile</button>
-    <button class="update-button" (click)="navigateTo('properties/create')">Create Property</button>
-  </div>
-</div>
-
-<!-- Action Buttons -->
-<div class="action-buttons">
-  <button class="action-button" (click)="changeSection('messages')">Messages</button>
-  <button class="action-button" (click)="changeSection('properties')">Properties</button>
-  <button class="action-button" (click)="changeSection('listings')">Listings</button>
-</div>
-
-<!-- Dynamic Content Section -->
-<div class="dynamic-content">
-  <div *ngIf="currentSection === 'messages'">
-    <h2>Messages</h2>
-    <p>Here are your messages...</p>
-    <!-- Add additional content or components for Messages -->
-  </div>
-  <div *ngIf="currentSection === 'properties'">
-    <h2>Properties</h2>
-    <div *ngIf="properties.length > 0; else noProperties">
-      <div *ngFor="let property of properties" class="property-card">
-        <h3>{{ getPropertyType(+property.type) }}</h3>
-        <p><strong>Property ID:</strong> {{ property.id }}</p>
-        <div class="address">
-          <h4>Address:</h4>
-          <p>{{ property.address.street }}, {{ property.address.city }}, {{ property.address.state }}</p>
-          <p>{{ property.address.postalCode ? property.address.postalCode + ', ' : '' }}{{ property.address.country }}</p>
-          <p *ngIf="property.address.additionalInfo">{{ property.address.additionalInfo }}</p>
-        </div>
-        <div class="features">
-          <h4>Features:</h4>
-          <ul>
-            <li *ngFor="let feature of getFeatureList(property.features)">
-              <ng-container *ngIf="isNumericFeature(feature.key); else booleanFeature">
-                {{ feature.key }}: {{ feature.value }}
-              </ng-container>
-              <ng-template #booleanFeature>
-                {{ feature.key }}:
-                <span [class.green-check]="feature.value === 1" [class.red-x]="feature.value === 0">
-                  {{ feature.value === 1 ? '✔️' : '❌' }}
-                </span>
-              </ng-template>
-            </li>
-          </ul>
-        </div>
-        <div class="property-actions">
-          <button class="make-listing-button" (click)="makeListing(property)">Make Listing</button>
-          <button (click)="updateProperty(property)">Update</button>
-          <button class="delete-button" (click)="deleteProperty(property.id || ' ')">Delete</button>
-        </div>
-        <hr class="property-divider" />
+      <div class="profile-actions">
+        <button class="primary-button" (click)="navigateTo('/users/update', userDetails.id)">Update Profile</button>
+        <button class="primary-button" (click)="navigateTo('properties/create')">Create Property</button>
       </div>
     </div>
-    <ng-template #noProperties>
-      <p>No properties found.</p>
-    </ng-template>
   </div>
-  
-  
-  <div *ngIf="currentSection === 'listings'">
-    <h2>Listings</h2>
-    <div class="parent-container">
-      <div *ngIf="listings.length > 0" class="listings-container">
-        <div *ngFor="let listing of listings" class="listing-box">
-          <h3>{{ listing.description }}</h3>
-          <p><strong>Price:</strong> {{ listing.price | currency }}</p>
-          <p><strong>Published on:</strong> {{ listing.publicationDate | date }}</p>
-          <p><strong>Features:</strong> {{ listing.features | json }}</p>
-    
-          <!-- Buttons Section -->
-          <div class="listing-actions">
-            <button (click)="updateListing(listing)">Update</button>
-            <button (click)="deleteListing(listing.id|| ' ')" class="delete-button">Delete</button>
+
+  <div class="navigation-buttons">
+    <button class="nav-button" (click)="changeSection('messages')">Messages</button>
+    <button class="nav-button" (click)="changeSection('properties')">Properties</button>
+    <button class="nav-button" (click)="changeSection('listings')">Listings</button>
+  </div>
+
+  <div class="dynamic-content">
+    <div *ngIf="currentSection === 'messages'">
+      <h2>Messages</h2>
+      <p>Here are your messages...</p>
+    </div>
+    <div *ngIf="currentSection === 'properties'">
+      <h2>Properties</h2>
+      <div *ngIf="properties.length > 0; else noProperties">
+        <div *ngFor="let property of properties" class="card property-card">
+          <h3>{{ getPropertyType(+property.type) }}</h3>
+          <p><strong>Property ID:</strong> {{ property.id }}</p>
+          <p><strong>Address:</strong> {{ property.address.street }}, {{ property.address.city }}</p>
+          <div class="actions">
+            <button class="btn-primary" (click)="makeListing(property)">Make Listing</button>
+            <button class="btn-secondary" (click)="updateProperty(property)">Update</button>
+            <button class="btn-danger" (click)="deleteProperty(property.id || ' ')">Delete</button>
           </div>
         </div>
       </div>
-      <div *ngIf="listings.length === 0">
-        <p>No listings found.</p>
-      </div>
+      <ng-template #noProperties>
+        <p>No properties found.</p>
+      </ng-template>
     </div>
-       
+    <div *ngIf="currentSection === 'listings'">
+      <h2>Listings</h2>
+      <div *ngIf="listings.length > 0; else noListings">
+        <div *ngFor="let listing of listings" class="card listing-card">
+          <h3>{{ listing.description }}</h3>
+          <p><strong>Price:</strong> {{ listing.price | currency }}</p>
+          <div class="actions">
+            <button class="btn-primary" (click)="updateListing(listing)">Update</button>
+            <button class="btn-danger" (click)="deleteListing(listing.id || ' ')">Delete</button>
+          </div>
+        </div>
+      </div>
+      <ng-template #noListings>
+        <p>No listings found.</p>
+      </ng-template>
+    </div>
   </div>
 </div>
 
