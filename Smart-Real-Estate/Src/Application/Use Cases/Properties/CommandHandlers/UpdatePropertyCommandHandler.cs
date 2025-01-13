@@ -31,6 +31,7 @@ namespace Application.Use_Cases.CommandHandlers
                 State = request.Address.State,
                 PostalCode = request.Address.PostalCode,
             };
+
             var newRequest = new UpdatePropertyCommand
             {
                 Id = request.Id,
