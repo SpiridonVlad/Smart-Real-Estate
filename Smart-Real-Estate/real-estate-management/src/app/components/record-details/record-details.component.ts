@@ -38,7 +38,7 @@ export class RecordDetailsComponent implements OnInit {
       }
     );
   }
-  
+
 
   getFeatures(features: { [key: string]: number } | null | undefined): { key: string; value: number }[] {
     if (!features || typeof features !== 'object') {

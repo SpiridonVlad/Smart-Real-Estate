@@ -39,6 +39,39 @@ button:hover {
   background-color: #218838;
 }
 
+.pagination-control select {
+  width: 100px; /* Ensure enough width for numbers */
+  padding: 8px;
+  font-size: 14px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.pagination-control select:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0, 91, 187, 0.5);
+}
+
+.pagination-control select:hover {
+  background-color: #f0f8ff; /* Light blue background on hover */
+}
+
+.pagination-control option {
+  padding: 10px;
+  font-size: 14px;
+  background-color: #ffffff;
+  color: #333;
+}
+
+.pagination-control option:hover {
+  background-color: #e6f7ff; /* Slightly lighter background for options */
+}
+
 @media (max-width: 600px) {
   .property-list {
     padding: 10px;

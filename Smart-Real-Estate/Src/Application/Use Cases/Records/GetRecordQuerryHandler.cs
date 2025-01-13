@@ -40,6 +40,7 @@ namespace Application.Use_Cases.Wrappers
             var Records = new List<Record>();
             foreach (var listing in listingsResult.Data)
             {
+                Console.WriteLine(listing.UserId);
                 var user = await userRepository.GetByIdAsync(listing.UserId);
                 if (!user.IsSuccess)
                 {
@@ -72,6 +73,7 @@ namespace Application.Use_Cases.Wrappers
 
                     Property = new PropertyCard
                     {
+                        Id = property.Data.Id,
                         ImageId = property.Data.ImageIds[0],
                         Type = property.Data.Type,
                         Features = property.Data.Features
@@ -87,6 +89,7 @@ namespace Application.Use_Cases.Wrappers
 
                     Listing = new ListingCard
                     {
+                        Id = listing.Id,
                         Description = listing.Description,
                         Price = listing.Price,
                         PublicationDate = listing.PublicationDate,

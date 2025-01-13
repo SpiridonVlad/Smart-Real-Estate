@@ -46,7 +46,6 @@ export class PropertyUpdateComponent implements OnInit {
         additionalInfo: ['']
       }),
       imageId: ['', Validators.required],
-      userId: ['', Validators.required],
       type: ['', Validators.required],
       features: this.fb.group(
         this.featuresList.reduce((acc: { [key: string]: boolean }, feature: string) => {

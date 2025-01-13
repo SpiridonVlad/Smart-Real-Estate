@@ -64,14 +64,6 @@
         </div>
 
         <div class="form-group">
-          <label for="userId">User ID:</label>
-          <input id="userId" formControlName="userId" required />
-          <div *ngIf="propertyForm.get('userId')?.invalid && propertyForm.get('userId')?.touched">
-            User ID is required.
-          </div>
-        </div>
-
-        <div class="form-group">
           <label for="type">Property Type:</label>
           <select id="type" formControlName="type" required>
             <option *ngFor="let type of propertyTypes | keyvalue" [value]="type.key">

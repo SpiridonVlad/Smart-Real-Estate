@@ -96,9 +96,10 @@ export class PropertyCreateComponent implements OnInit {
       };
 
       this.propertyService.createProperty(property).subscribe({
-        //next: () => this.router.navigate(['/properties']),
+        next: () => this.router.navigate(['/users/profile']),
         error: (error) => console.error('Error creating property:', error)
       });
+
     }
   }
 

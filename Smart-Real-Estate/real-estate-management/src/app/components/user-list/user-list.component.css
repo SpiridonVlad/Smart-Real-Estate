@@ -182,6 +182,7 @@ button:hover:enabled {
   justify-content: space-between;
   gap: 10px;
 }
+
 .pagination-controls select {
   width: 100px; /* Ensure enough width for numbers */
   padding: 8px;
