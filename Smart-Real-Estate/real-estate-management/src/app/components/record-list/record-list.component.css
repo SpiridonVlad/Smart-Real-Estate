@@ -5,6 +5,28 @@
   margin-bottom: 20px;
 }
 
+.no-records {
+  width: 500px;
+  height: 200px;
+  margin: 50px auto; /* Centers the box horizontally */
+  padding: 20px;
+  text-align: center;
+  border: 2px dashed #ccc; /* Dashed border for emphasis */
+  background-color: #f9f9f9; /* Light background color */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  font-family: Arial, sans-serif;
+  color: #555; /* Dark gray text */
+}
+
+.no-records h2 {
+  font-size: 24px;
+  color: #333; /* Slightly darker text for the heading */
+  margin: 0;
+  line-height: 200px; /* Vertically centers the text */
+}
+
+
 .compare-active {
   background-color: red;
   color: white;

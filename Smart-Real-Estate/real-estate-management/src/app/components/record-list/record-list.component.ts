@@ -36,7 +36,7 @@ export class RecordListComponent implements OnInit {
     propertyMaxFeatures?: { [key: string]: number } | null;
     listingMinFeatures?: { [key: string]: number } | null;
   } = this.createDefaultFilter();
-
+  exists: boolean = false;
   constructor(private router: Router, private recordService: RecordService) {}
 
   ngOnInit(): void {
@@ -121,6 +121,8 @@ export class RecordListComponent implements OnInit {
       (response: any) => {
         this.records = response.data;
         console.log('Records loaded:', this.records);
+        this.exists = this.records.length > 0;
+        console.log('Exists:', this.exists);
       },
       (error) => {
         console.error('Error loading records:', error);

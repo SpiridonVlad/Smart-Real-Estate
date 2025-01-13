@@ -6,12 +6,14 @@ import { CommonModule } from '@angular/common';
 import { PricePredictionRequest } from '../../models/price-prediction.interface';
 import { Property } from '../../models/property.model';
 import { HttpClient,HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from "../header/header.component";
+import { FooterComponent } from "../footer/footer.component";
 @Component({
   selector: 'app-property-create',
   templateUrl: './property-create.component.html',
   styleUrls: ['./property-create.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule, HttpClientModule]
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, HttpClientModule, HeaderComponent, FooterComponent]
 })
 export class PropertyCreateComponent implements OnInit {
   propertyForm: FormGroup;

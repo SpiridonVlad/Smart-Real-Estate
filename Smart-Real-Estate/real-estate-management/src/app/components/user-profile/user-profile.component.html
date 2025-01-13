@@ -36,7 +36,7 @@
         <div *ngFor="let property of properties" class="card property-card">
           <h3>{{ getPropertyType(+property.type) }}</h3>
           <p><strong>Address:</strong> {{ property.address.street }}, {{ property.address.city }}</p>
-          <div class="actions">
+          <div class="actions" *ngIf="isCurrentUser">
             <button class="btn-primary" (click)="makeListing(property)">Make Listing</button>
             <button class="btn-secondary" (click)="updateProperty(property)">Update</button>
             <button class="btn-danger" (click)="deleteProperty(property.id || ' ')">Delete</button>
@@ -53,9 +53,10 @@
         <div *ngFor="let listing of listings" class="card listing-card">
           <h3>{{ listing.description }}</h3>
           <p><strong>Price:</strong> {{ listing.price | currency }}</p>
-          <div class="actions">
+          <div class="actions" *ngIf="isCurrentUser">
             <button class="btn-primary" (click)="updateListing(listing)">Update</button>
             <button class="btn-danger" (click)="deleteListing(listing.id || ' ')">Delete</button>
+            <button class="btn-waiting">View</button>
           </div>
         </div>
       </div>
