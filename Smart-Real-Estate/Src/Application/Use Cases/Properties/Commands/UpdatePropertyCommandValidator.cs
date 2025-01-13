@@ -32,9 +32,9 @@ namespace Application.Use_Cases.Commands
                 .NotEmpty().WithMessage("Country must not be empty.")
                 .MaximumLength(50).WithMessage("Country must not exceed 50 characters.");
 
-            RuleFor(x => x.ImageId)
-                .NotEmpty().WithMessage("Image ID must not be empty.")
-                .MaximumLength(50).WithMessage("Image ID must not exceed 50 characters.");
+            RuleFor(x => x.ImageIds)
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty().WithMessage("Image IDs must not be empty.");
 
             RuleFor(x => x.UserId).NotEmpty().WithMessage("User ID must not be empty.");
 

@@ -86,6 +86,7 @@ export class UserListComponent implements OnInit {
     }
   }
   sendMessage(userId: string,): void {
+    this.router.navigate(['/users/message', userId]);
   }
   previousPage(): void {
     if (this.page > 1) {

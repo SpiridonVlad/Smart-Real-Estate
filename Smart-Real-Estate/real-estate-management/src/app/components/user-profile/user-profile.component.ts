@@ -164,7 +164,7 @@ export class UserProfileComponent implements OnInit {
 
   updateListing(listing: Listing): void {
     if (listing.propertyId) {
-      this.router.navigate([`/listings/update/${listing.propertyId}`]);
+      this.router.navigate([`/listings/update/${listing.id}`]);
     } else {
       console.error('Property ID is missing or invalid.');
     }
