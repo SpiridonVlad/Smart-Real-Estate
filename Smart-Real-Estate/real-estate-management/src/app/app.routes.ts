@@ -15,6 +15,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
 import { RecordDetailsComponent } from './components/record-details/record-details.component';
+import { ComparePropertiesComponent } from './components/compare-properties/compare-properties.component';
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -34,6 +35,7 @@ export const appRoutes: Routes = [
   { path: 'records/:id', component: RecordDetailsComponent },
   {path: 'users/profile', component: UserProfileComponent},
   {path: 'users/profile/:id', component: UserProfileComponent},
+  { path: 'compare-properties', component: ComparePropertiesComponent },
 
   // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }

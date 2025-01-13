@@ -76,6 +76,12 @@
             {{ feature.key }}: {{ feature.value }}
           </li>
         </ul>
+        <button 
+          (click)="addToCompare(record.property.id)" 
+          [disabled]="iscompareDisabled(record.property.id)"
+          [ngClass]="{'compare-active': isInCompareList(record.property.id)}">
+          {{ isInCompareList(record.property.id) ? 'Remove from Compare' : 'Add to Compare' }}
+        </button>
       </div>
       <!-- Listing Details -->
       <div class="card" (click)="navigateToListing(record.listing.id)">
@@ -101,6 +107,8 @@
   </div>
   <div class="pagination-controls-bottom">
     <button [disabled]="page <= 1" (click)="previousPage()">Previous Page</button>
+    <!-- Button to navigate to compare properties -->
+    <button *ngIf="compareList.length === 2" class="compare-button" (click)="navigateToCompare()">Compare</button>
     <button [disabled]="page >= pages.length" (click)="nextPage()">Next Page</button>
   </div>
 </div>

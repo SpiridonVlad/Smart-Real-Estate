@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class RecordListComponent implements OnInit {
   records: Record[] = [];
+  compareList: string[] = [];
   page: number = 1;
   pageSize: number = 5;
   pages: number[] = [1, 2, 3, 4, 5];
@@ -202,5 +203,37 @@ export class RecordListComponent implements OnInit {
 
   navigateToListing(listingId: string): void {
     this.router.navigate([`/records/${listingId}`]);
+  }
+
+  addToCompare(propertyId: string): void {
+    const index = this.compareList.indexOf(propertyId);
+    if (index === -1) {
+      if (this.compareList.length < 2) {
+        this.compareList.push(propertyId);
+        console.log('Added to compare:', propertyId);
+      } else {
+        console.log('You can only compare up to 2 properties.');
+      }
+    } else {
+      this.compareList.splice(index, 1);
+      console.log('Removed from compare:', propertyId);
+    }
+  }
+
+  iscompareDisabled(propertyId: string): boolean {
+    return this.compareList.length >= 2 || this.compareList.includes(propertyId);
+  }
+
+  isInCompareList(propertyId: string): boolean {
+    return this.compareList.includes(propertyId);
+  }
+
+  navigateToCompare(): void {
+    if (this.compareList.length === 2) {
+      const [initial, secondary] = this.compareList;
+      this.router.navigate(['/compare-properties'], { queryParams: { Initial: initial, Secondary: secondary } });
+    } else {
+      console.log('Please select exactly 2 properties to compare.');
+    }
   }
 }
