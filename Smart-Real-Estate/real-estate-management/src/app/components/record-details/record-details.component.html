@@ -43,7 +43,7 @@
         <div class="info-header">
           <h2>Property Highlights</h2>
           <div class="property-type" *ngIf="record.property?.type !== undefined">
-            Type: {{ record.property.type }}
+            Type: {{ getPropertyType(record.property.type) }}
           </div>
         </div>
 
