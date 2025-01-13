@@ -16,7 +16,7 @@ h1 {
 
 form {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Three columns */
+  grid-template-columns: 1fr 1fr; /* Two columns */
   gap: 1.5rem; /* Space between columns and rows */
 }
 
@@ -38,25 +38,22 @@ input, textarea, button {
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   font-size: 1rem;
-  box-sizing: border-box;
 }
 
-textarea {
-  min-height: 120px;
-  grid-column: span 2; /* Spans first two columns */
+input:focus, textarea:focus, button:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 button {
   background-color: #2563eb;
   color: white;
-  font-size: 1rem;
-  font-weight: 500;
-  border: none;
-  border-radius: 8px;
-  padding: 0.75rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  grid-column: span 3; /* Spans all three columns */
+  transition: background-color 0.3s ease;
+  padding: 0.5rem 1rem; /* Adjust button padding */
+  font-size: 1rem; /* Adjust button font size */
+  width: auto; /* Ensure button width is auto */
 }
 
 button:disabled {
@@ -65,30 +62,38 @@ button:disabled {
 }
 
 button:hover:not(:disabled) {
-  background-color: #1d4ed8;
-  transform: translateY(-2px);
+  background-color: #1a365d;
 }
 
-.features {
-  grid-column: 3; /* Place features in the third column */
+/* Boolean Features */
+input[type="checkbox"] {
+  width: auto;
+  margin-right: 0.5rem; /* Add space between checkbox and label */
 }
 
 .feature-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.75rem;
+  display: flex; /* Display label and checkbox on the same line */
+  align-items: center; /* Align items vertically */
 }
 
-.feature-group input[type="checkbox"] {
-  margin-right: 0.5rem;
+.feature-group label {
+  margin-right: 0.5rem; /* Add space between checkbox and label */
 }
 
-@media (max-width: 900px) {
+/* Responsive Design */
+@media (max-width: 768px) {
   form {
-    grid-template-columns: 1fr; /* Switch to single column on smaller screens */
+    grid-template-columns: 1fr; /* Adjust to 1 column */
+  }
+}
+
+@media (max-width: 480px) {
+  .listing-update {
+    padding: 1rem; /* Reduce padding */
   }
 
-  textarea, button {
-    grid-column: span 1;
+  button {
+    padding: 0.5rem 1rem; /* Adjust button padding */
+    font-size: 0.9rem; /* Adjust button font size */
   }
 }

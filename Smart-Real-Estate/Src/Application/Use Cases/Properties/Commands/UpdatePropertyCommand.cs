@@ -12,7 +12,8 @@ namespace Application.Use_Cases.Commands
         public Guid? AddressId { get; set; }
         public string? Title { get; set; }
         public Address? Address { get; set; }
-        public List<string>? ImageIds { get; set; }
+        public required string Title { get; set; }
+        public required List<string> ImageIds { get; set; }
 
         [JsonIgnore]
         public Guid? UserId { get; set; }
