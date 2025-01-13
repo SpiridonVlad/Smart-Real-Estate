@@ -1,18 +1,107 @@
-<app-header></app-header>
-<div class="record-details">
-    <h1>{{ record.listing.description }}</h1>
-    <h3>{{ record.address.street }}, {{ record.address.postalCode }}, {{ record.address.city }}, {{ record.address.state }}, {{ record.address.country }} <span *ngIf="record.address.additionalInfo">({{ record.address.additionalInfo }})</span></h3>
-  
-    <div class="card" *ngFor="let section of recordSections">
-      <h3>{{ section.title }}</h3>
-      <ng-container *ngIf="section.items">
-        <p *ngFor="let item of section.items">
-          <strong>{{ item.label }}:</strong> {{ item.value }}
-        </p>
-      </ng-container>
+<!-- record-details.component.html -->
+<div class="booking-style-container">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>We're getting your property details...</p>
+  </div>
+
+  <div *ngIf="!loading && record" class="property-details">
+    <!-- Property Header Section -->
+    <div class="property-header">
+      <div class="breadcrumb">
+        Home > Properties > Property Details
+      </div>
+      <div class="header-content">
+        <div class="header-left">
+          <h1 *ngIf="record.address">{{ record.address.street }}, {{ record.address.city }}</h1>
+          <div class="location-info">
+            <span class="location-icon">📍</span>
+            <span *ngIf="record.address">{{ record.address.city }}, {{ record.address.country }}</span>
+          </div>
+        </div>
+        <div class="header-right" *ngIf="record.listing?.price">
+          <div class="price-tag">
+            <span class="price-label">Price</span>
+            <span class="price-amount">${{ record.listing.price }}</span>
+          </div>
+        </div>
+      </div>
     </div>
-  
-    <div *ngIf="!record" class="not-found">
-      <p>Record not found!</p>
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+      <!-- Image Gallery -->
+      <div class="gallery-section" *ngIf="record.property?.imageId">
+        <div class="main-image">
+          <img [src]="record.property.imageId" alt="Property Image">
+        </div>
+      </div>
+
+      <!-- Property Info Box -->
+      <div class="info-box">
+        <div class="info-header">
+          <h2>Property Highlights</h2>
+          <div class="property-type" *ngIf="record.property?.type !== undefined">
+            Type: {{ record.property.type }}
+          </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-section" *ngIf="record.property?.features">
+          <h3>Popular Facilities</h3>
+          <div class="features-grid">
+            <div *ngFor="let feature of getFeatures(record.property.features)" class="feature-item">
+              <span class="feature-icon">✓</span>
+              <span class="feature-text">{{ feature.key }}: {{ feature.value }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Listing Details -->
+        <div class="listing-section" *ngIf="record.listing">
+          <h3>Property Description</h3>
+          <div class="listing-description" *ngIf="record.listing.description">
+            {{ record.listing.description }}
+          </div>
+          <div class="listing-meta">
+            <span class="listing-date" *ngIf="record.listing.publicationDate">
+              Listed on {{ record.listing.publicationDate | date }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Host Information -->
+      <div class="host-box" *ngIf="record.user">
+        <div class="host-header">
+          <div class="host-avatar">
+            {{ record.user.username.charAt(0).toUpperCase() }}
+          </div>
+          <div class="host-info">
+            <h3>Hosted by {{ record.user.username }}</h3>
+            <div class="host-meta">
+              <span class="verified-badge" *ngIf="record.user.verified">
+                <span class="verified-icon">✓</span>
+                Verified Host
+              </span>
+              <span class="rating" *ngIf="record.user.rating">
+                <span class="rating-stars">★</span>
+                {{ record.user.rating }} Rating
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-<app-footer></app-footer>
+  </div>
+
+  <!-- Not Found State -->
+  <div *ngIf="!loading || !record" class="not-found-state">
+    <div class="not-found-content">
+      <h2>Property Not Found</h2>
+      <p>We couldn't find the property you're looking for.</p>
+      <button class="back-button">Return to Search</button>
+    </div>
+  </div>
+</div>

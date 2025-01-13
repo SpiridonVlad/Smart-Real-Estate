@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RecordService } from '../../services/record.service';
-import { Record } from '../../models/record.model';
+import { PropertyType, Record } from '../../models/record.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from "../header/header.component";
@@ -19,11 +19,11 @@ export class RecordListComponent implements OnInit {
   pages: number[] = [1, 2, 3, 4, 5];
   pageSizes: number[] = [5, 10, 15];
   showFilterPopup: boolean = false;
-  pTypes: string[] = ['Apartment', 'Office', 'Studio', 'CommercialSpace', 'House', 'Garage'];
+  pTypes: string[] = Object.values(PropertyType);
   cities: string[] = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'];
   filter: {
     pType: string;
-    city: string ;
+    city: string;
     minPrice: number;
     maxPrice: number;
     minPublicationDate?: string | null;
@@ -134,6 +134,16 @@ export class RecordListComponent implements OnInit {
     return Object.entries(features).map(([key, value]) => ({ key, value }));
   }
 
+  getListingFeatures(features: { [key: string]: number } | null | undefined): { key: string; value: number }[] {
+    // Ensure the input is a valid object
+    if (!features || typeof features !== 'object') {
+      return [];
+    }
+    // Filter features to only include those with a value of 1
+    return Object.entries(features)
+      .map(([key, value]) => ({ key, value }));
+  }
+
 
   toggleFilterPopup(): void {
     this.showFilterPopup = !this.showFilterPopup;
@@ -164,5 +174,26 @@ export class RecordListComponent implements OnInit {
       this.page--;
       this.loadRecords();
     }
+  }
+
+  getPropertyType(type: number): string {
+    const propertyTypeMapping: { [key: number]: string } = {
+      0: 'Apartment',
+      1: 'Office',
+      2: 'Studio',
+      3: 'CommercialSpace',
+      4: 'House',
+      5: 'Garage',
+    };
+    return propertyTypeMapping[type] || 'Unknown';
+  }
+
+  getUserType(type: number): string {
+    const userTypeMapping: { [key: number]: string } = {
+      0: 'LegalEntity',
+      1: 'Individual',
+      2: 'Admin',
+    };
+    return userTypeMapping[type] || 'Unknown';
   }
 }

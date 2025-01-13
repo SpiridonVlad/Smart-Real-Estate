@@ -67,12 +67,12 @@
     <div *ngFor="let record of records" class="record-card">
       <!-- Property Card -->
       <div class="card">
-        <h3>{{ record.property.pType }}</h3>
+        <h3>Property type: {{ getPropertyType(record.property.type) }}</h3>
         <p>Address: {{ record.address.street }}, {{ record.address.city }}</p>
-        <img [src]="record.property.imageId" alt="Property Image" />
+        <p>ImageId: {{ record.property.imageId }}</p>
         <p>Features:</p>
         <ul>
-          <li *ngFor="let feature of getFeatures(record.property.pFeatures)">
+          <li *ngFor="let feature of getFeatures(record.property.features)">
             {{ feature.key }}: {{ feature.value }}
           </li>
         </ul>
@@ -83,13 +83,19 @@
         <p>Description: {{ record.listing.description }}</p>
         <p>Price: ${{ record.listing.price }}</p>
         <p>Publication Date: {{ record.listing.publicationDate | date }}</p>
+        <p>Features:</p>
+        <ul>
+          <li *ngFor="let feature of getFeatures(record.listing.features)">
+            {{ feature.key }}: {{ feature.value }}
+          </li>
+        </ul>
       </div>
       <!-- User Details -->
       <div class="card">
         <h3>User Details</h3>
         <p>Username: {{ record.user.username }}</p>
         <p>Verified: {{ record.user.verified ? 'Yes' : 'No' }}</p>
-        <p>User Type: {{ record.user.uType }}</p>
+        <p>User Type: {{ getUserType(record.user.type) }}</p>
       </div>
     </div>
   </div>
