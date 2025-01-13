@@ -35,7 +35,6 @@ namespace Application.Use_Cases.Commands
             RuleFor(x => x.ImageIds)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Image IDs must not be empty.");
-
             RuleFor(x => x.UserId).NotEmpty().WithMessage("User ID must not be empty.");
 
             RuleFor(x => x.Type)

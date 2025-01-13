@@ -88,7 +88,11 @@ namespace Real_Estate_Management_System.Controllers
             {
                 return BadRequest();
             }
-            await mediator.Send(command);
+            var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return NoContent();
         }
 
