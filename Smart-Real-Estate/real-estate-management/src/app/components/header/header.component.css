@@ -1,65 +1,102 @@
+/* General Header Styling */
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  box-sizing: border-box;
-  margin-top: 300px;
+  background: linear-gradient(135deg, #0056b3, #007bff);
+  color: #ffffff;
+  padding: 15px 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  font-family: 'Arial', sans-serif;
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.auth-buttons button {
+.brand {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.brand span {
+  color: #ffd700; /* Gold accent */
+}
+
+/* Button Styles */
+.auth-buttons .btn {
   background-color: #ffffff;
-  color: #007bff;
-  border: 2px solid #007bff;
-  padding: 10px 20px;
-  border-radius: 5px;
+  color: #0056b3;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  margin-left: 10px;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.auth-buttons button:hover {
+.auth-buttons .btn:hover {
   background-color: #0056b3;
-  color: white;
+  color: #ffffff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
 
-.auth-buttons button:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.auth-buttons .btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .auth-buttons .login-button {
   background-color: #28a745;
-  border-color: #28a745;
-  color: white;
+  color: #ffffff;
 }
 
 .auth-buttons .login-button:hover {
   background-color: #218838;
 }
 
-.auth-buttons .profile-button {
-  background-color: #28a745;
-  border-color: #28a745;
-  color: white;
-}
-
-.auth-buttons .profile-button:hover {
-  background-color: #218838;
-}
-
+.auth-buttons .profile-button,
 .auth-buttons .logout-button {
-  background-color: #28a745;
-  border-color: #28a745;
-  color: white;
+  background-color: #f8f9fa;
+  color: #0056b3;
+  border: 1px solid #0056b3;
 }
 
+.auth-buttons .profile-button:hover,
 .auth-buttons .logout-button:hover {
-  background-color: #218838;
+  background-color: #0056b3;
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .auth-buttons {
+    margin-top: 10px;
+  }
+
+  .auth-buttons .btn {
+    margin: 5px 0;
+    width: 100%;
+  }
 }

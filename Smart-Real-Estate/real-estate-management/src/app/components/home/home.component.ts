@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 import { interval, Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 interface Property {
   title: string;
@@ -17,13 +18,20 @@ interface Property {
   description: string;
   imageId?: string;
 }
-
+interface PropertyArticle {
+  tag: string;
+  title: string;
+  preview: string;
+  date: string;
+  readTime: string;
+  type: string;
+}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [HeaderComponent, FooterComponent]
+  imports: [HeaderComponent, FooterComponent, CommonModule]
 })
 export class HomeComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
@@ -31,6 +39,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   predictionForm: FormGroup;
   currentIndex: number = 0;
   private intervalSubscription?: Subscription;
+  currentArticleIndex: number = 0;
+  private articleIntervalSubscription?: Subscription;
 
   properties: Property[] = [
     {
@@ -75,6 +85,28 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   ];
 
+
+  // Add to your component class
+  sidebarArticles: PropertyArticle[] = [
+    {
+      tag: "Market Analysis",
+      title: "Luxury Real Estate Market Shows Strong Growth in Q1 2025",
+      preview: "The luxury real estate sector has demonstrated remarkable resilience. Experts attribute this growth to rising demand from international investors and limited inventory in key markets.",
+      date: "Jan 10, 2025",
+      readTime: "5 min read",
+      type: "Market Update"
+    },
+    {
+      tag: "Investment Strategy",
+      title: "Top 5 Emerging Markets for Real Estate",
+      preview: "",
+      date: "",
+      readTime: "",
+      type: "Investment Strategy"
+    },
+  ];
+
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -96,19 +128,32 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
-    this.startRotation();
+    this.startArticleRotation();
   }
 
   ngOnDestroy(): void {
     if (this.intervalSubscription) {
       this.intervalSubscription.unsubscribe();
     }
+    if (this.articleIntervalSubscription) {
+      this.articleIntervalSubscription.unsubscribe();
+    }
   }
 
-  startRotation(): void {
-    this.intervalSubscription = interval(5000).subscribe(() => {
-      this.currentIndex = (this.currentIndex + 1) % this.properties.length;
+  startArticleRotation(): void {
+    // Rotate articles every 7 seconds (slightly offset from property rotation)
+    this.articleIntervalSubscription = interval(7000).subscribe(() => {
+      this.currentArticleIndex = (this.currentArticleIndex + 1) % this.sidebarArticles.length;
     });
+  }
+
+  setCurrentArticle(index: number): void {
+    this.currentArticleIndex = index;
+    // Reset the interval when manually changing articles
+    if (this.articleIntervalSubscription) {
+      this.articleIntervalSubscription.unsubscribe();
+    }
+    this.startArticleRotation();
   }
 
   fetchPrediction(): void {

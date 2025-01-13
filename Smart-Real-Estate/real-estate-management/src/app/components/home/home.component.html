@@ -2,14 +2,61 @@
 <app-header></app-header>
 
 <div class="home">
-  <h1>Welcome to the Real Estate Management System</h1>
 
-  <!-- Users Button -->
-  <div class="users-button-container">
-    <button (click)="navigateTo('users')" class="users-button">
-      <i class="users-icon"></i>
-      Manage Users
-    </button>
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Find Your Dream Home</h1>
+    </div>
+  </div>
+
+<!-- Side Buttons -->
+<div class="buttons-container">
+  <button (click)="navigateTo('users')" class="side-button">
+    <i class="users-icon"></i>
+    <span>Manage Users</span>
+  </button>
+
+  <button (click)="navigateTo('chats')" class="side-button">
+    <i class="chat-icon"></i>
+    <span>Chats</span>
+  </button>
+
+  <button (click)="fetchPrediction()" class="side-button">
+    <i class="robot-icon"></i>
+    <span>Get AI Prediction</span>
+  </button>
+</div>
+
+<div class="layout-container">
+  <!-- New Sidebar Properties -->
+
+  <div class="sidebar-properties">
+    <div
+      *ngFor="let article of sidebarArticles; let i = index"
+      class="property-article"
+      [class.active]="i === currentArticleIndex"
+      (click)="navigateTo('records')"
+    >
+      <div class="article-tag">{{article.tag}}</div>
+      <h3>{{article.title}}</h3>
+      <p class="article-preview">{{article.preview}}</p>
+      <div class="article-meta">
+        <span>{{article.date}} • {{article.readTime}}</span>
+        <span>{{article.type}}</span>
+      </div>
+      <div class="article-link">
+        Read more →
+      </div>
+    </div>
+
+    <div class="article-indicators">
+      <div
+        *ngFor="let article of sidebarArticles; let i = index"
+        class="article-indicator"
+        [class.active]="i === currentArticleIndex"
+        (click)="setCurrentArticle(i)"
+      ></div>
+    </div>
   </div>
 
   <!-- Property Showcase -->
@@ -28,27 +75,14 @@
         <p class="description">{{properties[currentIndex].description}}</p>
 
         <button class="view-details" (click)="navigateTo('records')">
-          View Details
+          View More
         </button>
       </div>
 
       <!-- Progress Indicators -->
-      <div class="progress-indicators">
-        <div 
-          *ngFor="let property of properties; let i = index" 
-          class="indicator" >
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- AI Prediction Button -->
-  <div class="prediction-button-container">
-    <button (click)="fetchPrediction()" class="prediction-button">
-      <i class="robot-icon"></i>
-      Get AI Prediction
-    </button>
-  </div>
 </div>
 
 <app-footer></app-footer>

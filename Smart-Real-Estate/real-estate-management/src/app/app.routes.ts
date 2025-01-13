@@ -14,7 +14,6 @@ import { EmailVerificationComponent } from './components/email-verification/emai
 import { RegisterComponent } from './components/register/register.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { RecordListComponent } from './components/record-list/record-list.component';
-import { RecordDetailsComponent } from './components/record-details/record-details.component';
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -30,8 +29,8 @@ export const appRoutes: Routes = [
   { path: 'email-verification', component: EmailVerificationComponent },
   {path: 'user-profile',component:UserProfileComponent},
   { path: 'records', component: RecordListComponent },
-  { path: 'records/:id', component: RecordDetailsComponent },
-  
+  {path: 'users/profile', component: UserProfileComponent},
+
   // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }
 ];

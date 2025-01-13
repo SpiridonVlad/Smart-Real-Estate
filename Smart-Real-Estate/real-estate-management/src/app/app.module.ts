@@ -52,7 +52,8 @@ import { RecordDetailsComponent } from './components/record-details/record-detai
     MatCheckboxModule,
     HeaderComponent,
     FooterComponent,
-    RecordDetailsComponent
+    RecordDetailsComponent,
+    HomeComponent
   ],
   providers: [
     AuthGuard,
