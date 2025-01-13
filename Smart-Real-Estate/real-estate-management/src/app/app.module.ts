@@ -25,6 +25,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RecordDetailsComponent } from './components/record-details/record-details.component';
+import { ComparePropertiesComponent } from './components/compare-properties/compare-properties.component';
 @NgModule({
     declarations: [
     ],
@@ -53,7 +54,8 @@ import { RecordDetailsComponent } from './components/record-details/record-detai
     HeaderComponent,
     FooterComponent,
     RecordDetailsComponent,
-    HomeComponent
+    HomeComponent,
+    ComparePropertiesComponent
   ],
   providers: [
     AuthGuard,

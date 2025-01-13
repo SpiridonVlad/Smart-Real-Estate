@@ -5,6 +5,11 @@
   margin-bottom: 20px;
 }
 
+.compare-active {
+  background-color: red;
+  color: white;
+}
+
 .scroll-container {
   max-height: 500px; /* Înălțime maximă pentru scroll */
   overflow-y: auto; /* Activare scroll vertical */

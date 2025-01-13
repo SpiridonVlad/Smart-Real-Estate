@@ -1,0 +1,92 @@
+<!-- HTML Template -->
+<div class="property-comparison-container" *ngIf="comparisonResult">
+  <div class="header">
+    <h1>Compare Properties</h1>
+    <div class="similarity-score">
+      <div class="progress-bar">
+        <div class="progress" [style.width.%]="comparisonResult.overallSimilarityScore * 100"></div>
+      </div>
+      <span>Overall Similarity: {{comparisonResult.overallSimilarityScore | percent}}</span>
+    </div>
+  </div>
+
+  <div class="card feature-comparison">
+    <h2>Feature Comparisons</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Base Value</th>
+            <th>Compared Value</th>
+            <th>Match</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let feature of comparisonResult.featureComparisons | keyvalue">
+            <td>{{feature.key}}</td>
+            <td>{{feature.value.baseValue}}</td>
+            <td>{{feature.value.comparedValue}}</td>
+            <td>
+              <span class="badge" [class.high-score]="feature.value.similarityScore >= 0.7">
+                {{feature.value.similarityScore | percent}}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <h2>Address Proximity</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span>Distance:</span>
+          <strong>{{comparisonResult.addressProximity.distanceInKilometers}} km</strong>
+        </div>
+        <div class="info-item">
+          <span>Match Score:</span>
+          <span class="badge">
+            {{comparisonResult.addressProximity.similarityScore | percent}}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Type Compatibility</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span>Base Type:</span>
+          <span class="badge outline">{{comparisonResult.typeCompatibility.baseType}}</span>
+        </div>
+        <div class="info-item">
+          <span>Compared Type:</span>
+          <span class="badge outline">{{comparisonResult.typeCompatibility.comparedType}}</span>
+        </div>
+        <div class="info-item">
+          <span>Match Score:</span>
+          <span class="badge">{{comparisonResult.typeCompatibility.score | percent}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card winner">
+    <h2>Winning Property</h2>
+    <p>{{comparisonResult.winningProperty}}</p>
+  </div>
+
+  <div class="card">
+    <h2>Reasons</h2>
+    <ul class="reasons-list">
+      <li *ngFor="let reason of comparisonResult.reasons">{{reason}}</li>
+    </ul>
+  </div>
+</div>
+
+<div class="loading" *ngIf="!comparisonResult">
+  <p>Loading comparison data...</p>
+</div>
