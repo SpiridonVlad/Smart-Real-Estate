@@ -17,28 +17,22 @@ export enum PropertyType {
   
   export interface PropertyCard {
     imageId: string;
-    pType: PropertyType;
-    pFeatures: { [key: string]: number };
+    type: number;
+    features: { [key: string]: number };
   }
   
   export interface UserCard {
     username: string;
     verified: boolean;
     rating: number;
-    uType: UserType;
+    type: number;
   }
   
   export interface ListingCard {
     description?: string;
     price: number;
     publicationDate: Date;
-    lFeatures: {
-        features: {
-            IsSold: number;
-            IsHighlighted: number;
-            IsDeleted: number;
-        }
-    };
+    features:{ [key: string]: number };
   }
   
   export interface Record {

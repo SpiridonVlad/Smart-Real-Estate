@@ -1,77 +1,307 @@
-.record-details {
-    font-family: Arial, sans-serif;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    border: none;
-    border-radius: 0;
-    background-color: #f9f9f9;
+/* record-details.component.css */
+.booking-style-container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Loading State */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 1000;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f1f1f1;
+  border-top: 3px solid #003580;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Property Header */
+.property-header {
+  background: #003580;
+  color: white;
+  padding: 1.5rem 2rem;
+}
+
+.breadcrumb {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-left h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.location-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.price-tag {
+  background: #0071c2;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.price-label {
+  display: block;
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.price-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Main Content */
+.main-content {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  gap: 2rem;
+}
+
+/* Gallery Section */
+.gallery-section {
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-image img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+/* Info Box */
+.info-box {
+  background: white;
+  border-radius: 4px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.info-header h2 {
+  font-size: 1.5rem;
+  color: #262626;
+}
+
+.property-type {
+  background: #ebf3ff;
+  color: #0071c2;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Features Section */
+.features-section {
+  margin-top: 2rem;
+}
+
+.features-section h3 {
+  font-size: 1.25rem;
+  color: #262626;
+  margin-bottom: 1rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.feature-icon {
+  color: #0071c2;
+  font-size: 1.25rem;
+}
+
+/* Listing Section */
+.listing-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e7e7e7;
+}
+
+.listing-description {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.listing-meta {
+  color: #6b6b6b;
+  font-size: 0.875rem;
+}
+
+/* Host Box */
+.host-box {
+  background: white;
+  border-radius: 4px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.host-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.host-avatar {
+  width: 64px;
+  height: 64px;
+  background: #003580;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.host-info h3 {
+  color: #262626;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.host-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.verified-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #008009;
+  font-size: 0.875rem;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #262626;
+  font-size: 0.875rem;
+}
+
+.rating-stars {
+  color: #febb02;
+}
+
+/* Not Found State */
+.not-found-state {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.not-found-content h2 {
+  color: #262626;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.back-button {
+  background: #0071c2;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background: #00487a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .property-header {
+    padding: 1rem;
   }
-  
-  .record-details h1 {
+
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .main-image img {
+    height: 300px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .host-header {
+    flex-direction: column;
     text-align: center;
-    color: #333;
-    margin-bottom: 10px;
   }
-  
-  .record-details h3 {
-    text-align: center;
-    color: #555;
-    margin-top: 0;
-    margin-bottom: 20px;
+
+  .host-meta {
+    justify-content: center;
   }
-  
-  .card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .card h3 {
-    margin-top: 0;
-  }
-  
-  .card p {
-    margin: 5px 0;
-  }
-  
-  .card ul {
-    padding-left: 20px;
-  }
-  
-  .card ul li {
-    margin-bottom: 5px;
-  }
-  
-  .record-details .not-found {
-    text-align: center;
-    color: red;
-    font-weight: bold;
-  }
-  
-  .record-details .back-button {
-    display: block;
-    text-align: center;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-  
-  .record-details .back-button:hover {
-    background-color: #0056b3;
-  }
+}

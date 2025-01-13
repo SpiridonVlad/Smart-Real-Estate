@@ -57,4 +57,13 @@ export class RecordService {
       })
     );
   }  
+
+  getRecordById(id: string): Observable<Record> {
+    return this.http.get<Record>(`${this.apiUrl}/${id}`).pipe(
+      catchError((error) => {
+        console.error('Error fetching record:', error);
+        return throwError(error);
+      })
+    );
+  }
 }
