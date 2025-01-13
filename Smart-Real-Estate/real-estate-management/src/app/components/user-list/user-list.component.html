@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="user-list">
   <h1>User List</h1>
 
@@ -22,29 +23,29 @@
   <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
   <div *ngIf="showFilterPopup" class="filter-popup">
     <h2>Filters</h2>
-    
+
     <label for="minRating">Min Rating:</label>
     <input id="minRating" type="number" [(ngModel)]="minRating" />
-    
+
     <label for="maxRating">Max Rating:</label>
     <input id="maxRating" type="number" [(ngModel)]="maxRating" />
-    
+
     <label for="type">Type:</label>
     <select id="type" [(ngModel)]="type">
       <option [value]="0">Individual</option>
       <option [value]="1">LegalEntity</option>
       <option [value]="2">Admin</option>
     </select>
-    
+
     <label for="username">Username:</label>
     <input id="username" type="text" [(ngModel)]="username" />
-    
+
     <div class="button-group">
       <button (click)="applyFilters()">Apply Filters</button>
       <button (click)="toggleFilterPopup()">Close</button>
     </div>
   </div>
-    
+
   <div class="user-buttons">
     <div *ngFor="let user of users" class="user-button" (click)="navigateToProfile(user.id)">
       <p class="username">
@@ -59,9 +60,10 @@
       <p><strong>Type:</strong> {{ getUserType(user.type) }}</p>
     </div>
   </div>
-  
+
   <div class="pagination-controls-bottom">
     <button [disabled]="page <= 1" (click)="previousPage()">Previous Page</button>
     <button [disabled]="page >= pages.length" (click)="nextPage()">Next Page</button>
   </div>
 </div>
+<app-footer></app-footer>

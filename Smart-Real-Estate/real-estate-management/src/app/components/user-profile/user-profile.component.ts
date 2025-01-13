@@ -9,14 +9,24 @@ import { Property } from '../../models/property.model';
 import { PropertyService } from '../../services/property.service';
 import { Listing } from '../../models/listing.model';
 import { ListingService } from '../../services/listing.service';
-
+import { HeaderComponent } from "../header/header.component";
+import { FooterComponent } from "../footer/footer.component";
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
-  imports: [CommonModule, FormsModule]
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    HeaderComponent,
+    RouterModule,
+    FooterComponent
+  ]
 })
 export class UserProfileComponent implements OnInit {
+  isCurrentUser: boolean = false;
   userDetails: User | null = null;
   currentSection: string = 'messages';
   properties: Property[] = [];
@@ -28,13 +38,14 @@ export class UserProfileComponent implements OnInit {
     private propertyService: PropertyService,
     private userService: UserService,
     private authService: AuthService,
-    private listingService: ListingService
+    private listingService: ListingService,
   ) {}
 
   ngOnInit(): void {
     const userIdFromRoute = this.route.snapshot.paramMap.get('id'); // Get the 'id' from the route
     const jwtUserId = this.authService.getUserId();
     const userId = userIdFromRoute ?? jwtUserId;
+    this.isCurrentUser = !userIdFromRoute || userIdFromRoute === jwtUserId;
     if (!userIdFromRoute || userIdFromRoute === jwtUserId) {
       this.isProfileActionsVisible = true; // Show profile actions if the ids match
     }

@@ -4,13 +4,14 @@ import { UserService } from '../../services/user.service';
 import { User, UserType } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { HeaderComponent } from "../header/header.component";
+import { FooterComponent } from "../footer/footer.component";
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent]
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
@@ -51,7 +52,7 @@ export class UserListComponent implements OnInit {
   }
 
   navigateToProfile(userId: string): void {
-    this.router.navigate(['/user-profile/', userId]);
+    this.router.navigate(['/users/profile/', userId]);
   }
 
   deleteUser(userId: string): void {
