@@ -56,10 +56,7 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .footer-content {
-    flex-direction: column;
-    gap: 5px;
-  }
+
 
   .footer-links {
     gap: 10px;

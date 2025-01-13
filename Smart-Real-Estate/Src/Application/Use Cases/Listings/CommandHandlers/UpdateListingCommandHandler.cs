@@ -21,10 +21,7 @@ namespace Application.Use_Cases.CommandHandlers
             {
                 return Result<string>.Success("Listing updated successfully");
             }
-            else
-            {
-                return Result<string>.Failure(result.ErrorMessage);
-            }
+            return Result<string>.Failure(result.ErrorMessage);
         }
     }
 }
