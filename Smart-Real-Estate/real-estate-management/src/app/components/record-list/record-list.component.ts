@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-record-list',
@@ -34,7 +36,7 @@ export class RecordListComponent implements OnInit {
     listingMinFeatures?: { [key: string]: number } | null;
   } = this.createDefaultFilter();
 
-  constructor(private recordService: RecordService) {}
+  constructor(private router: Router, private recordService: RecordService) {}
 
   ngOnInit(): void {
     this.loadRecords();
@@ -117,6 +119,7 @@ export class RecordListComponent implements OnInit {
     }).subscribe(
       (response: any) => {
         this.records = response.data;
+        console.log('Records loaded:', this.records);
       },
       (error) => {
         console.error('Error loading records:', error);
@@ -195,5 +198,9 @@ export class RecordListComponent implements OnInit {
       2: 'Admin',
     };
     return userTypeMapping[type] || 'Unknown';
+  }
+
+  navigateToListing(listingId: string): void {
+    this.router.navigate([`/records/${listingId}`]);
   }
 }

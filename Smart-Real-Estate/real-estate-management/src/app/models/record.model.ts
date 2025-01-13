@@ -16,6 +16,7 @@ export enum PropertyType {
 }
   
   export interface PropertyCard {
+    id: string;
     imageId: string;
     type: number;
     features: { [key: string]: number };
@@ -29,6 +30,7 @@ export enum PropertyType {
   }
   
   export interface ListingCard {
+    id: string;
     description?: string;
     price: number;
     publicationDate: Date;

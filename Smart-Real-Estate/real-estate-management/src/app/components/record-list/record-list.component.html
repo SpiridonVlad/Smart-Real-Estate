@@ -78,7 +78,7 @@
         </ul>
       </div>
       <!-- Listing Details -->
-      <div class="card">
+      <div class="card" (click)="navigateToListing(record.listing.id)">
         <h3>Listing Details</h3>
         <p>Description: {{ record.listing.description }}</p>
         <p>Price: ${{ record.listing.price }}</p>

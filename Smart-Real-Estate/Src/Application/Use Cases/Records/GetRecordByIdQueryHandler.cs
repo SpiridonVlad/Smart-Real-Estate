@@ -60,6 +60,7 @@ namespace Application.Use_Cases.Wrappers
 
                 Property = new PropertyCard
                 {
+                    Id = property.Data.Id,
                     ImageId = property.Data.ImageIds[0],
                     Type = property.Data.Type,
                     Features = property.Data.Features
