@@ -14,34 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class RecordDetailsComponent implements OnInit {
   loading: boolean = true;
-  defaultRecord = {
-    address: {
-      id: '',
-      city: '',
-      street: '',
-      state: '',
-      country: '',
-      postalCode: ''
-    },
-    property: {
-      imageId: '',
-      type: 0,
-      features: {}
-     },
-    user: {
-      username: '',
-      verified: false,
-      rating: 0,
-      type: 0, 
-    },
-    listing: {
-      description: '',
-      price: 0,
-      publicationDate: new Date(),
-      features: {}
-    }
-  };
-  record: Record = this.defaultRecord;
+  record: Record | null = null;
   recordId: string = '';
 
   constructor(private route: ActivatedRoute, private recordService: RecordService) {}
@@ -59,7 +32,7 @@ export class RecordDetailsComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.record = this.defaultRecord;
+        this.record = null;
         this.loading = false;
         console.error('Error loading record:', error);
       }
