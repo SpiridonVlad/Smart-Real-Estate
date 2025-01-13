@@ -97,7 +97,7 @@
   </div>
 
   <!-- Not Found State -->
-  <div *ngIf="!loading || !record" class="not-found-state">
+  <div *ngIf="!loading && !record" class="not-found-state">
     <div class="not-found-content">
       <h2>Property Not Found</h2>
       <p>We couldn't find the property you're looking for.</p>
