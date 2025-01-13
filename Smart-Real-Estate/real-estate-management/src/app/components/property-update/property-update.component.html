@@ -1,82 +1,111 @@
-<div class="property-update">
-    <h1>Update Property</h1>
-    <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="addressId">Address ID:</label>
-        <input id="addressId" formControlName="addressId" />
-        <div *ngIf="propertyForm.get('addressId')?.invalid && propertyForm.get('addressId')?.touched">
-          Address ID is required.
+<div class="property-create">
+  <h1>Update Property</h1>
+  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+    <!-- Centered Form Container with Four Columns -->
+    <div class="form-container">
+      <!-- Column 1: Address Section -->
+      <div class="form-column" formGroupName="address">
+        <h3>Address</h3>
+        <div class="form-group">
+          <label for="street">Street:</label>
+          <input id="street" formControlName="street" required />
+          <div *ngIf="propertyForm.get('address.street')?.invalid && propertyForm.get('address.street')?.touched">
+            Street is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="city">City:</label>
+          <input id="city" formControlName="city" required />
+          <div *ngIf="propertyForm.get('address.city')?.invalid && propertyForm.get('address.city')?.touched">
+            City is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="state">State:</label>
+          <input id="state" formControlName="state" required />
+          <div *ngIf="propertyForm.get('address.state')?.invalid && propertyForm.get('address.state')?.touched">
+            State is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="postalCode">Postal Code:</label>
+          <input id="postalCode" formControlName="postalCode" required />
+          <div *ngIf="propertyForm.get('address.postalCode')?.invalid && propertyForm.get('address.postalCode')?.touched">
+            Postal Code is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country:</label>
+          <input id="country" formControlName="country" required />
+          <div *ngIf="propertyForm.get('address.country')?.invalid && propertyForm.get('address.country')?.touched">
+            Country is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="additionalInfo">Additional Info:</label>
+          <input id="additionalInfo" formControlName="additionalInfo" />
         </div>
       </div>
-  
-      <div formGroupName="address">
-        <label for="street">Street:</label>
-        <input id="street" formControlName="street" />
-        <div *ngIf="propertyForm.get('address.street')?.invalid && propertyForm.get('address.street')?.touched">
-          Street is required.
+
+      <!-- Column 2: Property Details -->
+      <div class="form-column">
+        <h3>Property Details</h3>
+        <div class="form-group">
+          <label for="imageId">Image ID:</label>
+          <input id="imageId" formControlName="imageId" required />
+          <div *ngIf="propertyForm.get('imageId')?.invalid && propertyForm.get('imageId')?.touched">
+            Image ID is required.
+          </div>
         </div>
-  
-        <label for="city">City:</label>
-        <input id="city" formControlName="city" />
-        <div *ngIf="propertyForm.get('address.city')?.invalid && propertyForm.get('address.city')?.touched">
-          City is required.
+
+        <div class="form-group">
+          <label for="userId">User ID:</label>
+          <input id="userId" formControlName="userId" required />
+          <div *ngIf="propertyForm.get('userId')?.invalid && propertyForm.get('userId')?.touched">
+            User ID is required.
+          </div>
         </div>
-  
-        <label for="state">State:</label>
-        <input id="state" formControlName="state" />
-        <div *ngIf="propertyForm.get('address.state')?.invalid && propertyForm.get('address.state')?.touched">
-          State is required.
-        </div>
-  
-        <label for="postalCode">Postal Code:</label>
-        <input id="postalCode" formControlName="postalCode" />
-        <div *ngIf="propertyForm.get('address.postalCode')?.invalid && propertyForm.get('address.postalCode')?.touched">
-          Postal Code is required.
-        </div>
-  
-        <label for="country">Country:</label>
-        <input id="country" formControlName="country" />
-        <div *ngIf="propertyForm.get('address.country')?.invalid && propertyForm.get('address.country')?.touched">
-          Country is required.
-        </div>
-  
-        <label for="additionalInfo">Additional Info:</label>
-        <input id="additionalInfo" formControlName="additionalInfo" />
-      </div>
-  
-      <div>
-        <label for="imageId">Image ID:</label>
-        <input id="imageId" formControlName="imageId" />
-        <div *ngIf="propertyForm.get('imageId')?.invalid && propertyForm.get('imageId')?.touched">
-          Image ID is required.
+
+        <div class="form-group">
+          <label for="type">Property Type:</label>
+          <select id="type" formControlName="type" required>
+            <option *ngFor="let type of propertyTypes | keyvalue" [value]="type.key">
+              {{ type.key }}
+            </option>
+          </select>
+          <div *ngIf="propertyForm.get('type')?.invalid && propertyForm.get('type')?.touched">
+            Property type is required.
+          </div>
         </div>
       </div>
-  
-      <div>
-        <label for="userId">User ID:</label>
-        <input id="userId" formControlName="userId" />
-        <div *ngIf="propertyForm.get('userId')?.invalid && propertyForm.get('userId')?.touched">
-          User ID is required.
+
+      <!-- Column 3: Numeric Features -->
+      <div class="form-column" formGroupName="features">
+        <h3>Numeric Features</h3>
+        <div class="form-group" *ngFor="let feature of numericFeatures">
+          <label [for]="feature">{{ feature }}:</label>
+          <input [id]="feature" type="number" [formControlName]="feature" min="0" />
         </div>
       </div>
-  
-      <div>
-        <label for="type">Property Type:</label>
-        <select id="type" formControlName="type">
-          <option *ngFor="let type of propertyTypes | keyvalue" [value]="type.key">{{ type.key }}</option>
-        </select>
-        <div *ngIf="propertyForm.get('type')?.invalid && propertyForm.get('type')?.touched">
-          Property type is required.
+
+      <!-- Column 4: Boolean Features -->
+      <div class="form-column" formGroupName="features">
+        <h3>Boolean Features</h3>
+        <div class="feature-group" *ngFor="let feature of booleanFeatures">
+          <input type="checkbox" [id]="feature" [formControlName]="feature" />
+          <label [for]="feature">{{ feature }}</label>
         </div>
       </div>
-  
-      <div formGroupName="features">
-        <label>Features:</label>
-        <div *ngFor="let feature of featuresList">
-          <input type="checkbox" [formControlName]="feature" /> {{ feature }}
-        </div>
-      </div>
-  
+    </div>
+
+    <!-- Buttons -->
+    <div class="button-row">
       <button type="submit" [disabled]="propertyForm.invalid">Update Property</button>
-    </form>
-  </div>
+    </div>
+  </form>
+</div>

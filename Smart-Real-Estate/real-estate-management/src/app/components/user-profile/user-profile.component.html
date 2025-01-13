@@ -6,7 +6,6 @@
     </div>
     <div class="profile-right">
       <div class="profile-details">
-        <p><strong>ID:</strong> {{ userDetails.id }}</p>
         <p><strong>Email:</strong> {{ userDetails.email }}</p>
         <p><strong>Verified:</strong> {{ userDetails.verified ? 'Yes' : 'No' }}</p>
         <p><strong>Rating:</strong> {{ userDetails.rating }}</p>
@@ -35,7 +34,6 @@
       <div *ngIf="properties.length > 0; else noProperties">
         <div *ngFor="let property of properties" class="card property-card">
           <h3>{{ getPropertyType(+property.type) }}</h3>
-          <p><strong>Property ID:</strong> {{ property.id }}</p>
           <p><strong>Address:</strong> {{ property.address.street }}, {{ property.address.city }}</p>
           <div class="actions">
             <button class="btn-primary" (click)="makeListing(property)">Make Listing</button>

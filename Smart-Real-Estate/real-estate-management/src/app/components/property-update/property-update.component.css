@@ -1,51 +1,86 @@
-.property-update {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f0f8ff; /* Light blue background */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.property-create {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #2563eb;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-input, textarea, button {
+.form-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
   width: 100%;
-  margin-bottom: 15px;
-  padding: 10px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  max-width: 1200px;
 }
 
-button {
-  background-color: #28a745; /* Green button */
+.form-column {
+  flex: 1;
+  min-width: 250px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.property-create label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a365d;
+  margin-bottom: 0.5rem;
+}
+
+.property-create input,
+.property-create select {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.property-create input:focus,
+.property-create select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.button-row {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.property-create button {
+  padding: 1rem 2rem;
+  background: #2563eb;
   color: white;
+  font-weight: 600;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-button:disabled {
-  background-color: #cccccc;
+.property-create button:disabled {
+  background: #cbd5e1;
   cursor: not-allowed;
 }
 
-button:hover:not(:disabled) {
-  background-color: #218838;
+.property-create button:hover:not(:disabled) {
+  background: #1d4ed8;
 }
 
-@media (max-width: 600px) {
-  .property-update {
-    padding: 15px;
-  }
-
-  input, textarea, button {
-    padding: 8px;
+@media (max-width: 1024px) {
+  .form-container {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
   }
 }

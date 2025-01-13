@@ -181,6 +181,10 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  getStars(rating: number): Array<number> {
+    return Array(Math.round(rating)).fill(1);
+  }
+
   deleteProperty(propertyId: string): void {
     if (confirm('Are you sure you want to delete this listing?')) {
       this.propertyService.deleteProperty(propertyId).subscribe(

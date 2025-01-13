@@ -26,6 +26,8 @@ export class PropertyUpdateComponent implements OnInit {
     'HeatingUnit', 'AirConditioning', 'Elevator', 'Furnished', 'Parking', 'Storage',
     'Basement', 'Attic', 'Alarm', 'Intercom', 'VideoSurveillance', 'FireAlarm'
   ];
+  numericFeatures = ['Surface', 'Rooms', 'Floor', 'Year'];
+  booleanFeatures = this.featuresList.filter(f => !this.numericFeatures.includes(f));
 
   constructor(
     private fb: FormBuilder,
@@ -72,9 +74,9 @@ export class PropertyUpdateComponent implements OnInit {
       const formData = this.propertyForm.value;
       formData.type = this.propertyTypes[formData.type]; // Convert type to its corresponding numeric value
       formData.features = { features: this.convertFeaturesToNumbers(formData.features) }; // Convert features to 0 or 1
-      
+
       console.log('Form Data to send:', formData); // Log the form data for debugging
-  
+
       this.propertyService.updateProperty(formData).subscribe(
         response => {
           console.log('Property updated:', response);
