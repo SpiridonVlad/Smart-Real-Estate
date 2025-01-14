@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
+import { MessageService } from '../../services/message.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -26,7 +27,11 @@ export class UserListComponent implements OnInit {
   type: number | null = null;
   username: string = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -85,8 +90,15 @@ export class UserListComponent implements OnInit {
       this.loadUsers();
     }
   }
-  sendMessage(userId: string,): void {
-    this.router.navigate(['/users/message', userId]);
+  createChat(userId: string): void {
+    this.messageService.createChat(userId).subscribe({
+      next: (response) => {
+        const chatId = response.chatId;
+        console.log('Chat created:', chatId);
+        this.router.navigate([`/messages/${chatId}`]); // Navigate to messages/{chatId}
+      },
+      error: (error) => console.error('Error creating chat:', error),
+    });
   }
   previousPage(): void {
     if (this.page > 1) {

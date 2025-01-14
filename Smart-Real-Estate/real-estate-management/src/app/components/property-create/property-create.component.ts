@@ -50,7 +50,7 @@ export class PropertyCreateComponent implements OnInit {
       }),
       title: ['', Validators.required],
       imageIds: [[]],
-      type: [0, Validators.required],
+      type: ['', Validators.required],
       features: this.fb.group({
         Surface: [0, [Validators.required, Validators.min(0)]],
         Rooms: [0, [Validators.required, Validators.min(0)]],
@@ -82,6 +82,7 @@ export class PropertyCreateComponent implements OnInit {
   onSubmit(): void {
     if (this.propertyForm.valid) {
       const formData = this.propertyForm.value;
+      formData.type = Number(formData.type);
       const property: Property = {
         address: {
           street: formData.address.street,

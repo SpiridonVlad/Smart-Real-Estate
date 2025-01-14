@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="profile-container" *ngIf="userDetails; else loading">
+<div class="profile-container" *ngIf="userDetails;">
   <div class="profile-header">
     <div class="profile-left">
       <img src="https://compote.slate.com/images/b4acd613-b4b0-42bd-bdfe-89fc55985608.jpeg?crop=4778%2C3185%2Cx258%2Cy703&width=1280" alt="Profile Image" class="profile-image" />
@@ -20,16 +20,24 @@
   </div>
 
   <div class="navigation-buttons">
-    <button class="nav-button" (click)="changeSection('messages')" *ngIf="isCurrentUser">Messages</button>
+    <button class="nav-button" (click)="changeSection('messages')" *ngIf="isCurrentUser">Chats</button>
     <button class="nav-button" (click)="changeSection('properties')">Properties</button>
     <button class="nav-button" (click)="changeSection('listings')">Listings</button>
   </div>
 
   <div class="dynamic-content">
-    <div *ngIf="currentSection === 'messages'">
-      <h2>Messages</h2>
-      <p>Here are your messages...</p>
-    </div>
+    <div class="dynamic-content">
+      <div *ngIf="currentSection === 'messages' && isCurrentUser">
+        <div class="chats">
+          <h2>Chats</h2>
+          <div *ngFor="let chat of chats" class="chat-box">
+            <button class="chat-button" (click)="navigateToChat(chat.chatId)">
+              <p><strong>Chat with:</strong> {{ chat.otherParticipantUsername }}</p>
+              <p><strong>Last Message:</strong> {{ chat.lastMessageAt | date:'short' }}</p>
+            </button>
+          </div>
+        </div>
+      </div>
     <div *ngIf="currentSection === 'properties'">
       <h2>Properties</h2>
       <div *ngIf="properties.length > 0; else noProperties">

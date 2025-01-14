@@ -12,6 +12,7 @@ import { ListingService } from '../../services/listing.service';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 import { RouterModule } from '@angular/router';
+import { MessageService } from '../../services/message.service';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -30,8 +31,10 @@ export class UserProfileComponent implements OnInit {
   userDetails: User | null = null;
   currentSection: string = 'messages';
   properties: Property[] = [];
+  chats: any[] = []; // Add chats arrayy
   listings: Listing[] = [];
   isProfileActionsVisible: boolean = false;
+  loading: boolean = true; // Add loading property
   constructor(
     private router: Router,
     private route: ActivatedRoute, // ActivatedRoute to get route params
@@ -39,6 +42,7 @@ export class UserProfileComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private listingService: ListingService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +56,7 @@ export class UserProfileComponent implements OnInit {
     if (userId) {
       this.loadProperties(userId); // Use the route's userId
       this.loadListingsByUserId(userId);
+      this.loadChats(); // Load chats
       this.userService.getUserById(userId).subscribe(
         (response) => {
           this.userDetails = response.data;
@@ -216,5 +221,26 @@ export class UserProfileComponent implements OnInit {
     }else{
       console.error('Property ID is missing or invalid.');
     }
+  }
+  loadChats(): void {
+    this.messageService.getChats().subscribe({
+      next: (response) => {
+        const userId = this.authService.getUserId();
+        this.chats = response.map((chat: any) => {
+          const otherParticipantId = chat.participant1Id === userId ? chat.participant2Id : chat.participant1Id;
+          this.userService.getUserById(otherParticipantId).subscribe({
+            next: (userResponse) => {
+              chat.otherParticipantUsername = userResponse.data.username;
+            },
+            error: (error) => console.error('Error fetching user details:', error),
+          });
+          return chat;
+        });
+      },
+      error: (error) => console.error('Error fetching chats:', error),
+    });
+  }
+  navigateToChat(chatId: string): void {
+    this.router.navigate([`/messages/${chatId}`]);
   }
 }

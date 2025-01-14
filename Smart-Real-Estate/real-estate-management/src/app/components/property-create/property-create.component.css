@@ -18,6 +18,7 @@
   gap: 2rem;
   width: 100%;
   max-width: 1200px;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 /* Each Column */
@@ -64,6 +65,7 @@
 .feature-group {
   display: flex; /* Display label and checkbox on the same line */
   align-items: center; /* Align items vertically */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 .feature-group label {
@@ -76,6 +78,7 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 .property-create button {
@@ -86,6 +89,7 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .property-create button:disabled {
@@ -95,4 +99,39 @@
 
 .property-create button:hover:not(:disabled) {
   background: #1a365d;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .form-container {
+    flex-direction: column; /* Stack columns vertically */
+    gap: 1rem; /* Reduce gap between columns */
+  }
+
+  .button-row {
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 0.5rem; /* Reduce gap between buttons */
+  }
+
+  .property-create button {
+    width: 100%; /* Make buttons full width */
+    padding: 0.75rem 1rem; /* Adjust padding for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    flex-direction: column; /* Stack columns vertically */
+    gap: 1rem; /* Reduce gap between columns */
+  }
+
+  .button-row {
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 0.5rem; /* Reduce gap between buttons */
+  }
+
+  .property-create button {
+    width: 100%; /* Make buttons full width */
+    padding: 0.5rem 0.75rem; /* Adjust padding for smaller screens */
+  }
 }

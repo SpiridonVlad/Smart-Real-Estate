@@ -1,0 +1,12 @@
+<app-header></app-header>
+<div class="messages-container">
+  <div *ngFor="let message of messages" [ngClass]="{'message-box': true, 'me': message.senderId === currentUserId, 'other': message.senderId !== currentUserId}">
+    <p><strong>{{ message.senderId === currentUserId ? 'me' : getUsername(message.senderId) }}</strong></p>
+    <p>{{ message.content }}</p>
+    <p class="timestamp">{{ message.timestamp | date:'short' }}</p>
+  </div>
+  <div class="message-input">
+    <textarea placeholder="Type your message here..." (keydown)="sendMessage($event)"></textarea>
+  </div>
+</div>
+<app-footer></app-footer>
