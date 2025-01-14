@@ -16,6 +16,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { RecordListComponent } from './components/record-list/record-list.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { RecordDetailsComponent } from './components/record-details/record-details.component';
+import { ComparePropertiesComponent } from './components/compare-properties/compare-properties.component';
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -36,6 +37,8 @@ export const appRoutes: Routes = [
   {path: 'users/profile', component: UserProfileComponent},
   {path: 'users/profile/:id', component: UserProfileComponent},
   {path: 'messages/:id', component: MessagesComponent},
+  { path: 'compare-properties', component: ComparePropertiesComponent },
+
 
   // { path: 'listings/update/:id', component: UpdateListingComponent }
   { path: 'listings/update/:id', component: ListingUpdateComponent }

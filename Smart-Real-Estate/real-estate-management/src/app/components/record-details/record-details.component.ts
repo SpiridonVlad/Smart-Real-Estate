@@ -46,4 +46,24 @@ export class RecordDetailsComponent implements OnInit {
     }
     return Object.entries(features).map(([key, value]) => ({ key, value }));
   }
+
+  getPropertyType(type: number): string {
+    switch (type) {
+      case 0:
+        return 'Apartment';
+      case 1:
+        return 'Office';
+      case 2:
+        return 'Studio';
+      case 3:
+        return 'Commercial Space';
+      case 4:
+        return 'House';
+      case 5:
+        return 'Garage';
+      default:
+        return 'Unknown';
+    }
+  }
+
 }

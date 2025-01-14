@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-record-list',
@@ -14,6 +16,7 @@ import { FooterComponent } from "../footer/footer.component";
 })
 export class RecordListComponent implements OnInit {
   records: Record[] = [];
+  compareList: string[] = [];
   page: number = 1;
   pageSize: number = 5;
   pages: number[] = [1, 2, 3, 4, 5];
@@ -33,8 +36,8 @@ export class RecordListComponent implements OnInit {
     propertyMaxFeatures?: { [key: string]: number } | null;
     listingMinFeatures?: { [key: string]: number } | null;
   } = this.createDefaultFilter();
-
-  constructor(private recordService: RecordService) {}
+  exists: boolean = false;
+  constructor(private router: Router, private recordService: RecordService) {}
 
   ngOnInit(): void {
     this.loadRecords();
@@ -117,6 +120,9 @@ export class RecordListComponent implements OnInit {
     }).subscribe(
       (response: any) => {
         this.records = response.data;
+        console.log('Records loaded:', this.records);
+        this.exists = this.records.length > 0;
+        console.log('Exists:', this.exists);
       },
       (error) => {
         console.error('Error loading records:', error);
@@ -196,4 +202,42 @@ export class RecordListComponent implements OnInit {
     };
     return userTypeMapping[type] || 'Unknown';
   }
+
+  navigateToListing(listingId: string): void {
+    this.router.navigate([`/records/${listingId}`]);
+  }
+
+  addToCompare(propertyId: string): void {
+    const index = this.compareList.indexOf(propertyId);
+    if (index === -1) {
+      if (this.compareList.length < 2) {
+        this.compareList.push(propertyId);
+        console.log('Added to compare:', propertyId);
+      } else {
+        console.log('You can only compare up to 2 properties.');
+      }
+    } else {
+      this.compareList.splice(index, 1);
+      console.log('Removed from compare:', propertyId);
+    }
+  }
+
+  isInCompareList(propertyId: string): boolean {
+    return this.compareList.includes(propertyId);
+  }
+
+  navigateToCompare(): void {
+    if (this.compareList.length === 2) {
+      const [initial, secondary] = this.compareList;
+      this.router.navigate(['/compare-properties'], { queryParams: { Initial: initial, Secondary: secondary } });
+    } else {
+      console.log('Please select exactly 2 properties to compare.');
+    }
+  }
+
+  blockButtonIfNotInCompareList(id: string): boolean {
+    return !this.compareList.includes(id) && this.compareList.length === 2;
+  }
+
+
 }

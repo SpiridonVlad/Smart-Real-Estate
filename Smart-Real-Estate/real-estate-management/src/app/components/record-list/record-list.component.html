@@ -25,7 +25,7 @@
   <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
   <div *ngIf="showFilterPopup" class="filter-popup">
   <h2>Filters</h2>
-  
+
   <!-- Tipul proprietății -->
   <label for="pType">Property Type</label>
   <select id="pType" [(ngModel)]="filter.pType">
@@ -36,7 +36,7 @@
   <!-- Oraș -->
   <label for="city">City</label>
   <input type="text" id="city" [(ngModel)]="filter.city" placeholder="Enter city name" />
-  
+
 
   <!-- Preț minim/maxim -->
   <label for="minPrice">Min Price</label>
@@ -76,9 +76,15 @@
             {{ feature.key }}: {{ feature.value }}
           </li>
         </ul>
+        <button
+          (click)="addToCompare(record.property.id)"
+          [disabled]="blockButtonIfNotInCompareList(record.property.id)"
+          [ngClass]="{'compare-active': isInCompareList(record.property.id)}">
+          {{ isInCompareList(record.property.id) ? 'Remove from Compare' : 'Add to Compare' }}
+        </button>
       </div>
       <!-- Listing Details -->
-      <div class="card">
+      <div class="card" (click)="navigateToListing(record.listing.id)">
         <h3>Listing Details</h3>
         <p>Description: {{ record.listing.description }}</p>
         <p>Price: ${{ record.listing.price }}</p>
@@ -98,10 +104,13 @@
         <p>User Type: {{ getUserType(record.user.type) }}</p>
       </div>
     </div>
-  </div>
+
+</div>
   <div class="pagination-controls-bottom">
     <button [disabled]="page <= 1" (click)="previousPage()">Previous Page</button>
-    <button [disabled]="page >= pages.length" (click)="nextPage()">Next Page</button>
+    <!-- Button to navigate to compare properties -->
+    <button *ngIf="compareList.length === 2" class="compare-button" (click)="navigateToCompare()">Compare</button>
+    <button [disabled]="records.length < pageSize" (click)="nextPage()">Next Page</button>
   </div>
 </div>
 <app-footer></app-footer>

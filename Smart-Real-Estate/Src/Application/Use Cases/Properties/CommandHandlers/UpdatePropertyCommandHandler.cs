@@ -23,6 +23,29 @@ namespace Application.Use_Cases.CommandHandlers
             var property = propertyResult.Data;
             mapper.Map(request, property);
 
+            var address = new Address
+            {
+                Id = request.AddressId.Value,
+                Country = request.Address.Country,
+                Street = request.Address.Street,
+                City = request.Address.City,
+                State = request.Address.State,
+                PostalCode = request.Address.PostalCode,
+            };
+
+            var newRequest = new UpdatePropertyCommand
+            {
+                Id = request.Id,
+                Title = request.Title,
+                ImageIds = request.ImageIds,
+                UserId = request.UserId,
+                Type = request.Type,
+                Features = request.Features
+            };
+            Console.WriteLine(address.Id);
+            var property = mapper.Map<Domain.Entities.Property>(newRequest);
+            var updateResult = await propertyRepository.UpdateAsync(property);
+            var addressUpdateResult = await addressRepository.UpdateAsync(address);
             var updateResult = await propertyRepository.UpdateAsync(property);
             if (updateResult.IsSuccess)
             {
