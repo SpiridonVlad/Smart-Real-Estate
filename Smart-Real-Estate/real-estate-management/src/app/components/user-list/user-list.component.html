@@ -58,7 +58,7 @@
         <span *ngFor="let star of getStars(user.rating)" class="star">★</span>
       </p>
       <p><strong>Type:</strong> {{ getUserType(user.type) }}</p>
-      <button class="message-button" (click)="sendMessage(user.id)">Message</button>
+      <button class="message-button" (click)="createChat(user.id); $event.stopPropagation()">Message</button> <!-- Stop event propagation -->
     </div>
   </div>
 

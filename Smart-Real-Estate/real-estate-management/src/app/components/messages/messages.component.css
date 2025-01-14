@@ -1,0 +1,110 @@
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  max-width: 1200px; /* Increase the max-width for the whole container */
+  margin: 0 auto;
+  margin-top: 4rem; /* Add space at the top to avoid header overlap */
+  margin-bottom: 4rem;
+}
+
+.message-box {
+  display: flex;
+  flex-direction: column;
+  max-width: 80%; /* Increase the max-width for message boxes */
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-box.me {
+  align-self: flex-end;
+  background-color: #e3f2fd;
+}
+
+.message-box.other {
+  align-self: flex-start;
+  background-color: #f9f9f9;
+}
+
+.message-box p {
+  margin: 0.25rem 0;
+}
+
+.message-box p strong {
+  color: #2d3748;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: #718096;
+  text-align: right;
+}
+
+.message-input {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-input textarea {
+  width: calc(100% + 10rem); /* Increase the width by 10rem */
+  padding-left: 10rem;
+  padding-right: 10rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem; /* Adjust font size for the input box */
+  resize: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease;
+}
+
+.message-input textarea:focus {
+  border-color: #3182ce;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .messages-container {
+    padding: 0.5rem;
+  }
+
+  .message-box {
+    padding: 0.5rem;
+
+  }
+
+  .message-input textarea {
+    width: calc(100% + 5rem); /* Adjust width for smaller screens */
+    padding: 0.5rem; /* Adjust padding for smaller screens */
+    font-size: 0.875rem; /* Adjust font size for smaller screens */
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .messages-container {
+    padding: 0.25rem;
+  }
+
+  .message-box {
+    padding: 0.5rem;
+  }
+
+  .message-input textarea {
+    width: calc(100% + 2rem); /* Adjust width for smaller screens */
+    padding: 0.5rem; /* Adjust padding for smaller screens */
+    font-size: 0.875rem; /* Adjust font size for smaller screens */
+  }
+}

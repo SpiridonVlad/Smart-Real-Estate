@@ -67,7 +67,7 @@ namespace Real_Estate_Management_System.Controllers.ActionControllers
             return Ok();
         }
 
-        [HttpGet("Chat/{userId}")]
+        [HttpPost("Chat/{userId}")]
         public async Task<ActionResult<Chat>> GetOrCreateChat(Guid userId)
         {
             var userResult = JwtHelper.GetUserIdFromJwt(HttpContext);
