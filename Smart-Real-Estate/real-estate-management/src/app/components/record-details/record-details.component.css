@@ -257,6 +257,28 @@
   margin-bottom: 1rem;
 }
 
+.message-button {
+  background-color: #17a2b8; /* Light blue */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 10px;
+  align-self: flex-end; /* Align to the bottom-right of the card */
+}
+
+.message-button:hover {
+  background-color: #138496; /* Darker blue */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.message-button:active {
+  background-color: #117a8b; /* Even darker blue */
+}
+
 .back-button {
   background: #0071c2;
   color: white;

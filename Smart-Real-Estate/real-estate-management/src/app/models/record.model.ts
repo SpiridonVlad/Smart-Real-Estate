@@ -23,6 +23,7 @@ export enum PropertyType {
   }
   
   export interface UserCard {
+    id: string;
     username: string;
     verified: boolean;
     rating: number;

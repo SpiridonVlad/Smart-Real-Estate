@@ -1,9 +1,10 @@
 // filepath: /c:/Users/andre/Documents/GitHub/Smart-Real-Estate-1/Smart-Real-Estate/real-estate-management/src/app/components/record-details/record-details.component.ts
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecordService } from '../../services/record.service';
 import { Record } from '../../models/record.model';
 import { CommonModule } from '@angular/common';
+import { MessageService } from '../../services/message.service';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class RecordDetailsComponent implements OnInit {
   record: Record | null = null;
   recordId: string = '';
 
-  constructor(private route: ActivatedRoute, private recordService: RecordService) {}
+  constructor(private route: ActivatedRoute, private recordService: RecordService, private messageService: MessageService, private router: Router) {}
 
   ngOnInit(): void {
     this.recordId = this.route.snapshot.paramMap.get('id')!;
@@ -64,6 +65,16 @@ export class RecordDetailsComponent implements OnInit {
       default:
         return 'Unknown';
     }
+  }
+
+  createChat(userId: string): void {
+    this.messageService.createChat(userId).subscribe({
+      next: (response) => {
+        const chatId = response.chatId;
+        this.router.navigate([`/messages/${chatId}`]); // Navigate to messages/{chatId}
+      },
+      error: (error) => console.error('Error creating chat:', error),
+    });
   }
 
 }

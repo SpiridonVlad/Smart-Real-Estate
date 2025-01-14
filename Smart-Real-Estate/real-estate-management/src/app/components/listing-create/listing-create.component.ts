@@ -48,7 +48,6 @@ export class ListingCreateComponent implements OnInit {
   ngOnInit(): void {
 
     const propertyId = this.route.snapshot.paramMap.get('id');
-    console.log('Property ID:', propertyId); // Debug log
     if (!propertyId) {
       console.error('No property ID provided');
       return;
@@ -80,7 +79,6 @@ export class ListingCreateComponent implements OnInit {
           ForLease: formData.features.ForLease ? 1 : 0
         }
       };
-      console.log('Listing to submit:', listing); // Debug log
 
       this.listingService.createListing(listing).subscribe({
         next: () => this.router.navigate(['/records']),
