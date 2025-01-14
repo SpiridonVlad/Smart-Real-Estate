@@ -90,8 +90,8 @@
                 {{ record.user.rating }} Rating
               </span>
             </div>
+            <button class="message-button" (click)="createChat(record.user.id); $event.stopPropagation()">Message</button> <!-- Stop event propagation -->
           </div>
-        </div>
       </div>
     </div>
   </div>

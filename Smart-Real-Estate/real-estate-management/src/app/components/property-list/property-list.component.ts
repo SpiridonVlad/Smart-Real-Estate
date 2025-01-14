@@ -27,7 +27,6 @@ export class PropertyListComponent implements OnInit {
   loadProperties(): void {
     this.propertyService.getPaginatedProperties(this.page, this.pageSize).subscribe(
       (response: any) => {
-        console.log("Response: ",response.data);
         this.properties = response.data;
       },
       (error) => {

@@ -93,7 +93,6 @@ export class UserProfileComponent implements OnInit {
     this.listingService.getListingsByUserId(userId).subscribe(
       (response) => {
         this.listings = response.data;
-        console.log('Fetched listings:', this.listings);
       },
       (error) => {
         console.error('Error fetching listings:', error);
@@ -179,7 +178,6 @@ export class UserProfileComponent implements OnInit {
     if (confirm('Are you sure you want to delete this listing?')) {
       this.listingService.deleteListing(listingId).subscribe(
         () => {
-          console.log('Listing deleted successfully');
           this.listings = this.listings.filter((listing) => listing.id !== listingId);
         },
         (error) => {
@@ -205,7 +203,6 @@ export class UserProfileComponent implements OnInit {
     if (confirm('Are you sure you want to delete this listing?')) {
       this.propertyService.deleteProperty(propertyId).subscribe(
         () => {
-          console.log('Property deleted successfully');
           this.properties = this.properties.filter((property) => property.id !== propertyId);
         },
         (error) => {

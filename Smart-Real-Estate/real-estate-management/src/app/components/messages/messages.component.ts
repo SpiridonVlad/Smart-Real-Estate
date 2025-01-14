@@ -74,7 +74,6 @@ export class MessagesComponent implements OnInit {
       if (content) {
         this.messageService.sendMessage(this.chatId, { content }).subscribe({
           next: (response) => {
-            console.log(response); // Log the response
             input.value = ''; // Clear the input
             this.loadMessages(this.chatId); // Reload messages
           },

@@ -123,9 +123,7 @@ export class RecordListComponent implements OnInit {
     }).subscribe(
       (response: any) => {
         this.records = response.data;
-        console.log('Records loaded:', this.records);
         this.exists = this.records.length > 0;
-        console.log('Exists:', this.exists);
       },
       (error) => {
         console.error('Error loading records:', error);

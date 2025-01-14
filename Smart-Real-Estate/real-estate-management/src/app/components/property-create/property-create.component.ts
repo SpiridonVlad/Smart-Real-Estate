@@ -155,7 +155,6 @@ export class PropertyCreateComponent implements OnInit {
   getPricePrediction(): void {
 
       const formData = this.propertyForm.value;
-      console.log('Form data:', formData);
       const predictionRequest: PricePredictionRequest = {
         surface: formData.features.Surface || 0,
         rooms: formData.features.Rooms || 0,
