@@ -68,6 +68,7 @@ namespace Application.Use_Cases.Wrappers
 
                 User = new UserCard
                 {
+                    Id = user.Data.Id,
                     Username = user.Data.Username,
                     Verified = user.Data.Verified,
                     Rating = user.Data.Rating,
