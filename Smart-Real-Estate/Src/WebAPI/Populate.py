@@ -5,11 +5,13 @@ import random
 import uuid
 from faker import Faker
 import json
+from datetime import datetime
+from enum import Enum
 
-class ListingAssets:
-    IS_SOLD = 'isSold'
-    IS_HIGHLIGHTED = 'isHighlighted'
-    IS_DELETED = 'isDeleted'
+class ListingType:
+    IS_SOLD = 'IsSold'
+    IS_HIGHLIGHTED = 'IsHighlighted'
+    IS_DELETED = 'IsDeleted'
 
 class PropertyFeatureType:
     GARDEN = 'Garden'
@@ -46,10 +48,15 @@ class UserType:
     INDIVIDUAL = 'Individual'
     ADMIN = 'Admin'
 
+class UserStatus(Enum):
+    ACTIVE = 0
+    INACTIVE = 1
+
+
 def generate_users(num_users=50):
     fake = Faker()
     users = []
-
+    
     for _ in range(num_users):
         user_id = str(uuid.uuid4()).upper()
         username = fake.user_name()
@@ -57,26 +64,32 @@ def generate_users(num_users=50):
         verified = random.choice([True, False])
         raw_password = fake.password(length=12)
         hashed_password = bcrypt.hashpw(raw_password.encode('utf-8'), bcrypt.gensalt())
-        property_history = None
+        property_history = [str(uuid.uuid4()) for _ in range(random.randint(0, 5))]
+        property_waiting_list = [str(uuid.uuid4()) for _ in range(random.randint(0, 3))]
+        chat_ids = [str(uuid.uuid4()) for _ in range(random.randint(1, 5))]
         
-        user_type = random.choice(range(3))
-
+        user_type = random.choice([UserType.LEGAL_ENTITY, UserType.INDIVIDUAL, UserType.ADMIN])
+        status = random.choice([UserStatus.ACTIVE, UserStatus.INACTIVE])
+        
         users.append({
-            'id': user_id,
-            'username': username,
-            'email': email,
-            'verified': verified,
-            'password': hashed_password,
-            'type': user_type,
-            'property_history': property_history,
+                'id'                   : user_id,
+                'username'             : username,
+                'email'                : email,
+                'verified'             : verified,
+                'password'             : hashed_password,
+                'type'                 : user_type,
+                'status'               : status.value,
+                'property_history'     : json.dumps(property_history),
+                'property_waiting_list': json.dumps(property_waiting_list),
+                'chat_ids'             : json.dumps(chat_ids),
+                'rating'               : round(random.uniform(0, 5), 1)
         })
-
+    
     return users
 
 def create_sqlite_users_table(db_path):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-
 
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Users (
@@ -85,9 +98,12 @@ def create_sqlite_users_table(db_path):
         Email TEXT NOT NULL,
         Password TEXT NOT NULL,
         Verified BOOLEAN NOT NULL,
-        Rating INTEGER,
+        Rating DECIMAL(3,1),
+        Status INTEGER NOT NULL,
         Type TEXT NOT NULL,
-        PropertyHistory TEXT
+        PropertyHistory TEXT,
+        PropertyWaitingList TEXT,
+        ChatIds TEXT
     )
     ''')
 
@@ -144,92 +160,90 @@ def generate_addresses(num_addresses=50):
 
     return addresses
 
-def generate_properties(users, addresses, num_properties=50):
-    properties = []
 
+def generate_properties(users, addresses, num_properties=50):
+    fake = Faker()
+    properties = []
+    
     for _ in range(num_properties):
         property_features = {
                 feature: random.randint(0, 30)
                 for feature in vars(PropertyFeatureType).values()
-                if isinstance(feature, str) and feature.startswith('__') is False
-        }
-        property_types = {
-                value: index for index, value in enumerate([
-                        value for value in dir(PropertyType)
-                        if not value.startswith('__')
-                ])
+                if isinstance(feature, str) and not feature.startswith('__')
         }
         
+        image_ids = [str(uuid.uuid4()) for _ in range(random.randint(1, 5))]
+        
         property_obj = {
-            'id': str(uuid.uuid4()),
-            'user_id': random.choice(users)['id'],
-            'address_id': random.choice(addresses)['id'],
-            'image_id': str(uuid.uuid4()),
-            'type': property_types[random.choice(list(property_types.keys()))],
-            'features': json.dumps(property_features)
+                'id'        : str(uuid.uuid4()),
+                'title'     : fake.catch_phrase(),
+                'user_id'   : random.choice(users)['id'],
+                'address_id': random.choice(addresses)['id'],
+                'image_ids' : json.dumps(image_ids),
+                'type'      : random.choice([getattr(PropertyType, attr) for attr in dir(PropertyType)
+                                             if not attr.startswith('__')]),
+                'features'  : json.dumps(property_features)
         }
         properties.append(property_obj)
-
+    
     return properties
 
-def generate_listings(users, properties, num_listings=50):
-    listings = []
 
+def generate_listings(users, properties, num_listings=50):
+    fake = Faker()
+    listings = []
+    
     for _ in range(num_listings):
         property_choice = random.choice(properties)
         available_users = [u for u in users if u['id'] != property_choice['user_id']]
         
         listing_features = {
-                feature: random.choice([1, 0])
-                for feature in vars(ListingAssets).values()
-                if isinstance(feature, str) and feature.startswith('__') is False
+                feature: random.choice([0, 1])
+                for feature in vars(ListingType).values()
+                if isinstance(feature, str) and not feature.startswith('__')
         }
-        print(listing_features)
+        
+        user_waiting_list = [str(uuid.uuid4()) for _ in range(random.randint(0, 5))]
+        
         listing = {
-            'id': str(uuid.uuid4()),
-            'property_id': property_choice['id'],
-            'user_id': random.choice(available_users)['id'],
-            'price': random.randint(10, 1000),
-            'publication_date': str(Faker().date_this_year()),
-            'description': Faker().text(max_nb_chars=1000) if random.random() < 0.7 else None,
-            'features': json.dumps(listing_features)
+                'id'               : str(uuid.uuid4()),
+                'property_id'      : property_choice['id'],
+                'user_id'          : random.choice(available_users)['id'],
+                'price'            : random.randint(10000, 1000000),
+                'publication_date' : datetime.now().strftime('%Y-%m-%d'),
+                'description'      : fake.text(max_nb_chars=1000) if random.random() < 0.7 else None,
+                'features'         : json.dumps(listing_features),
+                'user_waiting_list': json.dumps(user_waiting_list)
         }
         listings.append(listing)
-
+    
     return listings
+
 
 def populate_postgres_database(connection_string, users):
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor()
-
+    
+    # Drop existing tables
     cursor.execute('DROP TABLE IF EXISTS Users')
     cursor.execute('DROP TABLE IF EXISTS Addresses CASCADE')
     cursor.execute('DROP TABLE IF EXISTS Properties CASCADE')
     cursor.execute('DROP TABLE IF EXISTS Listings CASCADE')
     
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Addresses (
-        "Id" UUID PRIMARY KEY,
-        "Street" TEXT NOT NULL,
-        "City" TEXT NOT NULL,
-        "State" TEXT NOT NULL,
-        "PostalCode" TEXT NOT NULL,
-        "Country" TEXT NOT NULL,
-        "AdditionalInfo" TEXT
-    )
-    ''')
-    
+    # Create Addresses table
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Properties (
         "Id" UUID PRIMARY KEY,
+        "Title" TEXT NOT NULL,
         "UserId" UUID NOT NULL,
         "AddressId" UUID NOT NULL,
-        "ImageId" UUID NOT NULL,
+        "ImageIds" JSONB NOT NULL,
         "Type" TEXT NOT NULL,
-        "features" JSONB
+        "Features" JSONB
     )
     ''')
     
+    # Create Listings table
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Listings (
         "Id" UUID PRIMARY KEY,
@@ -238,45 +252,49 @@ def populate_postgres_database(connection_string, users):
         "Price" INTEGER NOT NULL,
         "PublicationDate" DATE NOT NULL,
         "Description" TEXT,
-        "features" JSONB
+        "Features" JSONB,
+        "UserWaitingList" JSONB
     )
     ''')
-
+    
     addresses = generate_addresses(50)
     properties = generate_properties(users, addresses, 50)
     listings = generate_listings(users, properties, 50)
     
-    for address in addresses:
-        cursor.execute('''
-        INSERT INTO Addresses ("Id", "Street", "City", "State", "PostalCode", "Country", "AdditionalInfo")
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
-        ''', (
-                address['id'], address['street'], address['city'], address['state'],
-                address['postal_code'], address['country'], address['additional_info']
-        ))
-    
+    # Insert data into tables
     for property_obj in properties:
         cursor.execute('''
-        INSERT INTO Properties ("Id", "UserId", "AddressId", "ImageId", "Type", "features")
-        VALUES (%s, %s, %s, %s, %s, %s)
+        INSERT INTO Properties ("Id", "Title", "UserId", "AddressId", "ImageIds", "Type", "Features")
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         ''', (
-                property_obj['id'], property_obj['user_id'], property_obj['address_id'],
-                property_obj['image_id'], property_obj['type'], property_obj['features']
+                property_obj['id'],
+                property_obj['title'],
+                property_obj['user_id'],
+                property_obj['address_id'],
+                property_obj['image_ids'],
+                property_obj['type'],
+                property_obj['features']
         ))
     
     for listing in listings:
         cursor.execute('''
-        INSERT INTO Listings ("Id", "PropertyId", "UserId", "Price", "PublicationDate", "Description", "features")
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO Listings ("Id", "PropertyId", "UserId", "Price", "PublicationDate",
+                            "Description", "Features", "UserWaitingList")
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         ''', (
-                listing['id'], listing['property_id'], listing['user_id'],
-                listing['price'], listing['publication_date'], listing['description'],
-                listing['features']
+                listing['id'],
+                listing['property_id'],
+                listing['user_id'],
+                listing['price'],
+                listing['publication_date'],
+                listing['description'],
+                listing['features'],
+                listing['user_waiting_list']
         ))
-
+    
     conn.commit()
     conn.close()
-
+    
     print(f"Successfully populated PostgreSQL database:")
     print(f"- {len(addresses)} addresses")
     print(f"- {len(properties)} properties")

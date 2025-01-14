@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Identity.Migrations
 {
     /// <inheritdoc />
-    public partial class Vlad : Migration
+    public partial class VladUsers : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,12 +16,13 @@ namespace Identity.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Username = table.Column<string>(type: "TEXT", nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Username = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    Password = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Verified = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
-                    Rating = table.Column<decimal>(type: "decimal(5, 2)", nullable: false),
+                    Rating = table.Column<decimal>(type: "TEXT", nullable: false, defaultValue: 0m),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
                     PropertyHistory = table.Column<string>(type: "TEXT", nullable: true),
                     PropertyWaitingList = table.Column<string>(type: "TEXT", nullable: true),
                     ChatId = table.Column<string>(type: "TEXT", nullable: true)
