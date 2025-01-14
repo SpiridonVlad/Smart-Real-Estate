@@ -1,28 +1,35 @@
 <app-header></app-header>
-<div class="record-list">
-  <h1>Property Records</h1>
+<div class="main-container">
+  <app-news></app-news>
 
-  <!-- Pagination Controls -->
-  <div class="pagination-controls">
-    <div>
-      <label for="page">Page:</label>
-      <select id="page" [(ngModel)]="page" (change)="loadRecords()">
-        <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
-      </select>
+  <div class="record-list">
+    <h1>Properties</h1>
+
+    <div class="pagination-controls">
+      <div class="pagination-group">
+        <div class="select-container">
+          <label for="page">Page:</label>
+          <select id="page" [(ngModel)]="page" (change)="loadRecords()" class="pagination-select">
+            <option *ngFor="let p of pages" [value]="p">{{ p }}</option>
+          </select>
+          <span class="page-info">of {{ pages.length }}</span>
+        </div>
+
+        <div class="select-container">
+          <label for="pageSize">Items per page:</label>
+          <select id="pageSize" [(ngModel)]="pageSize" (change)="loadRecords()" class="pagination-select">
+            <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="filters-button" (click)="toggleFilterPopup()">
+        <i class="fas fa-filter"></i> Filters
+      </button>
     </div>
 
-    <div>
-      <label for="pageSize">Page Size:</label>
-      <select id="pageSize" [(ngModel)]="pageSize" (change)="loadRecords()">
-        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
-      </select>
-    </div>
-
-    <button class="filters-button" (click)="toggleFilterPopup()">Filters</button>
-  </div>
-
-  <!-- Filter Popup -->
-  <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
+    <!-- Keep your existing filter popup and records list code here -->
+    <div *ngIf="showFilterPopup" class="overlay" (click)="toggleFilterPopup()"></div>
   <div *ngIf="showFilterPopup" class="filter-popup">
   <h2>Filters</h2>
 

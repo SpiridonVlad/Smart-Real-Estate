@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { RecordService } from '../../services/record.service';
 import { PropertyType, Record } from '../../models/record.model';
 import { CommonModule } from '@angular/common';
@@ -6,14 +7,16 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 import { Router } from '@angular/router';
-
+import { NewsComponent } from '../news/news.component';
 
 @Component({
   selector: 'app-record-list',
-  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent, NewsComponent],
   templateUrl: './record-list.component.html',
   styleUrls: ['./record-list.component.css'],
+  standalone: true
 })
+
 export class RecordListComponent implements OnInit {
   records: Record[] = [];
   compareList: string[] = [];

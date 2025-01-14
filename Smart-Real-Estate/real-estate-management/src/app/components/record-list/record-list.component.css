@@ -4,7 +4,12 @@
   align-items: center;
   margin-bottom: 20px;
 }
-
+.record-list h1 {
+  font-size: 1.5rem; /* Adjust the font size as needed */
+  font-weight: 600; /* Optional: Adjust the weight for thinner text */
+  color: #333; /* Optional: Change color if needed */
+  margin-bottom: 10px; /* Reduce spacing below the title */
+}
 .no-records {
   width: 500px;
   height: 200px;
@@ -24,6 +29,81 @@
   color: #333; /* Slightly darker text for the heading */
   margin: 0;
   line-height: 200px; /* Vertically centers the text */
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) 3fr; /* Shrink the left column further */
+  gap: 20px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: flex-start; /* Aligns both components at the top */
+}
+
+app-news {
+  margin-left: -50px; /* Moves the news component closer to the left edge */
+  padding-left: 10px; /* Optional: Adjust padding if content looks too close */
+}
+
+.record-list {
+  flex: 1;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.pagination-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.select-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  font-size: 14px;
+  min-width: 80px;
+}
+
+.page-info {
+  color: #666;
+  font-size: 14px;
+}
+
+.filters-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.filters-button:hover {
+  background: #0056b3;
 }
 
 
