@@ -37,7 +37,6 @@ export class UserCreateComponent {
         type: this.mapUserType(this.userForm.value.type)
       };
 
-      console.log('User data:', userData);
       
       this.userService.createUser(userData).subscribe(
         () => {

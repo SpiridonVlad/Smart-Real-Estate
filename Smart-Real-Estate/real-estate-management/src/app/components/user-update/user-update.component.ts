@@ -81,8 +81,7 @@ export class UserUpdateComponent implements OnInit {
         }
       );
     } else {
-      console.log('Form is invalid:', this.userForm.errors);
-      console.log('Form controls:', this.userForm.controls);
+      console.error('Form is invalid');
     }
   }
 

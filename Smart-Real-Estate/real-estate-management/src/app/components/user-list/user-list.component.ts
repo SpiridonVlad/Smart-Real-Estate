@@ -94,7 +94,6 @@ export class UserListComponent implements OnInit {
     this.messageService.createChat(userId).subscribe({
       next: (response) => {
         const chatId = response.chatId;
-        console.log('Chat created:', chatId);
         this.router.navigate([`/messages/${chatId}`]); // Navigate to messages/{chatId}
       },
       error: (error) => console.error('Error creating chat:', error),
