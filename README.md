@@ -1,17 +1,30 @@
 # Smart Real Estate Management System
 
-This project is a comprehensive platform for managing property listings, client inquiries, and transactions. It incorporates a machine learning module to predict property market trends and provide valuable insights. The system follows a clean architecture to ensure modularity and scalability.
+This project is a comprehensive platform for managing property listings and client inquiries. It incorporates a machine learning module to predict a properties value. The system follows a clean architecture to ensure modularity and scalability.
 
-Key features include:
+Key Features:
 
--CQRS for handling property listings and client inquiries separately.
+-Containerized Deployment
+Built with Docker to containerize both the application and the database for consistent and reliable deployment.
 
--MediatR for managing commands and queries.
+-CQRS Architecture
+Implements Command Query Responsibility Segregation (CQRS) to handle property listings and client inquiries separately for enhanced performance.
 
--PostgreSQL for data storage.
+-MediatR Integration
+Uses MediatR to manage commands and queries in a clean and decoupled manner.
 
--JWT for secure authentication and authorization.
+-Real-Time Messaging
+Powered by SignalR, providing real-time communication capabilities.
 
--Angular & Angular Material for a responsive and attractive frontend.
+-Database Solutions
+PostgreSQL for entity data storage.
+SQLite for lightweight identity data storage.
 
--Machine Learning for market trend prediction.
+-Secure Authentication and Authorization
+Implements JWT (JSON Web Tokens) for robust authentication and authorization.
+
+-Modern Frontend
+Developed with Angular to deliver a responsive and intuitive user interface.
+
+-Machine Learning Module
+Includes an AI-driven module for property price predictions to enhance decision-making.
