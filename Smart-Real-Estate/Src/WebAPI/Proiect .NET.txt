@@ -1,6 +1,0 @@
-Proiect .NET
--Refacut toate rutele pt entitatile modificate
--Adaugare autorizare pt celelalte rute in spate
--Filtrare mai buna pe Records
--Adaugare implementari noi 
--Adaugare mesagerie 
